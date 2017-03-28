@@ -1,0 +1,5 @@
+
+1squid:S1220""Move this file to a named package.
+¢squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ù¡¥Õÿÿÿÿÿ8ÀÓþ¤±+
+Usquid:S1213";Move this constructor to comply with Java Code Conventions.(Ù¡¥Õÿÿÿÿÿ
+~"squid:ClassVariableVisibilityCheck"MMake s a static final constant or non-public and provide accessors if needed.(ì÷–ëùÿÿÿÿ
