@@ -6,11 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="socialmedia" />
+        <module name="SocialMediaLibrary" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="socialmedia" target="1.8" />
+      <module name="SocialMediaLibrary" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>
