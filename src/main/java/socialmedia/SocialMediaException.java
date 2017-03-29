@@ -1,7 +1,18 @@
 package socialmedia;
 
-/**
- * Created by emperor on 2017-03-29.
- */
-public class SocialMediaException {
+public class SocialMediaException extends RuntimeException {
+    private String platform;
+
+    public SocialMediaException() {
+
+    }
+
+    public SocialMediaException(String message, String platform) {
+        super(message);
+        this.platform = platform;
+    }
+
+    public String getPlatform() {
+        return platform;
+    }
 }
