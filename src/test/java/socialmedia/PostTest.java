@@ -97,7 +97,7 @@ public class PostTest {
     }
 
     @Test
-    @DisplayName("should set and get receving users unchanged")
+    @DisplayName("should set and get receiving users unchanged")
     public void testToUsers() {
         User first = new User();
         first.setAge(10);
