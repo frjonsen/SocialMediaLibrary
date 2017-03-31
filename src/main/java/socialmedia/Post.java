@@ -48,7 +48,7 @@ public abstract class Post {
      */
     void setCreationTime(ZonedDateTime time) {
         this.creationTime = time;
-    };
+    }
 
     /**
      * Gets the time when the post was last changed.
