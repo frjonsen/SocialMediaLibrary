@@ -14,6 +14,8 @@ public class FacebookUser extends User {
     private int age;
     private String gender;
     private String email;
+    private String city;
+    private String language;
 
     public String getGender() {
         return gender;
@@ -47,8 +49,6 @@ public class FacebookUser extends User {
         this.language = language;
     }
 
-    private String city;
-    private String language;
 
     /**
      * Returns the Age of the User object.
