@@ -1,9 +1,12 @@
 language: java
 dist: trusty
 jdk:
-  - oraclejdk8
+- oraclejdk8
 addons:
   sonarqube:
     organization: frjonsen-github
 script:
-  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
+- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
+notifications:
+  slack:
+    secure: u+x47ESUyojDH9HFhjkWtKJSQGSYgQPbTsgApOEZAITlU42FN67SgzsbZ2X35wIb9PQ7/IVZzgtQWPFSw7We2OPivPG6J277Kfbw1LB8I1ABCFmnFA+XsSmMvNJ6APZK8sGyo6X4Dzl63eT3YpEZ5L47VpC1xrvBoXnM2vYAjzn3KfBoQWdEIOhabw/8fYhF7fMcNQ6aiec66kV/XRf1WSQjspy9eGxlrjXA1U/LTLsqg8NISS9RE5k1zT17+L62AWvyc+JpznSrMwV+Ps6J/LDu4Tu+hiXQnIG24gtjNHE2kaYatAq5J9HL9w7ZgLu4IBk0krm01emSogyRyO8zvuKy+1PPeaL70RXDaUxmbNABzKygOGhHBOhByTRz+9zbtmxXilb+wBNtoxtlyDu0jFmX9MoQPA9FSn8ISCarG5Kby9ewagdVx2e63Md8jujmi/vodEhKkXJGRNyoiMqWvITanYzX9COrU/a5OaDS8C6YKWH7/gECeP/Cmapl28iWIxiHnrN/FpqrU2FZGVB8VpNQWjUvqOUJ3r07eNpKCu8A48s/909DQ5VlAolVZ8KHj1A2sxVbj/waTJFff6e0krtC0MZpweM2qG0CE3+X5z9b3gS7IxQnhQlY4ZYN47IKDtcIUmuRh0M7ntM0tTkNGT5APYBDAchGiO+Vm1IUwHo=
