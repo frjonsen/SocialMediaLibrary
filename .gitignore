@@ -10,3 +10,4 @@ buildNumber.properties
 .idea/workspace.xml
 .idea/tasks.xml
 .idea/sonarlint
+.idea/libraries
