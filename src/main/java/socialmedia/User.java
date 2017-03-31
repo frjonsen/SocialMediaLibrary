@@ -45,80 +45,80 @@ public abstract class User {
 
     /**
      * Returns the ID of the User object from the platform.
-     * @return      ID of the User.
+     * @return  ID of the User.
      */
     public String getId() { return this.id; }
 
     /**
      * Updates the ID on the local User object. It does not update
      * the information on the platform.
-     * @param id - the new ID.
+     * @param id    the new ID.
      */
     public void setId(String id) { this.id = id; }
 
     /**
      * Returns the Username of the User from the platform.
-     * @return      Username of the User.
+     * @return  Username of the User.
      */
     public String getUsername() { return this.username; }
 
     /**
      * Updates the username on the local User object. It does not update
      * the information on the platform.
-     * @param username - the new Username.
+     * @param username  the new Username.
      */
     public void setUsername(String username) { this.username = username; }
 
     /**
      *  Returns the Website associated with the User from the platform.
-     * @return      Website of the User.
+     * @return  Website of the User.
      */
     public URL getWebsite() { return this.website; }
 
     /**
      * Updates the website on the local User object. It does not update
      * the information on the platform.
-     * @param website - the new Website.
+     * @param website   the new Website.
      */
     public void setWebsite(URL website) { this.website = website; }
 
     /**
      * Returns the Biography of the User object  from the platform.
-     * @return      Biography of the User.
+     * @return  Biography of the User.
      */
     public String getBiography() { return this.biography; }
 
     /**
      * Updates the biography on the local User object. It does not update
      * the information on the platform.
-     * @param biography - the new Biography.
+     * @param biography the new Biography.
      */
     public void setBiography(String biography) { this.biography = biography; }
 
     /**
      * Returns the number of times the User has uploaded content on the platform.
      * This does not include chat messages.
-     * @return      UploadCount of the User.
+     * @return  UploadCount of the User.
      */
     public int getUploadCount() { return this.uploadCount; }
 
     /**
      *  Updates the upload count on the local User object. It does not update
      *  the information on the platform.
-     * @param count - the new UploadCount.
+     * @param count the new UploadCount.
      */
     public void setUploadCount(int count) { this.uploadCount = count; }
 
     /**
      * Returns the number of other users/accounts the given User is following on the platform.
-     * @return      FollowingCount of the User.
+     * @return  FollowingCount of the User.
      */
     public int getFollowingCount() { return this.followingCount; }
 
     /**
      * Updates the following count on the local User object. It does not update
      * the information on the platform.
-     * @param count - the new FollowingCount.
+     * @param count the new FollowingCount.
      */
     public void setFollowingCount(int count) throws NotSupportedException {
         this.followingCount = count;
@@ -126,14 +126,14 @@ public abstract class User {
 
     /**
      * Returns number of users/accounts the User is following on the platform.
-     * @return      FollowersCount of the User.
+     * @return  FollowersCount of the User.
      */
     public int getFollowersCount() { return this.followersCount; }
 
     /**
      * Updates the follower count on the local User object. It does not update
      * the information on the platform.
-     * @param count - the new FollowerCount.
+     * @param count the new FollowerCount.
      */
     public void setFollowersCount(int count) { this.followersCount = count; }
 

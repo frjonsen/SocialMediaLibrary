@@ -9,7 +9,7 @@ import socialmedia.User;
  * @see socialmedia.User
  */
 public class FacebookUser extends User {
-    static final String PLATFORM = "Facebook";
+    private static final String PLATFORM = "Facebook";
 
     private int age;
     private String gender;
