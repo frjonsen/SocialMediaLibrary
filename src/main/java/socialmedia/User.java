@@ -16,12 +16,7 @@ import java.net.URL;
  */
 public abstract class User {
     private String name;
-    //private String gender;
-    //private int age;
-    //private String email;
-    //private String city;
     private String id;
-    //private String language;
     private String username;
     private URL website;
     private String biography;
