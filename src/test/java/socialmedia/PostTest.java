@@ -69,11 +69,11 @@ class PostTest {
     @Test
     @DisplayName("should set and get author unchanged")
     void testAuthor() {
-        User user = new User();
-        int age = 20;
-        user.setAge(age);
+        User user = new User() {};
+        String name = "somename";
+        user.setName(name);
         post.setAuthor(user);
-        assertEquals(age, post.getAuthor().getAge());
+        assertEquals(name, post.getAuthor().getName());
     };
 
     @Test
@@ -95,9 +95,9 @@ class PostTest {
     @Test
     @DisplayName("should set and get receiving users unchanged")
     void testToUsers() {
-        User first = new User();
-        first.setAge(10);
-        User second = new User();
+        User first = new User() {};
+        first.setId("someid");
+        User second = new User() {};
         second.setName("somename");
         List<User> expected = new ArrayList<>();
         expected.add(first);

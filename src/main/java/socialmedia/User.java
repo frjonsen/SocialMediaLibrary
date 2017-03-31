@@ -2,6 +2,8 @@ package socialmedia;
 
 import com.google.gson.JsonObject;
 
+import java.net.URL;
+
 
 /**
  * The User class represents a user on a social media network.
@@ -21,7 +23,7 @@ public abstract class User {
     private String id;
     //private String language;
     private String username;
-    private String website;
+    private URL website;
     private String biography;
     private int uploadCount;
     private int followingCount;
@@ -71,14 +73,14 @@ public abstract class User {
      *  Returns the Website associated with the User from the platform.
      * @return      Website of the User.
      */
-    public String getWebsite() { return this.website; }
+    public URL getWebsite() { return this.website; }
 
     /**
      * Updates the website on the local User object. It does not update
      * the information on the platform.
      * @param website - the new Website.
      */
-    public void setWebsite(String website) { this.website = website; }
+    public void setWebsite(URL website) { this.website = website; }
 
     /**
      * Returns the Biography of the User object  from the platform.
