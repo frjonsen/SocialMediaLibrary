@@ -20,4 +20,45 @@ public abstract class SocialMediaAPI {
     }
 
     public abstract User getUser(String id);
+
+    //public abstract searchUser();
+
+    //public abstract getProfilePicture();
+
+    //public abstract likePost();
+
+    //public abstract unlikePost();
+
+    //public abstract getPost();
+
+    //public abstract searchPost();
+
+    //public abstract getPostFeed();
+
+    //public abstract publishPost();
+
+    //public abstract publishComment();
+
+    //public abstract getFollowers();
+
+    //public abstract getFollowing();
+
+    //public abstract follow();
+
+    //public abstract unFollow();
+
+
+
+
+    /* Implemented individually
+    comments
+    likes post
+
+    get RSVP's
+    create event
+    user check ins??
+    friend request ---> NOH!
+    get friends
+    DM features
+     */
 }
