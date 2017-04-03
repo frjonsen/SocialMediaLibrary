@@ -11,3 +11,5 @@ buildNumber.properties
 .idea/tasks.xml
 .idea/sonarlint
 .idea/libraries
+out
+
