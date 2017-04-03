@@ -1,8 +1,10 @@
 package socialmedia;
 
 import java.io.PrintStream;
+import java.net.URL;
+import java.util.List;
 
-public abstract class SocialMediaAPI {
+public abstract class SocialMediaAPI<T extends User>{
     private PrintStream stream;
 
     public void setDebugStream(PrintStream stream) {
@@ -19,23 +21,25 @@ public abstract class SocialMediaAPI {
             stream.printf(s, args);
     }
 
-    public abstract User getUser(String id);
+    //public abstract User getUser(String id);
 
-    //public abstract searchUser();
+    //public abstract List<T> searchUser(String query);
 
-    //public abstract getProfilePicture();
+    //public abstract URL getProfilePicture(String id, int size);
 
-    //public abstract likePost();
+    //public abstract boolean likePost(String id);
 
-    //public abstract unlikePost();
+    //public abstract boolean unlikePost(String id);
 
-    //public abstract getPost();
+    //public abstract T getPost(String id);
 
     //public abstract searchPost();
 
     //public abstract getPostFeed();
 
     //public abstract publishPost();
+
+    //public abstract getComments();
 
     //public abstract publishComment();
 
