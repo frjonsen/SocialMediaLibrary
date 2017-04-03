@@ -1,10 +1,10 @@
 package socialmedia;
 
 public class SocialMediaException extends RuntimeException {
-    private String platform;
+    private final String platform;
 
     public SocialMediaException() {
-
+        platform = "UNKNOWN";
     }
 
     public SocialMediaException(String message, String platform) {

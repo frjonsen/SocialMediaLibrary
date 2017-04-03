@@ -200,7 +200,4 @@ public abstract class Post {
     void setLocationName(String location) {
         this.locationName = location;
     }
-
-    // Coordinates getCoordinates();
-    // void setCoordinates(Coordinates location);
 }

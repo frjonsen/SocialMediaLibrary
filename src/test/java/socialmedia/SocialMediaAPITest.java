@@ -35,4 +35,14 @@ public class SocialMediaAPITest {
         sm.debugf("something", "one", "two");
         Mockito.verify(ps).printf("something", "one", "two");
     }
+
+    @Test
+    @DisplayName("should do nothing when PrintStream is null")
+    void testPrintStreamNull() {
+        sm.setDebugStream(null);
+        sm.debug("something");
+        sm.debugf("something", "else");
+        Mockito.verify(ps, Mockito.never()).println("something");
+        Mockito.verify(ps, Mockito.never()).printf("something", "else");
+    }
 }
