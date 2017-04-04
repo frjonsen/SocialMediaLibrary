@@ -30,6 +30,11 @@
             <version>2.7.20</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.facebook4j</groupId>
+            <artifactId>facebook4j-core</artifactId>
+            <version>[2.4,)</version>
+        </dependency>
     </dependencies>
 
     <build>

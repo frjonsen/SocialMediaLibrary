@@ -1,7 +1,14 @@
 package facebook;
 
+import facebook4j.Facebook;
 import socialmedia.NotSupportedException;
 import socialmedia.User;
+
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.List;
 
 /**
  * This class is an extension of the User class. The variables added here are the
@@ -15,7 +22,29 @@ public class FacebookUser extends User {
     private String gender;
     private String email;
     private String city;
-    private String language;
+    private List<String> languages;
+    private FacebookBirthDateUtil.FacebookBirthDate birthday;
+
+    public FacebookBirthDateUtil.FacebookBirthDate getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(FacebookBirthDateUtil.FacebookBirthDate birthday) {
+        this.birthday = birthday;
+    }
+
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = new FacebookBirthDateUtil.FacebookBirthDate(birthday, FacebookBirthDateUtil.DateType.FULL);
+    }
+
+    public void setBirthday(String birthday) {
+        /* Three possible formats, according to facebook API docs:
+        *  Full date as MM/DD/YYYY
+        *  Only YEAR as YYYY
+        *  Only month and MONTHDAY as MM/DD
+        */
+        this.birthday = FacebookBirthDateUtil.formatDate(birthday);
+    }
 
     public String getGender() {
         return gender;
@@ -41,12 +70,12 @@ public class FacebookUser extends User {
         this.city = city;
     }
 
-    public String getLanguage() {
-        return language;
+    public List<String> getLanguages() {
+        return languages;
     }
 
-    public void setLanguage(String language) {
-        this.language = language;
+    public void setLanguages(List<String> languages) {
+        this.languages = languages;
     }
 
 

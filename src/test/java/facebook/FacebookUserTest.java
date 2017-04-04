@@ -5,6 +5,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import socialmedia.NotSupportedException;
 
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class FacebookUserTest {
@@ -43,9 +47,10 @@ class FacebookUserTest {
     @Test
     @DisplayName("should set and get language unchanged")
     void testLanguage() {
-        String language = "somelanguage";
-        user.setLanguage(language);
-        assertEquals(language, user.getLanguage());
+        ArrayList<String> language = new ArrayList<String>();
+        language.add("somelanguage");
+        user.setLanguages(language);
+        assertEquals(language, user.getLanguages());
     }
 
     @Test
@@ -77,11 +82,27 @@ class FacebookUserTest {
 
     }
 
-    @Test@DisplayName("should throw an exception as setUploadCount is not supported by Facebook")
-
+    @Test
+    @DisplayName("should throw an exception as setUploadCount is not supported by Facebook")
     void testSetUploadCount() {
         Throwable exception = assertThrows(NotSupportedException.class, () -> { user.setUploadCount(10); });
         assertEquals("setUploadCount is not supported for platform \"Facebook\"", exception.toString());
+    }
+
+    @Test
+    @DisplayName("should set and get birthday unchanged")
+    void testDirectBirthdayAssignment() {
+        LocalDate bday = LocalDate.now();
+        user.setBirthday(bday);
+        assertEquals(bday, user.getBirthday().getDate());
+    }
+
+    @Test
+    @DisplayName("should correctly parse a birthday as formatted by facebook")
+    void testFacebookBirthdayAssignment() {
+        user.setBirthday("1991");
+        assertEquals(1991, user.getBirthday().getDate().getYear());
+        assertEquals(FacebookBirthDateUtil.DateType.YEAR, user.getBirthday().getType());
     }
 
 }
