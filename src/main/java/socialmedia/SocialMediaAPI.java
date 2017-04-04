@@ -11,6 +11,12 @@ public abstract class SocialMediaAPI<T extends User>{
         this.stream = stream;
     }
 
+    protected void debug(Object o) {
+        if (stream != null) {
+            stream.println(o.toString());
+        }
+    }
+
     protected void debug(String s) {
         if(stream != null)
             stream.println(s);

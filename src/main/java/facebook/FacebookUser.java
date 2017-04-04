@@ -1,13 +1,9 @@
 package facebook;
 
-import facebook4j.Facebook;
 import socialmedia.NotSupportedException;
 import socialmedia.User;
 
 import java.time.LocalDate;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.List;
 
 /**

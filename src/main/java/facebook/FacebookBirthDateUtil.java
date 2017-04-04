@@ -39,15 +39,15 @@ public class FacebookBirthDateUtil {
     }
 
     enum DateType {
-        FULL(Pattern.compile("^(\\d{2}/){2}\\d{4}$"), buildFormatter("MM/dd/uuuu")),
-        YEAR(Pattern.compile("^\\d{4}$"), buildFormatter("uuuu")),
-        MONTHDAY(Pattern.compile("^\\d{2}/\\d{2}$"), buildFormatter("MM/dd")),
+        FULL(Pattern.compile("^(\\d{2}/){2}\\d{4}$"), "MM/dd/uuuu"),
+        YEAR(Pattern.compile("^\\d{4}$"), "uuuu"),
+        MONTHDAY(Pattern.compile("^\\d{2}/\\d{2}$"), "MM/dd"),
         INVALID(null, null);
 
         Pattern pattern;
-        DateTimeFormatter formatter;
+        String formatter;
 
-        DateType(Pattern pattern, DateTimeFormatter formatter) {
+        DateType(Pattern pattern, String formatter) {
             this.pattern = pattern;
             this.formatter = formatter;
         }
@@ -56,7 +56,7 @@ public class FacebookBirthDateUtil {
             return this.pattern;
         }
 
-        public DateTimeFormatter getFormatter() {
+        public String getFormatter() {
             return this.formatter;
         }
     }
@@ -77,6 +77,6 @@ public class FacebookBirthDateUtil {
         if (type == DateType.INVALID) {
             return null;
         }
-        return new FacebookBirthDate(LocalDate.parse(date, type.getFormatter()), type);
+        return new FacebookBirthDate(LocalDate.parse(date, buildFormatter(type.getFormatter())), type);
     }
 }

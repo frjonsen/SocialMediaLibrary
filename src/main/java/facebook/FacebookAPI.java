@@ -4,7 +4,6 @@ import facebook4j.*;
 import facebook4j.conf.ConfigurationBuilder;
 import socialmedia.SocialMediaAPI;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class FacebookAPI extends SocialMediaAPI<FacebookUser> {
@@ -24,14 +23,14 @@ public class FacebookAPI extends SocialMediaAPI<FacebookUser> {
         this(appId, appSecret, userAccessToken, String.join(",", permissions));
     }
 
-    public FacebookUser getUser(String id) throws FacebookAPIException {
+    public FacebookUser getUser(String id) {
         User user;
         try {
             user = libraryInstance.getUser(id);
         }
         catch (FacebookException fe) {
-            debugf(fe.toString());
-            throw new FacebookAPIException(fe.getErrorMessage());
+            debug(fe);
+            throw new FacebookAPIException(fe.getMessage());
         }
         FacebookUser fbUser = new FacebookUser();
         fbUser.setGender(user.getGender());
