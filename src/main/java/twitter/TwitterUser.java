@@ -10,7 +10,7 @@ import socialmedia.User;
 public class TwitterUser extends User{
     private static final String PLATFORM = "Twitter";
 
-    private String email;
+    private String email; //TODO::might wanna extend with more variables from 4j...
     private String location;
     private String language;
 

@@ -9,10 +9,11 @@ public abstract class Post {//<T extends User> { //TODO:: might actully want use
     private ZonedDateTime creationTime;
     private ZonedDateTime editTime;
     private String id;
-    private int shareCount;
+    private int shareCount; // retweet count
     private Iterable<User> toUsers;
     private Iterable<String> tags;
     private URL permalink;
+    private String type; //TODO:: maek enum and gib setter and getter
     private User author;
 
     /**

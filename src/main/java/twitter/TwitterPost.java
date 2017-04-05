@@ -15,7 +15,6 @@ public class TwitterPost extends Post{
     private SymbolEntity[] symbolEntities;
     private URLEntity[] urlEntities;
     //private UserMentionEntity[] userMentionEntities;//TODO:: check if it should be here or in base class
-
     private int favoriteCount;
     private String replyToScreenName;
     private long replyToStatusId;
@@ -91,7 +90,7 @@ public class TwitterPost extends Post{
 
     /**
      * A list of hashtags parsed out of the tweet.
-     * @see HashtagEntity
+     * @see HashtagEntity //TODO:: might wanna remove these
      * @return hashtagEntities
      */
    /* public HashtagEntity[] getHashtags() {
