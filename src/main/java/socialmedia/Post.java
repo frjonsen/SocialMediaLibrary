@@ -3,18 +3,16 @@ package socialmedia;
 import java.time.*;
 import java.net.URL;
 
-public abstract class Post {
+public abstract class Post {//<T extends User> { //TODO:: might actully want users to be able to be different...
 
     private String text;
     private ZonedDateTime creationTime;
     private ZonedDateTime editTime;
     private String id;
     private int shareCount;
-    private String language;
     private Iterable<User> toUsers;
     private Iterable<String> tags;
     private URL permalink;
-    private String locationName;
     private User author;
 
     /**
@@ -115,24 +113,6 @@ public abstract class Post {
     }
 
     /**
-     * Gets the language the post body text is written in. For some
-     * networks, this is auto-detected, and may not always
-     * be accurate.
-     * @return Post language
-     */
-    String getLanguage() {
-        return this.language;
-    }
-
-    /**
-     * Sets the language the body text is written in
-     * @param language Post language
-     */
-    void setLanguage(String language) {
-        this.language = language;
-    }
-
-    /**
      * Sets the list of users the post was directed to.
      * What is considered a "to" depends on the network.
      * @return Iterable of users
@@ -143,7 +123,7 @@ public abstract class Post {
 
     /**
      * Sets the list of users the post was directed to.
-     * @param user Iterable of users
+     * @param users Iterable of users
      */
     void setTo(Iterable<User> users) {
         this.toUsers = users;
@@ -182,22 +162,4 @@ public abstract class Post {
         this.permalink = permalink;
     }
 
-    /**
-     * Gets the location where the post was made from.
-     * This is stored as a named location, such as 'Stockholm'.
-     * @return Location name as a string.
-     */
-    String getLocationName() {
-        return this.locationName;
-    }
-
-    /**
-     * Sets the locaiton where the post was made from.
-     * This should be stored as the name of the location, such as
-     * 'Stockholm'.
-     * @param location Location name as a string
-     */
-    void setLocationName(String location) {
-        this.locationName = location;
-    }
 }

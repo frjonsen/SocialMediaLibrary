@@ -1,5 +1,6 @@
 package socialmedia;
 
+import facebook.FacebookUser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
@@ -84,13 +85,13 @@ class PostTest {
         assertEquals(count, post.getSharedCount());
     }
 
-    @Test
+    /*@Test  //TODO:: maby remove this later
     @DisplayName("should set and get post language unchanged")
     void testLanguage() {
         String language = "Swedish";
         post.setLanguage(language);
         assertEquals(language, post.getLanguage());
-    }
+    }*/
 
     @Test
     @DisplayName("should set and get receiving users unchanged")
@@ -131,11 +132,11 @@ class PostTest {
         assertEquals(url, post.getPermalink());
     }
 
-    @Test
+  /*  @Test //TODO:: maby remove this later
     @DisplayName("should set and get location name unchanged")
     void testLocationName() {
         String location = "Stockholm";
         post.setLocationName(location);
         assertEquals(location, post.getLocationName());
-    }
+    }*/
 }
