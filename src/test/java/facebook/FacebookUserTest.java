@@ -1,5 +1,6 @@
 package facebook;
 
+import facebook4j.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -56,9 +57,19 @@ class FacebookUserTest {
     @Test
     @DisplayName("should set and get age unchanged")
     void testAge() {
-        int age = 20;
+        User.AgeRange age = new User.AgeRange() {
+            @Override
+            public Integer getMin() {
+                return 18;
+            }
+
+            @Override
+            public Integer getMax() {
+                return 21;
+            }
+        };
         user.setAge(age);
-        assertEquals(age, user.getAge());
+        assertEquals(18, user.getAgeRange().getMin().intValue());
     }
 
     @Test
@@ -105,4 +116,12 @@ class FacebookUserTest {
         assertEquals(FacebookBirthDateUtil.DateType.YEAR, user.getBirthday().getType());
     }
 
+    @Test
+    @DisplayName("should set and get a simple birthdate")
+    void testSimpleBirthDateAssignment() {
+        LocalDate date = LocalDate.now();
+        user.setBirthday(date);
+        assertEquals(date, user.getBirthday().getDate());
+        assertEquals(FacebookBirthDateUtil.DateType.FULL, user.getBirthday().getType());
+    }
 }

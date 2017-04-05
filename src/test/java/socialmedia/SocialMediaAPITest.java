@@ -36,6 +36,21 @@ public class SocialMediaAPITest {
     }
 
     @Test
+    @DisplayName("should use toString to print object")
+    void testPrintObject() {
+        Object o = new Object() {
+            String s = "something";
+
+            @Override
+            public String toString() {
+                return s;
+            }
+        };
+        sm.debug(o);
+        Mockito.verify(ps).println("something");
+    }
+
+    @Test
     @DisplayName("should do nothing when PrintStream is null")
     void testPrintStreamNull() {
         sm.setDebugStream(null);
@@ -44,4 +59,6 @@ public class SocialMediaAPITest {
         Mockito.verify(ps, Mockito.never()).println("something");
         Mockito.verify(ps, Mockito.never()).printf("something", "else");
     }
+
+
 }

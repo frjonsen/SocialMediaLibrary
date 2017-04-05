@@ -14,7 +14,7 @@ import java.util.List;
 public class FacebookUser extends User {
     private static final String PLATFORM = "Facebook";
 
-    private int age;
+    private facebook4j.User.AgeRange age;
     private String gender;
     private String email;
     private String city;
@@ -79,14 +79,14 @@ public class FacebookUser extends User {
      * Returns the Age of the User object.
      * @return      Age of the User.
      */
-    int getAge() { return this.age; }
+    facebook4j.User.AgeRange getAgeRange() { return this.age; }
 
     /**
      * Updates the age on the local User object. It does not update
      * the information on the platform.
      * @param age - the new Age.
      */
-    void setAge(int age) { this.age = age; }
+    void setAge(facebook4j.User.AgeRange ageRange) { this.age = ageRange; }
 
     /**
      * This variable is not supported by facebook and throws an NotSupportedException
