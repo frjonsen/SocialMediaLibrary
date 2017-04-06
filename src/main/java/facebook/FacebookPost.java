@@ -44,17 +44,16 @@ public class FacebookPost extends Post<FacebookUser> {
     private Place place;
     private String objectId;
     private String parentId;
-    //private String type;
     private String statusType;
-    private Iterable<socialmedia.User> withTags;
-    private Iterable<socialmedia.User> messageTags;
+    private Iterable<FacebookUser> withTags;
+    private Iterable<FacebookUser> messageTags;
     private List<facebook4j.Post.Property> properties;
 
     /**
      * Returns users tagged as being 'with' the author of the post.
      * @return  list of users
      */
-    public Iterable<User> getWithTags() {
+    public Iterable<FacebookUser> getWithTags() {
         return withTags;
     }
 
@@ -62,23 +61,25 @@ public class FacebookPost extends Post<FacebookUser> {
      * Sets with tags locally.
      * @param withTags  new with tags
      */
-    public void setWithTags(Iterable<User> withTags) {
+    public void setWithTags(Iterable<FacebookUser> withTags) {
         this.withTags = withTags;
     }
 
     /**
-     * Returns the list of users tagged in this post.
+     * Returns the list of users tagged in this post. Users are 'tagged' when their names
+     * are written directly in the post text.
      * @return  list of users tagged
      */
-    public Iterable<User> getMessageTags() {
+    public Iterable<FacebookUser> getMessageTags() {
         return messageTags;
     }
 
     /**
-     * Sets the message tags list locally.
+     * Users which were tagged in the post, by having their names written
+     * directly in the post text.
      * @param messageTags   new message tags list
      */
-    public void setMessageTags(Iterable<User> messageTags) {
+    public void setMessageTags(Iterable<FacebookUser> messageTags) {
         this.messageTags = messageTags;
     }
 
