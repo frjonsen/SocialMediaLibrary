@@ -12,6 +12,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -38,28 +39,33 @@ class FacebookPostTest {
     @DisplayName("should set and get withTags unchanged")
     void testWithTags() {
         List<FacebookUser> with = createFriendsSample(2);
+        List<FacebookUser> clone = createFriendsSample(2);
         post.setWithTags(with);
 
         for (FacebookUser u : post.getWithTags()) {
-            assertTrue(with.contains(u));
-            with.remove(u);
+            Predicate<FacebookUser> predicate = user -> user.getId().equals(u.getId());
+            assertTrue(clone.stream().anyMatch(predicate));
+            clone.removeIf(predicate);
         }
 
-        assertEquals(0, with.size());
+        assertEquals(0, clone.size());
     }
 
     @Test
     @DisplayName("should set and get messageTags unchanged")
     void testMessageTags() {
+
         List<FacebookUser> tags = createFriendsSample(3);
+        List<FacebookUser> clone = createFriendsSample(3);
         post.setMessageTags(tags);
 
         for (FacebookUser u : post.getMessageTags()) {
-            assertTrue(tags.contains(u));
-            tags.remove(u);
+            Predicate<FacebookUser> predicate = user -> user.getId().equals(u.getId());
+            assertTrue(clone.stream().anyMatch(predicate));
+            clone.removeIf(predicate);
         }
 
-        assertEquals(0, tags.size());
+        assertEquals(0, clone.size());
     }
 
     @Test
