@@ -3,8 +3,12 @@ package socialmedia;
 import java.time.*;
 import java.net.URL;
 
-public abstract class Post {//<T extends User> { //TODO:: might actully want users to be able to be different...
+public abstract class Post <T extends User> { //TODO:: might actully want users to be able to be different...
+    public enum Type{
+        IMAGE, TEXT, VIDEO, LINK, OFFER
+    }
 
+    private Type type;
     private String text;
     private ZonedDateTime creationTime;
     private ZonedDateTime editTime;
@@ -13,8 +17,24 @@ public abstract class Post {//<T extends User> { //TODO:: might actully want use
     private Iterable<User> toUsers;
     private Iterable<String> tags;
     private URL permalink;
-    private String type; //TODO:: maek enum and gib setter and getter
-    private User author;
+    private T author;
+
+    /**
+     * Returns the type of the post. If the post is a text,
+     * video, image, link post etc.
+     * @return  type of post
+     */
+    public Type getType() {
+        return type;
+    }
+
+    /**
+     * Sets the type of the post locally.
+     * @param type  new type of post
+     */
+    public void setType(Type type) {
+        this.type = type;
+    }
 
     /**
      * Gets the body text of the post.
@@ -84,7 +104,7 @@ public abstract class Post {//<T extends User> { //TODO:: might actully want use
      * Gets information about the user who created the post.
      * @return Author user
      */
-    User getAuthor() {
+    T getAuthor() {
         return this.author;
     }
 
@@ -92,7 +112,7 @@ public abstract class Post {//<T extends User> { //TODO:: might actully want use
      * Sets the information about the user who created the post
      * @param author Author user
      */
-    void setAuthor(User author) {
+    void setAuthor(T author) {
         this.author = author;
     }
 

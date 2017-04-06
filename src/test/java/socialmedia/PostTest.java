@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static socialmedia.Post.Type.TEXT;
 
 /*
     This whole test class is mostly to add code coverage.
@@ -19,11 +20,11 @@ import static org.junit.jupiter.api.Assertions.*;
 */
 class PostTest {
 
-    Post post = null;
+    Post<User> post = null;
 
     @BeforeEach
     void init() {
-        this.post = new Post() {};
+        this.post = new Post<User>() {};
     }
 
     @Test
@@ -85,14 +86,6 @@ class PostTest {
         assertEquals(count, post.getSharedCount());
     }
 
-    /*@Test  //TODO:: maby remove this later
-    @DisplayName("should set and get post language unchanged")
-    void testLanguage() {
-        String language = "Swedish";
-        post.setLanguage(language);
-        assertEquals(language, post.getLanguage());
-    }*/
-
     @Test
     @DisplayName("should set and get receiving users unchanged")
     void testToUsers() {
@@ -132,11 +125,11 @@ class PostTest {
         assertEquals(url, post.getPermalink());
     }
 
-  /*  @Test //TODO:: maby remove this later
-    @DisplayName("should set and get location name unchanged")
-    void testLocationName() {
-        String location = "Stockholm";
-        post.setLocationName(location);
-        assertEquals(location, post.getLocationName());
-    }*/
+    @Test
+    @DisplayName("should set and get post type unchanged")
+    void testType() {
+        Post.Type type = TEXT;
+        post.setType(type);
+        assertEquals(type, post.getType());
+    }
 }

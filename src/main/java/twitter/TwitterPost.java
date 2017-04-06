@@ -5,7 +5,7 @@ import socialmedia.Post;
 import twitter4j.*;
 
 
-public class TwitterPost extends Post{
+public class TwitterPost extends Post<TwitterUser>{
     private String language;
     private Coordinate coordinate;
     private Place place;

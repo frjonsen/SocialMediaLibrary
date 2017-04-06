@@ -15,7 +15,7 @@ import java.util.List;
  * @see Place
  * @see facebook4j.Post.Property
  */
-public class FacebookPost extends Post {
+public class FacebookPost extends Post<FacebookUser> {
     //id// ----- //TODO::Remove these comments when life is safe
     //private Application application;
     //private Action[] actions;
