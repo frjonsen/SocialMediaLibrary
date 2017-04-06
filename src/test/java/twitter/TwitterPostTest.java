@@ -130,6 +130,14 @@ class TwitterPostTest {
     }
 
     @Test
+    @DisplayName("should set and get quotedStatus unchanged")
+    void testQuotedStatus(){
+        TwitterPost status = Mockito.mock(TwitterPost.class);
+        post.setQuotedStatus(status);
+        assertEquals(status, post.getQuotedStatus());
+    }
+
+    @Test
     @DisplayName("should set and get retweetedStatus unchanged")
     void testRetweetedStatus(){
         TwitterPost status = Mockito.mock(TwitterPost.class);

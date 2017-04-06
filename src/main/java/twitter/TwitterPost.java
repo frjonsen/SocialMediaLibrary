@@ -105,24 +105,6 @@ public class TwitterPost extends Post<TwitterUser>{
     }
 
     /**
-     * A list of hashtags parsed out of the tweet.
-     * @see HashtagEntity //TODO:: might wanna remove these
-     * @return hashtagEntities
-     */
-   /* public HashtagEntity[] getHashtags() {
-        return hashtags;
-    }*/
-
-    /**
-     * Sets the list of hashtags parsed out of the tweet, locally.
-     * @see HashtagEntity
-     * @param hashtags new hashtagEntities
-     */
-  /*  public void setHashtags(HashtagEntity[] hashtags) {
-        this.hashtags = hashtags;
-    }*/
-
-    /**
      * A list of media entities uploaded with the tweet.
      * @see MediaEntity
      * @return mediaEntities
@@ -174,23 +156,6 @@ public class TwitterPost extends Post<TwitterUser>{
     public void setUrlEntities(URLEntity[] urlEntities) {
         this.urlEntities = urlEntities;
     }
-
-    /**
-     * An array of twitter screen names mentioned in the tweet.
-     * @see UserMentionEntity
-     * @return userMentionEntities
-     */
-   /* public UserMentionEntity[] getUserMentionEntities() {
-        return userMentionEntities;
-    }*/
-
-    /**
-     * Sets the array of twitter screen names mentioned in the tweet, locally.
-     * @param userMentionEntities new userMentionEntities
-     */
-    /*public void setUserMentionEntities(UserMentionEntity[] userMentionEntities) {
-        this.userMentionEntities = userMentionEntities;
-    }*/
 
     /**
      * Returns a count of how many times the tweet has been "favorited".
