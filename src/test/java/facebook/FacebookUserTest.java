@@ -4,6 +4,7 @@ import facebook4j.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import socialmedia.NotSupportedException;
 
 import java.time.LocalDate;
@@ -123,5 +124,13 @@ class FacebookUserTest {
         user.setBirthday(date);
         assertEquals(date, user.getBirthday().getDate());
         assertEquals(FacebookBirthDateUtil.DateType.FULL, user.getBirthday().getType());
+    }
+
+    @Test
+    @DisplayName("")
+    void testStuff() {
+        FacebookBirthDateUtil.FacebookBirthDate birthday = Mockito.mock(FacebookBirthDateUtil.FacebookBirthDate.class);
+        user.setBirthday(birthday);
+        assertEquals(birthday, user.getBirthday());
     }
 }
