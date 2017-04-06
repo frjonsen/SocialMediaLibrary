@@ -13,4 +13,12 @@ class NotSupportedExceptionTest {
         assertEquals("someFunction is not supported for platform \"platform\"" ,exception.toString());
     }
 
+    @Test
+    @DisplayName("test if empty constructor for notSupportedException works")
+    void testEmptyConstructor() {
+        assertThrows(NotSupportedException.class, () -> {
+        throw new NotSupportedException();
+        });
+    }
+
 }

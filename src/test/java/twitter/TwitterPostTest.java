@@ -30,7 +30,8 @@ class TwitterPostTest {
         coordinate.setLatitude(28.385233);
         coordinate.setLongitude(-81.563874);
         post.setCoordinate(coordinate);
-        assertEquals(coordinate, post.getCoordinate());
+        assertEquals(28.385233, post.getCoordinate().getLatitude());
+        assertEquals(-81.563874, post.getCoordinate().getLongitude());
     }
 
     @Test
