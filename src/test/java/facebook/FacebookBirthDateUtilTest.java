@@ -11,7 +11,7 @@ class FacebookBirthDateUtilTest {
 
     @Test
     @DisplayName("should return the type of a full facebook date")
-    void getFullDateType() {
+    void testGetFullDateType() {
         String date = "02/21/1991";
         FacebookBirthDateUtil.DateType type = FacebookBirthDateUtil.getDateType(date);
         assertEquals(FacebookBirthDateUtil.DateType.FULL, type);
@@ -19,7 +19,7 @@ class FacebookBirthDateUtilTest {
 
     @Test
     @DisplayName("should return the type of facebook date with only year")
-    void getYearDateType() {
+    void testGetYearDateType() {
         String date = "2007";
         FacebookBirthDateUtil.DateType type = FacebookBirthDateUtil.getDateType(date);
         assertEquals(FacebookBirthDateUtil.DateType.YEAR, type);
@@ -27,7 +27,7 @@ class FacebookBirthDateUtilTest {
 
     @Test
     @DisplayName("should return the type of a facebook date with no year")
-    void getNoYearDateType() {
+    void testGetNoYearDateType() {
         String date = "08/12";
         FacebookBirthDateUtil.DateType type = FacebookBirthDateUtil.getDateType(date);
         assertEquals(FacebookBirthDateUtil.DateType.MONTHDAY, type);
@@ -35,14 +35,14 @@ class FacebookBirthDateUtilTest {
 
     @Test
     @DisplayName("should return INVALID when date is null or empty")
-    void getInvalidDateType() {
+    void testGetInvalidDateType() {
         assertEquals(FacebookBirthDateUtil.DateType.INVALID, FacebookBirthDateUtil.getDateType(null));
         assertEquals(FacebookBirthDateUtil.DateType.INVALID, FacebookBirthDateUtil.getDateType(""));
     }
 
     @Test
     @DisplayName("should return a facebook birthdate of full facebook date")
-    void getFullFormattedDate() {
+    void testGetFullFormattedDate() {
         String date = "08/21/1991";
         FacebookBirthDateUtil.FacebookBirthDate formatted = FacebookBirthDateUtil.formatDate(date);
         LocalDate d = formatted.getDate();
@@ -54,7 +54,7 @@ class FacebookBirthDateUtilTest {
 
     @Test
     @DisplayName("should return a Facebook birthdate of facebook date with only year")
-    void getYearFormattedDate() {
+    void testGetYearFormattedDate() {
         String date = "1967";
         FacebookBirthDateUtil.FacebookBirthDate formatted = FacebookBirthDateUtil.formatDate(date);
         assertEquals(1967, formatted.getDate().getYear());
@@ -63,11 +63,18 @@ class FacebookBirthDateUtilTest {
 
     @Test
     @DisplayName("should return a facebook birthdate, lacking year")
-    void getMonthDayFormattedDate() {
+    void testGetMonthDayFormattedDate() {
         String date = "10/08";
         FacebookBirthDateUtil.FacebookBirthDate formatted = FacebookBirthDateUtil.formatDate(date);
         assertEquals(10, formatted.getDate().getMonthValue());
         assertEquals(8, formatted.getDate().getDayOfMonth());
         assertEquals(FacebookBirthDateUtil.DateType.MONTHDAY, formatted.getType());
+    }
+
+    @Test
+    @DisplayName("")
+    void testInvalidInput() {
+        FacebookBirthDateUtil.FacebookBirthDate birthDate = FacebookBirthDateUtil.formatDate(null);
+        assertNull(birthDate);
     }
 }
