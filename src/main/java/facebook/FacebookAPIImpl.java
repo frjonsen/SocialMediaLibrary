@@ -1,7 +1,10 @@
 package facebook;
 
 import facebook4j.*;
+import facebook4j.User;
 import facebook4j.conf.ConfigurationBuilder;
+import socialmedia.*;
+import socialmedia.Post;
 
 import java.util.stream.Collectors;
 
@@ -42,6 +45,11 @@ public class FacebookAPIImpl extends FacebookAPI {
         fbUser.setCity(city == null ? null : city.getName());
         fbUser.setEmail(user.getEmail());
         return fbUser;
+    }
+
+    @Override
+    public FacebookPost getPost(String id) {
+        return null;
     }
 
     //TODO:: Overloads for pagination

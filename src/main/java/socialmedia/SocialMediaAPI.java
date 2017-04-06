@@ -27,7 +27,7 @@ public abstract class SocialMediaAPI<T extends User>{
             stream.printf(s, args);
     }
 
-    //public abstract User getUser(String id);
+    public abstract User getUser(String id);
 
     //public abstract List<T> searchUser(String query);
 
@@ -37,7 +37,7 @@ public abstract class SocialMediaAPI<T extends User>{
 
     //public abstract boolean unlikePost(String id);
 
-    //public abstract T getPost(String id);
+    public abstract Post getPost(String id);
 
     //public abstract searchPost();
 
