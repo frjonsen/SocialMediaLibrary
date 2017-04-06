@@ -1,10 +1,7 @@
 package facebook.mocks;
 
 
-import facebook4j.Facebook;
-import facebook4j.FacebookException;
-import facebook4j.IdNameEntity;
-import facebook4j.User;
+import facebook4j.*;
 import org.mockito.Mockito;
 
 import java.net.MalformedURLException;
@@ -13,6 +10,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FacebookLibraryMock {
+
+    private static User.AgeRange createAgeRange(Integer min, Integer max) {
+        return new User.AgeRange() {
+            @Override
+            public Integer getMin() {
+                return min;
+            }
+
+            @Override
+            public Integer getMax() {
+                return max;
+            }
+        };
+    }
+
+    private static IdNameEntity createHometown(String town) {
+        return new IdNameEntity() {
+            @Override
+            public String getId() {
+                return "uselessid";
+            }
+
+            @Override
+            public String getName() {
+                return town;
+            }
+        };
+    };
 
     private static List<IdNameEntity> createIdNameList(List<String> items) {
         List<IdNameEntity> listed = new ArrayList<IdNameEntity>();
@@ -44,36 +69,17 @@ public class FacebookLibraryMock {
 
     public static User getFacebookFullUserMock() throws MalformedURLException {
         User user = Mockito.mock(User.class);
-        Mockito.when(user.getGender()).thenReturn("Man");
-        Mockito.when(user.getBio()).thenReturn("A very short biography");
-        User.AgeRange range = new User.AgeRange() {
-            @Override
-            public Integer getMin() {
-                return 21;
-            }
 
-            @Override
-            public Integer getMax() {
-                return null;
-            }
-        };
-        Mockito.when(user.getAgeRange()).thenReturn(range);
-        Mockito.when(user.getBirthday()).thenReturn("10/02/1986");
-        Mockito.when(user.getHometown()).thenReturn(new IdNameEntity() {
-            @Override
-            public String getId() {
-                return "uselessid";
-            }
-
-            @Override
-            public String getName() {
-                return "atown";
-            }
-        });
-        Mockito.when(user.getEmail()).thenReturn("email@example.com");
         List<String> languages = new ArrayList<String>();
         languages.add("Swedish");
         languages.add("English");
+
+        Mockito.when(user.getGender()).thenReturn("Man");
+        Mockito.when(user.getBio()).thenReturn("A very short biography");
+        Mockito.when(user.getAgeRange()).thenReturn(createAgeRange(21, null));
+        Mockito.when(user.getBirthday()).thenReturn("10/02/1986");
+        Mockito.when(user.getHometown()).thenReturn(createHometown("atown"));
+        Mockito.when(user.getEmail()).thenReturn("email@example.com");
         Mockito.when(user.getLanguages()).thenReturn(createIdNameList(languages));
         Mockito.when(user.getName()).thenReturn("some name");
         Mockito.when(user.getId()).thenReturn("56726489657236574");

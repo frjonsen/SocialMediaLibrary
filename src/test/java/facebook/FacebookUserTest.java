@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class FacebookUserTest {
 
-    FacebookUser user;
+    private FacebookUser user;
 
     @BeforeEach
     void init() {
