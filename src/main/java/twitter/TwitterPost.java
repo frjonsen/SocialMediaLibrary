@@ -10,11 +10,9 @@ public class TwitterPost extends Post<TwitterUser>{
     private Coordinate coordinate;
     private Place place;
     private ExtendedMediaEntity[] extendedMediaEntities;
-    //private HashtagEntity[] hashtags; //TODO:: check if it should be here or in base class
     private MediaEntity[] mediaEntities;
     private SymbolEntity[] symbolEntities;
     private URLEntity[] urlEntities;
-    //private UserMentionEntity[] userMentionEntities;//TODO:: check if it should be here or in base class
     private int favoriteCount;
     private String replyToScreenName;
     private long replyToStatusId;
@@ -34,6 +32,23 @@ public class TwitterPost extends Post<TwitterUser>{
     private boolean truncated;
 
     /**
+     * Returns location of this tweet as specified by the user or application
+     * posting it.
+     * @return  Coordinates as longitude and latitude
+     */
+    public Coordinate getCoordinate() {
+        return coordinate;
+    }
+
+    /**
+     * Sets the location of the tweet locally.
+     * @param coordinate    new coordinates
+     */
+    public void setCoordinate(Coordinate coordinate) {
+        this.coordinate = coordinate;
+    }
+
+    /**
      * Returns the language of the tweet as a BCP 47 language
      * identifier detected by twitter. Nullable.
      * @return  language of tweet
@@ -51,7 +66,8 @@ public class TwitterPost extends Post<TwitterUser>{
     }
 
     /**
-     * Returns the place object associated with the tweet.
+     * Returns the place object associated with the tweet, but not necessarily
+     * originating from.
      * @see Place
      * @return place
      */

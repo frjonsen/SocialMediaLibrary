@@ -3,7 +3,7 @@ package socialmedia;
 import java.time.*;
 import java.net.URL;
 
-public abstract class Post <T extends User> { //TODO:: might actully want users to be able to be different...
+public abstract class Post <T extends User> {
     public enum Type{
         IMAGE, TEXT, VIDEO, LINK, OFFER
     }
