@@ -4,9 +4,6 @@ import socialmedia.SocialMediaAPI;
 
 import java.util.List;
 
-public class TwitterAPI /*extends SocialMediaAPI<TwitterUser> */{
-
-    /*public List<TwitterUser> searchUser(String query){
-
-    }*/
+public abstract class TwitterAPI extends SocialMediaAPI<TwitterUser>{
+    public abstract TwitterUser getUser(String id);
 }
