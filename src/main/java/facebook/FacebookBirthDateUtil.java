@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-public abstract class FacebookBirthDateUtil {
+public class FacebookBirthDateUtil {
 
     static class FacebookBirthDate {
         private LocalDate date;

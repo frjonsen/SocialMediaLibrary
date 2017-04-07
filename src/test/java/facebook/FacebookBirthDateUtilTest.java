@@ -1,5 +1,6 @@
 package facebook;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -8,6 +9,11 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
 class FacebookBirthDateUtilTest {
+
+    @BeforeAll
+    static void beforeAll() {
+       new FacebookBirthDateUtil();
+    }
 
     @Test
     @DisplayName("should return the type of a full facebook date")

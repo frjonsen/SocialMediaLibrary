@@ -3,7 +3,21 @@ package socialmedia;
 import java.time.*;
 import java.net.URL;
 
+/**
+ * The base class of posts. These fields are what the different
+ * platforms have in common. It gets created with what type of user
+ * the post is associated with. For instance FacebookUser.
+ * @param <T>   The type of user associated with the post
+ */
 public abstract class Post <T extends User> {
+    /**
+     * The post types that a post may be
+     * <li>{@link #IMAGE}</li>
+     * <li>{@link #TEXT}</li>
+     * <li>{@link #VIDEO}</li>
+     * <li>{@link #LINK}</li>
+     * <li>{@link #OFFER}</li>
+     */
     public enum Type{
         IMAGE, TEXT, VIDEO, LINK, OFFER
     }
