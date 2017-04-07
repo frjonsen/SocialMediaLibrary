@@ -52,6 +52,10 @@ public abstract class Post <T extends User> {
         this.text = text;
     }
 
+    /*void setCreationTime(java.util.Date time) {
+        ZonedDateTime converted = time.
+    }*/
+
     /**
      * Gets a copy of the time when the post was first created.
      * @return Creation time

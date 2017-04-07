@@ -21,7 +21,7 @@ class FacebookAPIImplTest {
 
     @Test
     void testGetFullValidUser() {
-        FacebookUser user = facebook.getUser("someid");
+        FacebookUser user = facebook.getUser("56726489657236574");
         assertEquals("Man", user.getGender());
         assertNotNull(user.getAgeRange());
         assertNull(user.getAgeRange().getMax());

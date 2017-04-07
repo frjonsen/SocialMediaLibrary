@@ -6,6 +6,7 @@ import org.mockito.Mockito;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -64,14 +65,14 @@ public class FacebookLibraryMock {
     public static Facebook getFacebookMock() throws FacebookException, MalformedURLException {
         Facebook f = Mockito.mock(Facebook.class);
         User user = getFacebookFullUserMock();
-        Mockito.when(f.getUser("someid")).thenReturn(user);
+        Mockito.when(f.getUser("56726489657236574")).thenReturn(user);
         return f;
     }
 
     public static User getFacebookFullUserMock() throws MalformedURLException {
         User user = Mockito.mock(User.class);
 
-        List<String> languages = new ArrayList<String>();
+        List<String> languages = new ArrayList<>();
         languages.add("Swedish");
         languages.add("English");
 
@@ -92,6 +93,10 @@ public class FacebookLibraryMock {
     public static Post getFullFacebookPost() throws MalformedURLException {
         Post post = Mockito.mock(Post.class);
 
+        Mockito.when(post.getId()).thenReturn("10202360904079395_10208824524985878");
+        Mockito.when(post.getMessage()).thenReturn("A regular post message");
+        Date date = new Date();
+        Mockito.when(post.getCreatedTime()).thenReturn(date);
         Mockito.when(post.isHidden()).thenReturn(false);
         Mockito.when(post.isPublished()).thenReturn(true);
         Mockito.when(post.getLink()).thenReturn(new URL("https://example.com/post"));
@@ -104,71 +109,16 @@ public class FacebookLibraryMock {
         with.add("friend1");
         with.add("friend2");
         Mockito.when(post.getWithTags()).thenReturn(createIdNameList(with));
-        List<Tag> tags = new ArrayList<Tag>();
-        tags.add(new Tag() {
-            @Override
-            public String getId() {
-                return null;
-            }
-
-            @Override
-            public String getName() {
-                return "sometag";
-            }
-
-            @Override
-            public Integer getOffset() {
-                return null;
-            }
-
-            @Override
-            public Integer getLength() {
-                return null;
-            }
-
-            @Override
-            public String getType() {
-                return null;
-            }
-
-            @Override
-            public Double getX() {
-                return null;
-            }
-
-            @Override
-            public Double getY() {
-                return null;
-            }
-
-            @Override
-            public Date getCreatedTime() {
-                return null;
-            }
-
-            @Override
-            public Metadata getMetadata() {
-                return null;
-            }
-        });
+        List<Tag> tags = new ArrayList<>();
+        Tag tag = Mockito.mock(Tag.class);
+        Mockito.when(tag.getId()).thenReturn("sometagid");
+        tags.add(tag);
         Mockito.when(post.getMessageTags()).thenReturn(tags);
         List<Post.Property> properties = new ArrayList<>();
-        properties.add(new Post.Property() {
-            @Override
-            public String getName() {
-                return "length";
-            }
-
-            @Override
-            public String getText() {
-                return "10";
-            }
-
-            @Override
-            public String getHref() {
-                return null;
-            }
-        });
+        Post.Property property = Mockito.mock(Post.Property.class);
+        Mockito.when(property.getName()).thenReturn("length");
+        Mockito.when(property.getText()).thenReturn("10");
+        properties.add(property);
         Mockito.when(post.getProperties()).thenReturn(properties);
 
         return post;
