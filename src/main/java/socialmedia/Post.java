@@ -54,27 +54,36 @@ public abstract class Post <T extends User> {
      * Gets the body text of the post.
      * @return Body text
      */
-    String getText() {
+    public String getText() {
         return text;
     }
 
     /**
      * Set the body text of the post.
+     * time must be in UTC, or the result will be incorrect
      * @param text Body text
      */
-    void setText(String text) {
+    public void setText(String text) {
         this.text = text;
     }
 
-    /*void setCreationTime(java.util.Date time) {
-        ZonedDateTime converted = time.
-    }*/
+    /**
+     * Sets the creation time using a java.util.Date
+     * This will internally be converted to a ZonedDateTime
+     * As java.util.Date lacks a timezone, this function
+     * assumes the timezone is UTC.
+     * @param time Creation time of the post
+     */
+    void setCreationTime(java.util.Date time) {
+        if (time == null) this.creationTime = null;
+        else this.creationTime = ZonedDateTime.ofInstant(time.toInstant(), ZoneOffset.UTC);
+    }
 
     /**
      * Gets a copy of the time when the post was first created.
      * @return Creation time
      */
-    ZonedDateTime getCreationTime() {
+    public  ZonedDateTime getCreationTime() {
         return creationTime;
     }
 
@@ -83,7 +92,7 @@ public abstract class Post <T extends User> {
      * The passed time is copied before storing
      * @param time Creation time
      */
-    void setCreationTime(ZonedDateTime time) {
+    public  void setCreationTime(ZonedDateTime time) {
         this.creationTime = time;
     }
 
@@ -93,7 +102,7 @@ public abstract class Post <T extends User> {
      * the creation time.
      * @return Edit time
      */
-    ZonedDateTime getEditTime() {
+    public  ZonedDateTime getEditTime() {
         if (editTime == null) {
             return this.getCreationTime();
         }
@@ -106,15 +115,35 @@ public abstract class Post <T extends User> {
      * set to the creation time.
      * @param time Edit time
      */
-    void setEditTime(ZonedDateTime time) {
+    public void setEditTime(ZonedDateTime time) {
         this.editTime = time;
     }
 
-    String getId() {
+    /**
+     * Sets the creation time using a java.util.Date
+     * This will internally be converted to a ZonedDateTime
+     * As java.util.Date lacks a timezone, this function
+     * assumes the timezone is UTC.
+     * @param time Creation time of the post
+     */
+    void setEditTime(java.util.Date time) {
+        if (time == null) this.editTime = null;
+        else this.editTime = ZonedDateTime.ofInstant(time.toInstant(), ZoneOffset.UTC);
+    }
+
+    /**
+     * Gets the id of the post
+     * @return Id of the post
+     */
+    public String getId() {
         return this.id;
     }
 
-    void setId(String id) {
+    /**
+     * Sets the id of the post
+     * @param id Id of the post
+     */
+    public  void setId(String id) {
         this.id = id;
     }
 
@@ -122,7 +151,7 @@ public abstract class Post <T extends User> {
      * Gets information about the user who created the post.
      * @return Author user
      */
-    T getAuthor() {
+    public  T getAuthor() {
         return this.author;
     }
 
@@ -130,7 +159,7 @@ public abstract class Post <T extends User> {
      * Sets the information about the user who created the post
      * @param author Author user
      */
-    void setAuthor(T author) {
+    public void setAuthor(T author) {
         this.author = author;
     }
 
@@ -139,7 +168,7 @@ public abstract class Post <T extends User> {
      * counted in some way that makes sense to individual networks.
      * @return Shares count
      */
-    int getSharedCount() {
+    public int getSharedCount() {
         return this.shareCount;
     }
 
@@ -147,7 +176,7 @@ public abstract class Post <T extends User> {
      * Sets the amount of times the post has been shared.
      * @param count Shares count
      */
-    void setSharedCount(int count) {
+    public void setSharedCount(int count) {
         this.shareCount = count;
     }
 
@@ -156,7 +185,7 @@ public abstract class Post <T extends User> {
      * What is considered a "to" depends on the network.
      * @return Iterable of users
      */
-    Iterable<User> getTo() {
+    public Iterable<User> getTo() {
         return this.toUsers;
     }
 
@@ -164,7 +193,7 @@ public abstract class Post <T extends User> {
      * Sets the list of users the post was directed to.
      * @param users Iterable of users
      */
-    void setTo(Iterable<User> users) {
+    public void setTo(Iterable<User> users) {
         this.toUsers = users;
     }
 
@@ -173,7 +202,7 @@ public abstract class Post <T extends User> {
      * a tag depends on the network.
      * @return Iterable of tags as strings
      */
-    Iterable<String> getTags() {
+    public Iterable<String> getTags() {
         return this.tags;
     }
 
@@ -181,7 +210,7 @@ public abstract class Post <T extends User> {
      * Sets the tags for the network
      * @param tags Iterable of tags as strings
      */
-    void setTags(Iterable<String> tags) {
+    public void setTags(Iterable<String> tags) {
         this.tags = tags;
     }
 
@@ -189,7 +218,7 @@ public abstract class Post <T extends User> {
      * A URL leading directly to the post
      * @return Permalink URL
      */
-    URL getPermalink() {
+    public URL getPermalink() {
         return this.permalink;
     }
 
@@ -197,7 +226,7 @@ public abstract class Post <T extends User> {
      * Sets the URL leading directly to the post
      * @param permalink Permalink URL
      */
-    void setPermalink(URL permalink) {
+    public void setPermalink(URL permalink) {
         this.permalink = permalink;
     }
 

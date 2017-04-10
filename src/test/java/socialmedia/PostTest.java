@@ -7,8 +7,12 @@ import org.junit.jupiter.api.DisplayName;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,7 +24,7 @@ import static socialmedia.Post.Type.TEXT;
 */
 class PostTest {
 
-    Post<User> post = null;
+    private Post<User> post = null;
 
     @BeforeEach
     void init() {
@@ -52,11 +56,23 @@ class PostTest {
     }
 
     @Test
+    @DisplayName("should convert a java.util.Date to ZonedDateTime")
+    void testSimpleDateConversion() throws ParseException {
+        Date d = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse("2017-03-18T16:59:49+0000");
+        post.setCreationTime(d);
+        assertEquals(2017, post.getCreationTime().getYear());
+        assertEquals(16, post.getCreationTime().getHour());
+        assertEquals(post.getCreationTime().getZone(), ZoneOffset.UTC);
+    }
+
+    @Test
     @DisplayName("should return creation time when edit is null")
     void testNullEditTime() {
         ZonedDateTime time = ZonedDateTime.now();
         post.setCreationTime(time);
-        post.setEditTime(null);
+        // Need to set as null separately, as it will otherwise be an ambiguous call
+        Date d = null;
+        post.setEditTime(d);
         assertEquals(time, post.getEditTime());
     }
 

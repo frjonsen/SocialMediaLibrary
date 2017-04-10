@@ -3,8 +3,6 @@ package facebook;
 import facebook4j.*;
 import facebook4j.User;
 import facebook4j.conf.ConfigurationBuilder;
-import socialmedia.*;
-import socialmedia.Post;
 
 import java.util.stream.Collectors;
 
@@ -49,6 +47,16 @@ public class FacebookAPIImpl extends FacebookAPI {
 
     @Override
     public FacebookPost getPost(String id) {
+        facebook4j.Post post = null;
+        try {
+            post = libraryInstance.getPost("10202360904079395_10208824524985878");
+        } catch (FacebookException fe) {
+            debug(fe);
+            throw new FacebookAPIException(fe.getMessage());
+        }
+        FacebookPost fbPost = new FacebookPost();
+        fbPost.setId(post.getId());
+
         return null;
     }
 
