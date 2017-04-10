@@ -74,7 +74,7 @@ public abstract class Post <T extends User> {
      * assumes the timezone is UTC.
      * @param time Creation time of the post
      */
-    void setCreationTime(java.util.Date time) {
+    public void setCreationTime(java.util.Date time) {
         if (time == null) this.creationTime = null;
         else this.creationTime = ZonedDateTime.ofInstant(time.toInstant(), ZoneOffset.UTC);
     }
@@ -126,7 +126,7 @@ public abstract class Post <T extends User> {
      * assumes the timezone is UTC.
      * @param time Creation time of the post
      */
-    void setEditTime(java.util.Date time) {
+    public void setEditTime(java.util.Date time) {
         if (time == null) this.editTime = null;
         else this.editTime = ZonedDateTime.ofInstant(time.toInstant(), ZoneOffset.UTC);
     }

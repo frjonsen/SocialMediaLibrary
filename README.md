@@ -24,3 +24,6 @@ Page tokens varar bara i en timme. Biblioteket får därför ta in en user token
 
 ### Övrigt
 Insights, användbart, men bara för Facebook
+
+# Future Plans
+- Get latest post by a user

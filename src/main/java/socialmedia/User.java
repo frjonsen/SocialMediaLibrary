@@ -23,7 +23,6 @@ public abstract class User {
     private int uploadCount;
     private int followingCount;
     private int followersCount;
-    private JsonObject rawJSON;
 
     /**
      * Returns the name of the User object from the platform.

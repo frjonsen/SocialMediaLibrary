@@ -9,7 +9,6 @@ public class TwitterPost extends Post<TwitterUser>{
     private String language;
     private Coordinate coordinate;
     private Place place;
-    private ExtendedMediaEntity[] extendedMediaEntities;
     private MediaEntity[] mediaEntities;
     private SymbolEntity[] symbolEntities;
     private URLEntity[] urlEntities;
@@ -17,6 +16,7 @@ public class TwitterPost extends Post<TwitterUser>{
     private String replyToScreenName;
     private long replyToStatusId;
     private long replyToUserId;
+
     private boolean possiblySensitive;
     private long quotedStatusId;
     private TwitterPost quotedStatus;
@@ -82,26 +82,6 @@ public class TwitterPost extends Post<TwitterUser>{
      */
     public void setPlace(Place place) {
         this.place = place;
-    }
-
-    /**
-     * A list of media entities. Represents the media elements
-     * uploaded with the tweet.
-     * @see ExtendedMediaEntity
-     * @return extendedMediaEntities
-     */
-    public ExtendedMediaEntity[] getExtendedMediaEntities() {
-        return extendedMediaEntities;
-    }
-
-    /**
-     * Sets the list of media entities locally. Represents the
-     * media elements uploaded with the tweet.
-     * @see ExtendedMediaEntity
-     * @param extendedMediaEntities new extendedMediaEntities
-     */
-    public void setExtendedMediaEntities(ExtendedMediaEntity[] extendedMediaEntities) {
-        this.extendedMediaEntities = extendedMediaEntities;
     }
 
     /**

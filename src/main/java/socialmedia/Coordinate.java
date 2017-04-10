@@ -4,8 +4,13 @@ package socialmedia;
  * Class for storing coordinates as longitude and latitude.
  */
 public class Coordinate {
-    private double longitude;
     private double latitude;
+    private double longitude;
+
+    public Coordinate(double latitude, double longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
 
     /**
      * Returns the longitude for coordinate.
