@@ -93,7 +93,7 @@ public class TwitterAPIImpl extends TwitterAPI {
         tp.setSymbolEntities(status.getSymbolEntities());
         tp.setUrlEntities(status.getURLEntities());
         tp.setFavoriteCount(status.getFavoriteCount());
-        
+
         tp.setReplyToScreenName();
         tp.setReplyToStatusId();
         tp.setReplyToUserId();
