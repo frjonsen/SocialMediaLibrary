@@ -27,7 +27,7 @@ public abstract class Post <T extends User> {
     private ZonedDateTime creationTime;
     private ZonedDateTime editTime;
     private String id;
-    private int shareCount; // retweet count
+    private int shareCount;
     private Iterable<T> toUsers;
     private Iterable<String> tags;
     private URL permalink;

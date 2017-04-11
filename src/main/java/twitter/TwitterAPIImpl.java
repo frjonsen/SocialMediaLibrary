@@ -1,11 +1,15 @@
 package twitter;
 
-import socialmedia.Coordinate;
+import socialmedia.*;
 import twitter4j.*;
+import twitter4j.User;
 import twitter4j.conf.ConfigurationBuilder;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class TwitterAPIImpl extends TwitterAPI {
 
@@ -37,6 +41,7 @@ public class TwitterAPIImpl extends TwitterAPI {
             debug(tw);
             throw new TwitterAPIException(tw.getMessage());
         }
+        if(user == null) { throw new TwitterAPIException("No user with id " + "\"" + id + "\""); }
 
         return createUser(user);
     }
@@ -51,6 +56,7 @@ public class TwitterAPIImpl extends TwitterAPI {
             debug(tw);
             throw new TwitterAPIException(tw.getMessage());
         }
+        if(user == null) { throw new TwitterAPIException("No user with id " + "\"" + id + "\""); }
 
         return createUser(user);
     }
@@ -64,22 +70,29 @@ public class TwitterAPIImpl extends TwitterAPI {
         }
         catch (NumberFormatException nfe) {
             debug(nfe);
-            throw new TwitterAPIException("Invalid tweet ID: " + "\"" + id + "\"");
+            throw new TwitterAPIException("Invalid tweet id: " + "\"" + id + "\"");
         }
         catch (TwitterException te) {
             debug(te);
             throw new TwitterAPIException(te.getMessage());
         }
+        if(status == null) { throw new TwitterAPIException("No tweet with id " + "\"" + id + "\""); }
 
+
+
+        return createStatus(status);
+    }
+
+    private TwitterPost createStatus(Status status) {
         TwitterPost tp = new TwitterPost();
-        tp.setType(); //fix
+        tp.setType(Post.Type.UNKNOWN);
         tp.setText(status.getText());
         tp.setCreationTime(status.getCreatedAt());
         tp.setId(String.valueOf(status.getId()));
         tp.setSharedCount(status.getRetweetCount());
-        tp.setTo();//fix
-        tp.setTags();//fix
-        tp.setAuthor();
+        tp.setTo(createToList(status.getUserMentionEntities()));
+        tp.setTags(createTagsList(status.getHashtagEntities()));
+        tp.setAuthor(createUser(status.getUser()));
         try {
             tp.setPermalink(new URL("https://twitter.com/" + tp.getAuthor().getUsername() + "/" + tp.getId()));
         }
@@ -93,23 +106,24 @@ public class TwitterAPIImpl extends TwitterAPI {
         tp.setSymbolEntities(status.getSymbolEntities());
         tp.setUrlEntities(status.getURLEntities());
         tp.setFavoriteCount(status.getFavoriteCount());
+        tp.setReplyToScreenName(status.getInReplyToScreenName());
+        tp.setReplyToStatusId(status.getInReplyToStatusId());
+        tp.setReplyToUserId(status.getInReplyToUserId());
+        tp.setPossiblySensitive(status.isPossiblySensitive());
+        tp.setQuotedStatusId(status.getQuotedStatusId());
+        tp.setQuotedStatus(createStatus(status.getQuotedStatus()));
+        tp.setRetweetedStatus(createStatus(status.getRetweetedStatus()));
+        tp.setCurrentUserRetweetId(status.getCurrentUserRetweetId());
+        tp.setScopes(status.getScopes());
+        tp.setSource(status.getSource());
+        tp.setWithheldInCountries(status.getWithheldInCountries());
+        tp.setFavorited(status.isFavorited());
+        tp.setRetweet(status.isRetweet());
+        tp.setRetweeted(status.isRetweeted());
+        tp.setRetweetedByMe(status.isRetweetedByMe());
+        tp.setTruncated(status.isTruncated());
 
-        tp.setReplyToScreenName();
-        tp.setReplyToStatusId();
-        tp.setReplyToUserId();
-        tp.setPossiblySensitive();
-        tp.setQuotedStatusId();
-        tp.setQuotedStatus();
-        tp.setRetweetedStatus();
-        tp.setCurrentUserRetweetId();
-        tp.setScopes();
-        tp.setSource();
-        tp.setWithheldInCountries();
-        tp.setFavorited();
-        tp.setRetweet();
-        tp.setRetweeted();
-        tp.setRetweetedByMe();
-        tp.setTruncated();
+        return tp;
     }
 
     private TwitterUser createUser(User user) {
@@ -133,5 +147,26 @@ public class TwitterAPIImpl extends TwitterAPI {
         twUser.setLanguage(user.getLang());
 
         return twUser;
+    }
+
+    private Iterable<TwitterUser> createToList(UserMentionEntity[] mentions) {
+        ArrayList<TwitterUser> usersList = new ArrayList<>();
+
+        TwitterUser user;
+        for(UserMentionEntity entity : mentions) {
+            user = new TwitterUser();
+            user.setId(String.valueOf(entity.getId()));
+            user.setName(entity.getName());
+            user.setUsername(entity.getScreenName());
+
+            usersList.add(user);
+        }
+        return usersList;
+    }
+
+    private Iterable<String> createTagsList(HashtagEntity[] tags) {
+        return Stream.of(tags)
+                .map(HashtagEntity::getText)
+                .collect(Collectors.toList());
     }
 }
