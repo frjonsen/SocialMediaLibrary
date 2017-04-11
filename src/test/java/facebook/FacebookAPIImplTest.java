@@ -132,8 +132,15 @@ class FacebookAPIImplTest {
 
     @Test
     @DisplayName("should throw exception for non-existant post id")
-    void testNonexistantGetPost() {
+    void testNonExistentGetPost() {
         assertNotNull(this.facebook);
         assertThrows(FacebookAPIException.class, () -> this.facebook.getPost("noexist"));
+    }
+
+    @Test
+    @DisplayName("should search for and find three users")
+    void testSearchUsers() {
+        List<FacebookUser> results = facebook.searchUsers("User");
+        assertEquals(3, results.size());
     }
 }

@@ -2,6 +2,8 @@ package facebook;
 
 import socialmedia.SocialMediaAPI;
 
+import java.util.List;
+
 public abstract class FacebookAPI extends SocialMediaAPI<FacebookUser> {
 
     /**
@@ -14,4 +16,6 @@ public abstract class FacebookAPI extends SocialMediaAPI<FacebookUser> {
     public abstract FacebookUser getUser(String id);
 
     public abstract FacebookPost getPost(String id);
+
+    public abstract List<FacebookUser> searchUsers(String query);
 }

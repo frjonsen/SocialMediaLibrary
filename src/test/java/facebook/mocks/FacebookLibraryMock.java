@@ -1,5 +1,6 @@
 package facebook.mocks;
 
+import facebook.FacebookUser;
 import facebook4j.*;
 import facebook4j.internal.org.json.JSONException;
 import org.mockito.Mockito;
@@ -74,9 +75,10 @@ public class FacebookLibraryMock {
         Facebook f = Mockito.mock(Facebook.class);
         User user = getFacebookFullUserMock();
         Post post = getFullFacebookPostMock();
+        ResponseList<User> searchResults = intoResponseList(generateBasicFacebookUsers(3));
         Mockito.when(f.getUser("56726489657236574")).thenReturn(user);
         Mockito.when(f.getPost("10202360904079395_10208824524985878")).thenReturn(post);
-        Mockito.when(f.searchUsers("User")).thenReturn(intoResponseList(generateBasicFacebookUsers(3)));
+        Mockito.when(f.searchUsers("User")).thenReturn(searchResults);
         return f;
     }
 

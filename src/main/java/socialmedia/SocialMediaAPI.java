@@ -29,7 +29,7 @@ public abstract class SocialMediaAPI<T extends User>{
 
     public abstract User getUser(String id);
 
-    //public abstract List<T> searchUser(String query);
+    //public abstract List<T> searchUsers(String query);
 
     //public abstract URL getProfilePicture(String id, int size);
 

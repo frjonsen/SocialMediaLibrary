@@ -152,6 +152,23 @@ public class FacebookAPIImpl extends FacebookAPI {
         return fPost;
     }
 
+    public List<FacebookUser> searchUsers(String query) {
+        ResponseList<User> results;
+        try {
+            results = libraryInstance.searchUsers(query);
+        } catch(FacebookException fe) {
+            debug(fe);
+            throw new FacebookAPIException(fe.getMessage());
+        }
+        if (results == null) throw new FacebookAPIException("Unable to query for \"" + query + "\"");
+
+        List<FacebookUser> users = new ArrayList<>();
+        for (User user : results) {
+            users.add(facebook4jUserConversion(user));
+        }
+        return users;
+    }
+
     //TODO:: Overloads for pagination
    /* public List<FacebookUser> searchUser(String query) {
 
