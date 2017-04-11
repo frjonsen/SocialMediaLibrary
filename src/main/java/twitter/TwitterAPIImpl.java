@@ -25,6 +25,9 @@ public class TwitterAPIImpl extends TwitterAPI {
         TwitterFactory tf = new TwitterFactory(cb.build());
         libraryInstance = tf.getInstance();
     }
+
+    TwitterAPIImpl (Twitter twitter) { this.libraryInstance = twitter; }
+
     @Override
     public TwitterUser getUser(String id){
         User user;
@@ -84,6 +87,8 @@ public class TwitterAPIImpl extends TwitterAPI {
     }
 
     private TwitterPost createStatus(Status status) {
+        if( status == null ) { return null; }
+
         TwitterPost tp = new TwitterPost();
         tp.setType(Post.Type.UNKNOWN);
         tp.setText(status.getText());
@@ -114,7 +119,6 @@ public class TwitterAPIImpl extends TwitterAPI {
         tp.setQuotedStatus(createStatus(status.getQuotedStatus()));
         tp.setRetweetedStatus(createStatus(status.getRetweetedStatus()));
         tp.setCurrentUserRetweetId(status.getCurrentUserRetweetId());
-        tp.setScopes(status.getScopes());
         tp.setSource(status.getSource());
         tp.setWithheldInCountries(status.getWithheldInCountries());
         tp.setFavorited(status.isFavorited());

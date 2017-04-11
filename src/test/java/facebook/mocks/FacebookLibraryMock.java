@@ -40,7 +40,7 @@ public class FacebookLibraryMock {
                 return town;
             }
         };
-    };
+    }
 
     private static List<IdNameEntity> createIdNameList(List<String> items) {
         List<IdNameEntity> listed = new ArrayList<IdNameEntity>();
@@ -61,7 +61,7 @@ public class FacebookLibraryMock {
         }
 
         return listed;
-    };
+    }
 
     public static Facebook getFacebookMock() throws FacebookException, MalformedURLException, ParseException {
         Facebook f = Mockito.mock(Facebook.class);
