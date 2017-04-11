@@ -49,7 +49,7 @@ public class FacebookLibraryMock {
             IdNameEntity item = new IdNameEntity() {
                 @Override
                 public String getId() {
-                    return Integer.toString(id);
+                    return Integer.toString(id + 1);
                 }
 
                 @Override
@@ -97,7 +97,7 @@ public class FacebookLibraryMock {
         Post post = Mockito.mock(Post.class);
 
         Mockito.when(post.getId()).thenReturn("10202360904079395_10208824524985878");
-        Mockito.when(post.getMessage()).thenReturn("A regular post message");
+        Mockito.when(post.getMessage()).thenReturn("A regular post #message");
         Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse("2017-03-18T16:59:49+0000");
         Mockito.when(post.getCreatedTime()).thenReturn(date);
         Date updated = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse("2017-03-18T17:00:49+0000");
@@ -114,11 +114,6 @@ public class FacebookLibraryMock {
         with.add("friend1");
         with.add("friend2");
         Mockito.when(post.getWithTags()).thenReturn(createIdNameList(with));
-        List<Tag> tags = new ArrayList<>();
-        Tag tag = Mockito.mock(Tag.class);
-        Mockito.when(tag.getName()).thenReturn("sometag");
-        tags.add(tag);
-        Mockito.when(post.getMessageTags()).thenReturn(tags);
         List<Post.Property> properties = new ArrayList<>();
         Post.Property property = Mockito.mock(Post.Property.class);
         Mockito.when(property.getName()).thenReturn("length");

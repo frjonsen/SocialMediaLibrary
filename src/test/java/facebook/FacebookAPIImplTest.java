@@ -4,6 +4,7 @@ import facebook.mocks.FacebookLibraryMock;
 import facebook4j.FacebookException;
 import facebook4j.IdNameEntity;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -27,6 +28,7 @@ class FacebookAPIImplTest {
     }
 
     @Test
+    @DisplayName("should return two hashtagged words")
     void testFindExistingHashTags() {
         List<String> tags = new ArrayList<>();
         tags.add("message");
@@ -38,6 +40,7 @@ class FacebookAPIImplTest {
     }
 
     @Test
+    @DisplayName("should return zero hashtags")
     void testFindEmptyHashTags() {
         String msg = "A message with weird hashtag # hello";
         List<String> tags = FacebookAPIImpl.getHashTags(msg);
@@ -45,6 +48,7 @@ class FacebookAPIImplTest {
     }
 
     @Test
+    @DisplayName("should return a full user")
     void testGetFullValidUser() {
         assertNotNull(this.facebook);
         FacebookUser user = facebook.getUser("56726489657236574");
@@ -71,13 +75,14 @@ class FacebookAPIImplTest {
     }
 
     @Test
+    @DisplayName("should return a full post")
     void testGetFullValidPost() {
         String id = "10202360904079395_10208824524985878";
         assertNotNull(this.facebook);
         FacebookPost post = facebook.getPost(id);
 
         assertEquals(id, post.getId());
-        assertEquals("A regular post message", post.getText());
+        assertEquals("A regular post #message", post.getText());
         ZonedDateTime created = ZonedDateTime.parse("2017-03-18T16:59:49Z");
         assertEquals(created, post.getCreationTime());
         ZonedDateTime updated = ZonedDateTime.parse("2017-03-18T17:00:49Z");
@@ -109,10 +114,17 @@ class FacebookAPIImplTest {
         assertEquals(2, withCount);
         int tagCount = 0;
         for (String t : post.getTags()) {
-            assertEquals("sometag", t);
+            assertEquals("message", t);
             tagCount++;
         }
         assertEquals(1, tagCount);
         assertEquals("10", post.getProperties().get(0).getText());
+    }
+
+    @Test
+    @DisplayName("should throw exception for non-existant post id")
+    void testNonexistantGetPost() {
+        assertNotNull(this.facebook);
+        assertThrows(FacebookAPIException.class, () -> this.facebook.getPost("asd"));
     }
 }

@@ -49,6 +49,7 @@ public class FacebookAPIImpl extends FacebookAPI {
             FacebookUser converted = new FacebookUser();
             converted.setName(user.getName());
             converted.setId(user.getId());
+            u.add(converted);
         }
         return u;
     }
@@ -60,6 +61,47 @@ public class FacebookAPIImpl extends FacebookAPI {
                 .setOAuthAccessToken(userAccessToken)
                 .setOAuthPermissions(permissions);
         libraryInstance = new FacebookFactory(cb.build()).getInstance();
+    }
+
+    private FacebookPost facebook4jPostConversion(Post post) {
+        FacebookPost fbPost = new FacebookPost();
+        fbPost.setId(post.getId());
+        fbPost.setType(convertFacebookType(post.getType()));
+        fbPost.setCreationTime(post.getCreatedTime());
+        fbPost.setEditTime(post.getUpdatedTime());
+        fbPost.setText(post.getMessage());
+        fbPost.setTo(convertNameIdToSimpleUsers(post.getTo()));
+        fbPost.setWithTags(convertNameIdToSimpleUsers(post.getWithTags()));
+        List<String> hashTags = getHashTags(post.getMessage());
+        fbPost.setTags(hashTags);
+        fbPost.setHidden(post.isHidden());
+        fbPost.setPublished(post.isPublished());
+        fbPost.setLink(post.getLink());
+        fbPost.setSource(post.getSource());
+        fbPost.setPlace(post.getPlace());
+        fbPost.setObjectId(post.getObjectId());
+        fbPost.setParentId(post.getParentId());
+        fbPost.setStatusType(post.getStatusType());
+        fbPost.setProperties(post.getProperties());
+
+        return fbPost;
+    }
+
+    private FacebookUser facebook4jUserConversion(User user) {
+        FacebookUser fbUser = new FacebookUser();
+        fbUser.setId(user.getId());
+        fbUser.setUsername(user.getUsername());
+        fbUser.setGender(user.getGender());
+        fbUser.setAge(user.getAgeRange());
+        fbUser.setLanguages(user.getLanguages().stream().map(IdNameEntity::getName).collect(Collectors.toList()));
+        fbUser.setBiography(user.getBio());
+        fbUser.setBirthday(user.getBirthday());
+        IdNameEntity city = user.getHometown();
+        fbUser.setCity(city == null ? null : city.getName());
+        fbUser.setEmail(user.getEmail());
+        fbUser.setName(user.getName());
+        fbUser.setWebsite(user.getWebsite());
+        return fbUser;
     }
 
     FacebookAPIImpl(Facebook facebook) {
@@ -81,20 +123,10 @@ public class FacebookAPIImpl extends FacebookAPI {
             debug(fe);
             throw new FacebookAPIException(fe.getMessage());
         }
-        FacebookUser fbUser = new FacebookUser();
-        fbUser.setId(user.getId());
-        fbUser.setUsername(user.getUsername());
-        fbUser.setGender(user.getGender());
-        fbUser.setAge(user.getAgeRange());
-        fbUser.setLanguages(user.getLanguages().stream().map(IdNameEntity::getName).collect(Collectors.toList()));
-        fbUser.setBiography(user.getBio());
-        fbUser.setBirthday(user.getBirthday());
-        IdNameEntity city = user.getHometown();
-        fbUser.setCity(city == null ? null : city.getName());
-        fbUser.setEmail(user.getEmail());
-        fbUser.setName(user.getName());
-        fbUser.setWebsite(user.getWebsite());
-        return fbUser;
+
+        if (user == null) throw new FacebookAPIException("No user with id \"" + id + "\"");
+
+        return facebook4jUserConversion(user);
     }
 
     /**
@@ -113,20 +145,9 @@ public class FacebookAPIImpl extends FacebookAPI {
             debug(fe);
             throw new FacebookAPIException(fe.getMessage());
         }
-        if (post == null) throw new FacebookAPIException("No post with id \"" + id + "\" found");
+        if (post == null) throw new FacebookAPIException("No post with id \"" + id + "\"");
 
-        FacebookPost fbPost = new FacebookPost();
-        fbPost.setId(post.getId());
-        fbPost.setType(convertFacebookType(post.getType()));
-        fbPost.setCreationTime(post.getCreatedTime());
-        fbPost.setEditTime(post.getUpdatedTime());
-        fbPost.setText(post.getMessage());
-        fbPost.setTo(convertNameIdToSimpleUsers(post.getTo()));
-        fbPost.setWithTags(convertNameIdToSimpleUsers(post.getWithTags()));
-        List<String> hashTags = getHashTags(post.getMessage());
-        fbPost.setTags(hashTags);
-
-        return fbPost;
+        return facebook4jPostConversion(post);
     }
 
     //TODO:: Overloads for pagination
