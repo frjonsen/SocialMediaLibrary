@@ -3,11 +3,13 @@ package facebook;
 import facebook.mocks.FacebookLibraryMock;
 import facebook4j.FacebookException;
 import facebook4j.IdNameEntity;
+import facebook4j.internal.org.json.JSONException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.text.ParseException;
 import java.time.ZonedDateTime;
@@ -23,7 +25,7 @@ class FacebookAPIImplTest {
     private FacebookAPI facebook;
 
     @BeforeEach
-    void init() throws FacebookException, MalformedURLException, ParseException {
+    void init() throws FacebookException, MalformedURLException, ParseException, ClassNotFoundException, JSONException, InstantiationException, IllegalAccessException, InvocationTargetException {
         this.facebook = new FacebookAPIImpl(FacebookLibraryMock.getFacebookMock());
     }
 
@@ -75,7 +77,7 @@ class FacebookAPIImplTest {
     }
     @Test
     @DisplayName("should throw exception for non-existant post id")
-    void testNonexistantGetUser() {
+    void testNonExistentGetUser() {
         assertNotNull(this.facebook);
         assertThrows(FacebookAPIException.class, () -> this.facebook.getUser("noexist"));
     }

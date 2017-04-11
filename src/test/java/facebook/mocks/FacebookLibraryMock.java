@@ -1,9 +1,10 @@
 package facebook.mocks;
 
-
 import facebook4j.*;
+import facebook4j.internal.org.json.JSONException;
 import org.mockito.Mockito;
 
+import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.ParseException;
@@ -63,13 +64,37 @@ public class FacebookLibraryMock {
         return listed;
     };
 
-    public static Facebook getFacebookMock() throws FacebookException, MalformedURLException, ParseException {
+    private static <T> ResponseList<T> intoResponseList(List<T> l) throws ClassNotFoundException, JSONException, InstantiationException, IllegalAccessException, InvocationTargetException {
+        ResponseListMock<T> list = new ResponseListMock<>();
+        list.addAll(l);
+        return list;
+    }
+
+    public static Facebook getFacebookMock() throws FacebookException, MalformedURLException, ParseException, JSONException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassNotFoundException {
         Facebook f = Mockito.mock(Facebook.class);
         User user = getFacebookFullUserMock();
         Post post = getFullFacebookPostMock();
         Mockito.when(f.getUser("56726489657236574")).thenReturn(user);
         Mockito.when(f.getPost("10202360904079395_10208824524985878")).thenReturn(post);
+        Mockito.when(f.searchUsers("User")).thenReturn(intoResponseList(generateBasicFacebookUsers(3)));
         return f;
+    }
+
+    private static List<User> generateBasicFacebookUsers(int numberOfUsers) {
+        List<User> users = new ArrayList<>();
+        for (int i = 0; i < numberOfUsers; ++i) {
+            User user = Mockito.mock(User.class);
+            String gender = i % 2 == 0 ? "Man" : "Woman";
+            Mockito.when(user.getGender()).thenReturn(gender);
+            Mockito.when(user.getUsername()).thenReturn("User" + i);
+            Mockito.when(user.getId()).thenReturn(Integer.toString(i + 1));
+            Mockito.when(user.getName()).thenReturn("Firstname LastName" + i);
+            Mockito.when(user.getEmail()).thenReturn("email" + i + "@example.com");
+
+            users.add(user);
+        }
+
+        return users;
     }
 
     private static User getFacebookFullUserMock() throws MalformedURLException {
