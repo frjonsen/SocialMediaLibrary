@@ -26,9 +26,7 @@ class TwitterPostTest {
     @Test
     @DisplayName("should set and get coordinate unchanged")
     void testCoordinate(){
-        Coordinate coordinate = new Coordinate();
-        coordinate.setLatitude(28.385233);
-        coordinate.setLongitude(-81.563874);
+        Coordinate coordinate = new Coordinate(28.385233, -81.563874);
         post.setCoordinate(coordinate);
         assertEquals(28.385233, post.getCoordinate().getLatitude());
         assertEquals(-81.563874, post.getCoordinate().getLongitude());
@@ -40,16 +38,6 @@ class TwitterPostTest {
         Place place = Mockito.mock(Place.class);
         post.setPlace(place);
         assertEquals(place, post.getPlace());
-    }
-
-    @Test
-    @DisplayName("should set and get extendedMediaEntities unchanged")
-    void testExtendedMediaEntities(){
-        ExtendedMediaEntity[] extended = {Mockito.mock(ExtendedMediaEntity.class),
-                Mockito.mock(ExtendedMediaEntity.class),
-                Mockito.mock(ExtendedMediaEntity.class)};
-        post.setExtendedMediaEntities(extended);
-        assertEquals(extended, post.getExtendedMediaEntities());
     }
 
     @Test
