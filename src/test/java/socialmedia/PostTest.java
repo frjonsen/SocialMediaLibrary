@@ -48,6 +48,24 @@ class PostTest {
     }
 
     @Test
+    @DisplayName("should convert a java.util.Date to ZonedDateTime")
+    void testSimpleDateConversionCreation() throws ParseException {
+        Date d = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse("2017-03-18T16:59:49+0000");
+        post.setCreationTime(d);
+        assertEquals(2017, post.getCreationTime().getYear());
+        assertEquals(16, post.getCreationTime().getHour());
+        assertEquals(post.getCreationTime().getZone(), ZoneOffset.UTC);
+    }
+
+    @Test
+    @DisplayName("should properly handle a null value for creation time")
+    void testNullCreatedConversation() {
+        Date d = null;
+        post.setCreationTime(d);
+        assertNull(post.getCreationTime());
+    }
+
+    @Test
     @DisplayName("should set and get post edit time unchanged")
     void testEditTime() {
         ZonedDateTime time = ZonedDateTime.now();
@@ -57,17 +75,27 @@ class PostTest {
 
     @Test
     @DisplayName("should convert a java.util.Date to ZonedDateTime")
-    void testSimpleDateConversion() throws ParseException {
+    void testSimpleDateConversionEdit() throws ParseException {
         Date d = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse("2017-03-18T16:59:49+0000");
         post.setCreationTime(d);
-        assertEquals(2017, post.getCreationTime().getYear());
-        assertEquals(16, post.getCreationTime().getHour());
-        assertEquals(post.getCreationTime().getZone(), ZoneOffset.UTC);
+        assertEquals(2017, post.getEditTime().getYear());
+        assertEquals(16, post.getEditTime().getHour());
+        assertEquals(post.getEditTime().getZone(), ZoneOffset.UTC);
+    }
+
+    @Test
+    @DisplayName("should properly handle a null value for creation time")
+    void testNullEditConversation() {
+        Date d = null;
+        post.setEditTime(d);
+        // Creation time must be null too
+        assertNull(post.getCreationTime());
+        assertNull(post.getEditTime());
     }
 
     @Test
     @DisplayName("should return creation time when edit is null")
-    void testNullEditTime() {
+    void testNullZonedEditTime() {
         ZonedDateTime time = ZonedDateTime.now();
         post.setCreationTime(time);
         // Need to set as null separately, as it will otherwise be an ambiguous call

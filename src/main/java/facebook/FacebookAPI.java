@@ -12,4 +12,6 @@ public abstract class FacebookAPI extends SocialMediaAPI<FacebookUser> {
      * @return A FacebookUser
      */
     public abstract FacebookUser getUser(String id);
+
+    public abstract FacebookPost getPost(String id);
 }

@@ -19,7 +19,7 @@ public abstract class Post <T extends User> {
      * <li>{@link #OFFER}</li>
      */
     public enum Type{
-        IMAGE, TEXT, VIDEO, LINK, OFFER
+        IMAGE, TEXT, VIDEO, LINK, OFFER, UNKNOWN
     }
 
     private Type type;
@@ -28,7 +28,7 @@ public abstract class Post <T extends User> {
     private ZonedDateTime editTime;
     private String id;
     private int shareCount; // retweet count
-    private Iterable<User> toUsers;
+    private Iterable<T> toUsers;
     private Iterable<String> tags;
     private URL permalink;
     private T author;
@@ -185,7 +185,7 @@ public abstract class Post <T extends User> {
      * What is considered a "to" depends on the network.
      * @return Iterable of users
      */
-    public Iterable<User> getTo() {
+    public Iterable<T> getTo() {
         return this.toUsers;
     }
 
@@ -193,7 +193,7 @@ public abstract class Post <T extends User> {
      * Sets the list of users the post was directed to.
      * @param users Iterable of users
      */
-    public void setTo(Iterable<User> users) {
+    public void setTo(Iterable<T> users) {
         this.toUsers = users;
     }
 
