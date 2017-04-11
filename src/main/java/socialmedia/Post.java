@@ -30,6 +30,36 @@ public abstract class Post <T extends User> {
     private int shareCount; // retweet count
     private Iterable<T> toUsers;
     private Iterable<String> tags;
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "type=" + type +
+                ", text='" + text + '\'' +
+                ", creationTime=" + creationTime +
+                ", editTime=" + editTime +
+                ", id='" + id + '\'' +
+                ", shareCount=" + shareCount +
+                ", toUsers=" + toUsers +
+                ", tags=" + tags +
+                ", permalink=" + permalink +
+                ", author=" + author +
+                '}';
+    }
+
+    protected String baseToString() {
+        return "type=" + type +
+                ", text='" + text + '\'' +
+                ", creationTime=" + creationTime +
+                ", editTime=" + editTime +
+                ", id='" + id + '\'' +
+                ", shareCount=" + shareCount +
+                ", toUsers=" + toUsers +
+                ", tags=" + tags +
+                ", permalink=" + permalink +
+                ", author=" + author;
+    }
+
     private URL permalink;
     private T author;
 

@@ -39,4 +39,11 @@ public class Coordinate {
         this.latitude = latitude;
     }
 
+    @Override
+    public String toString() {
+        return "Coordinate{" +
+                "longitude=" + longitude +
+                ", latitude=" + latitude +
+                '}';
+    }
 }

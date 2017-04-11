@@ -172,4 +172,16 @@ public class FacebookUser extends User {
         throw new NotSupportedException("setUploadCount", FacebookUser.PLATFORM);
     }
 
+    @Override
+    public String toString() {
+        return "FacebookUser{" +
+                super.baseToString() +
+                "age=" + age +
+                ", gender='" + gender + '\'' +
+                ", email='" + email + '\'' +
+                ", city='" + city + '\'' +
+                ", languages=" + languages +
+                ", birthday=" + birthday +
+                '}';
+    }
 }
