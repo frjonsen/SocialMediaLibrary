@@ -25,6 +25,40 @@ public abstract class User {
     private int followersCount;
 
     /**
+     * Returns a stringified version of this instance
+     * @return String with all members of this class
+     */
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", website=" + website +
+                ", biography='" + biography + '\'' +
+                ", uploadCount=" + uploadCount +
+                ", followingCount=" + followingCount +
+                ", followersCount=" + followersCount +
+                '}';
+    }
+
+    /**
+     * This function is simply meant to be of assistance when
+     * overriding toString in a derived class
+     * @return String with all members of this class
+     */
+    protected String baseToString() {
+        return "name='" + name + '\'' +
+                ", id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", website=" + website +
+                ", biography='" + biography + '\'' +
+                ", uploadCount=" + uploadCount +
+                ", followingCount=" + followingCount +
+                ", followersCount=" + followersCount;
+    }
+
+    /**
      * Returns the name of the User object from the platform.
      * @return      Name of the User.
      */

@@ -73,6 +73,13 @@ class FacebookAPIImplTest {
         assertEquals(languages.size(), user.getLanguages().size());
         assertTrue(user.getLanguages().containsAll(languages));
     }
+    @Test
+    @DisplayName("should throw exception for non-existant post id")
+    void testNonexistantGetUser() {
+        assertNotNull(this.facebook);
+        assertThrows(FacebookAPIException.class, () -> this.facebook.getUser("noexist"));
+    }
+
 
     @Test
     @DisplayName("should return a full post")
@@ -125,6 +132,6 @@ class FacebookAPIImplTest {
     @DisplayName("should throw exception for non-existant post id")
     void testNonexistantGetPost() {
         assertNotNull(this.facebook);
-        assertThrows(FacebookAPIException.class, () -> this.facebook.getPost("asd"));
+        assertThrows(FacebookAPIException.class, () -> this.facebook.getPost("noexist"));
     }
 }

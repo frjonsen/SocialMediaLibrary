@@ -240,5 +240,21 @@ public class FacebookPost extends Post<FacebookUser> {
         this.statusType = statusType;
     }
 
-
+    @Override
+    public String toString() {
+        return "FacebookPost{" +
+                super.baseToString() +
+                "hidden=" + hidden +
+                ", published=" + published +
+                ", link=" + link +
+                ", source=" + source +
+                ", place=" + place +
+                ", objectId='" + objectId + '\'' +
+                ", parentId='" + parentId + '\'' +
+                ", statusType='" + statusType + '\'' +
+                ", withTags=" + withTags +
+                ", messageTags=" + messageTags +
+                ", properties=" + properties +
+                '}';
+    }
 }

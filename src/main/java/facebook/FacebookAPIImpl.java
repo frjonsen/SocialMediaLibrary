@@ -125,8 +125,9 @@ public class FacebookAPIImpl extends FacebookAPI {
         }
 
         if (user == null) throw new FacebookAPIException("No user with id \"" + id + "\"");
-
-        return facebook4jUserConversion(user);
+        FacebookUser fUser = facebook4jUserConversion(user);
+        debugf("Retrieved Facebook user", fUser);
+        return fUser;
     }
 
     /**
@@ -146,8 +147,9 @@ public class FacebookAPIImpl extends FacebookAPI {
             throw new FacebookAPIException(fe.getMessage());
         }
         if (post == null) throw new FacebookAPIException("No post with id \"" + id + "\"");
-
-        return facebook4jPostConversion(post);
+        FacebookPost fPost = facebook4jPostConversion(post);
+        debugf("Retrieved Facebook post", fPost);
+        return fPost;
     }
 
     //TODO:: Overloads for pagination
