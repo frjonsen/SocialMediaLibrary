@@ -80,6 +80,8 @@ public class FacebookLibraryMock {
         Mockito.when(f.getPictureURL(Integer.MAX_VALUE, 0)).thenReturn(new URL("https://scontent.xx.fbcdn.net/v/t31.0-1/selfpicture"));
         Mockito.when(f.getPictureURL("56726489657236574", Integer.MAX_VALUE, 0))
                 .thenReturn(new URL("https://scontent.xx.fbcdn.net/v/t31.0-1/otheruserpicture"));
+        Mockito.when(f.likePost("10202360904079395_10208824524985878")).thenReturn(true);
+        Mockito.when(f.likePost("nonexistent")).thenThrow(FacebookException.class);
 
         return f;
     }

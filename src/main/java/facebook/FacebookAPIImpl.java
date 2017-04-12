@@ -180,12 +180,29 @@ public class FacebookAPIImpl extends FacebookAPI {
     @Override
     public URL getProfilePicture(String id) {
         try {
+            URL url = null;
             if (id.equals(SELF_ID)) {
-                return libraryInstance.getPictureURL(Integer.MAX_VALUE, 0);
+                url = libraryInstance.getPictureURL(Integer.MAX_VALUE, 0);
+            } else {
+                url = libraryInstance.getPictureURL(id, Integer.MAX_VALUE, 0);
             }
-            return libraryInstance.getPictureURL(id, Integer.MAX_VALUE, 0);
+            if (url == null) {
+                throw new FacebookAPIException("No profile picture for id \"" + id + "\". User probably does not exist");
+            }
+            return url;
+
         }
         catch (FacebookException fe) {
+            debug(fe);
+            throw new FacebookAPIException(fe.getMessage());
+        }
+    }
+
+    @Override
+    public boolean likePost(String id) {
+        try {
+            return libraryInstance.likePost(id);
+        } catch (FacebookException fe) {
             debug(fe);
             throw new FacebookAPIException(fe.getMessage());
         }

@@ -172,4 +172,22 @@ class FacebookAPIImplTest {
         URL url = facebook.getProfilePicture("me");
         assertEquals("https://scontent.xx.fbcdn.net/v/t31.0-1/selfpicture", url.toString());
     }
+
+    @Test
+    @DisplayName("should fail to get profile picture of non-existent user")
+    void testGetInvalidProfilePicture() {
+        assertThrows(FacebookAPIException.class, () -> facebook.getProfilePicture("nonexistent"));
+    }
+
+    @Test
+    @DisplayName("should successfully like a post")
+    void testLikePost() {
+        assertTrue(facebook.likePost("10202360904079395_10208824524985878"));
+    }
+
+    @Test
+    @DisplayName("should fail to like a non-existent post")
+    void testLikeInvalidPost() {
+        assertThrows(FacebookAPIException.class, () -> facebook.likePost("nonexistent"));
+    }
 }

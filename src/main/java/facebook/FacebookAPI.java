@@ -43,4 +43,13 @@ public abstract class FacebookAPI extends SocialMediaAPI<FacebookUser> {
      * @return A URL to the profile picture
      */
     public abstract URL getProfilePicture(String id);
+
+    /**
+     * Likes a post. Currently, Facebook only allows for pages
+     * liking posts and comments on itself or other pages.
+     * User likes can not be managed through the API.
+     * @param id Id of the post
+     * @return true if successful
+     */
+    public abstract boolean likePost(String id);
 }
