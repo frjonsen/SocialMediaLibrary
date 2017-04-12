@@ -65,13 +65,13 @@ public class FacebookLibraryMock {
         return listed;
     };
 
-    private static <T> ResponseList<T> intoResponseList(List<T> l) throws ClassNotFoundException, JSONException, InstantiationException, IllegalAccessException, InvocationTargetException {
+    private static <T> ResponseList<T> intoResponseList(List<T> l) {
         ResponseListMock<T> list = new ResponseListMock<>();
         list.addAll(l);
         return list;
     }
 
-    public static Facebook getFacebookMock() throws FacebookException, MalformedURLException, ParseException, JSONException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassNotFoundException {
+    public static Facebook getFacebookMock() throws FacebookException, MalformedURLException, ParseException {
         Facebook f = Mockito.mock(Facebook.class);
         User user = getFacebookFullUserMock();
         Post post = getFullFacebookPostMock();

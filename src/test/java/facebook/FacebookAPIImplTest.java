@@ -25,7 +25,7 @@ class FacebookAPIImplTest {
     private FacebookAPI facebook;
 
     @BeforeEach
-    void init() throws FacebookException, MalformedURLException, ParseException, ClassNotFoundException, JSONException, InstantiationException, IllegalAccessException, InvocationTargetException {
+    void init() throws FacebookException, MalformedURLException, ParseException {
         this.facebook = new FacebookAPIImpl(FacebookLibraryMock.getFacebookMock());
     }
 

@@ -15,7 +15,17 @@ public abstract class FacebookAPI extends SocialMediaAPI<FacebookUser> {
      */
     public abstract FacebookUser getUser(String id);
 
+    /**
+     * Gets a Facebook post, filling a post object with all available information.
+     * @param id id of the post
+     * @return A FacebookPost
+     */
     public abstract FacebookPost getPost(String id);
 
+    /**
+     * Searches for all users matching the query.
+     * @param query Query to use as search word
+     * @return A list of matching FacebookUsers
+     */
     public abstract List<FacebookUser> searchUsers(String query);
 }

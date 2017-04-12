@@ -1,7 +1,5 @@
 package socialmedia;
 
-import com.google.gson.JsonObject;
-
 import java.net.URL;
 
 
@@ -148,7 +146,7 @@ public abstract class User {
      * the information on the platform.
      * @param count the new FollowingCount.
      */
-    public void setFollowingCount(int count) throws NotSupportedException {
+    public void setFollowingCount(int count) {
         this.followingCount = count;
     }
 
