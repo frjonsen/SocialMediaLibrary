@@ -1,7 +1,7 @@
 package twitter.mocks;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
+import twitter.TwitterUser;
 import twitter4j.*;
 
 import java.util.Date;
@@ -22,7 +22,7 @@ public class TwitterLibraryMock {
         User user = Mockito.mock(User.class);
 
         Mockito.when(user.getName()).thenReturn("Testington");
-        Mockito.when(user.getId()).thenReturn(114749583439036416L);
+        Mockito.when(user.getId()).thenReturn(6253282L);
         Mockito.when(user.getScreenName()).thenReturn("TestyMcTest");
         Mockito.when(user.getURL()).thenReturn("https:://twitter.testington.org/");
         Mockito.when(user.getDescription()).thenReturn("Lorem ipsum testy mctest ipsunator...");
@@ -53,17 +53,22 @@ public class TwitterLibraryMock {
         Mockito.when(tweet.getRetweetCount()).thenReturn(123);
         Mockito.when(tweet.getUserMentionEntities()).thenReturn(new UserMentionEntity[]{mention});
         Mockito.when(tweet.getHashtagEntities()).thenReturn(new HashtagEntity[]{tag});
-        Mockito.when(tweet.getUser()).thenReturn(getTwitterFullUserMock());
+        Mockito.when(tweet.getMediaEntities()).thenReturn(new MediaEntity[]{});
+        Mockito.when(tweet.getSymbolEntities()).thenReturn(new SymbolEntity[]{});
+        Mockito.when(tweet.getURLEntities()).thenReturn(new URLEntity[]{});
+        User user = getTwitterFullUserMock();
+        System.out.println("Is baed<<<<<<" + (user == null));
+        Mockito.when(tweet.getUser()).thenReturn(user);
         Mockito.when(tweet.getLang()).thenReturn("Testarian");
-        Mockito.when(tweet.getGeoLocation().getLatitude()).thenReturn(28.385233);
-        Mockito.when(tweet.getGeoLocation().getLongitude()).thenReturn(-81.563874);
+        GeoLocation geo = new GeoLocation(28.385233,-81.563874);
+        Mockito.when(tweet.getGeoLocation()).thenReturn(geo);
         Mockito.when(tweet.getFavoriteCount()).thenReturn(1234);
         Mockito.when(tweet.getInReplyToScreenName()).thenReturn("TestFriend");
         Mockito.when(tweet.getInReplyToStatusId()).thenReturn(903641611474958343L);
         Mockito.when(tweet.isPossiblySensitive()).thenReturn(false);
-        Mockito.when(tweet.getQuotedStatus()).thenReturn(Mockito.mock(Status.class));
+        Mockito.when(tweet.getQuotedStatus()).thenReturn(null);
         Mockito.when(tweet.getQuotedStatusId()).thenReturn(903641611474958343L);
-        Mockito.when(tweet.getRetweetedStatus()).thenReturn(Mockito.mock(Status.class));
+       // Mockito.when(tweet.getRetweetedStatus()).thenReturn(Mockito.mock(Status.class));
         Mockito.when(tweet.getCurrentUserRetweetId()).thenReturn(26815871309L);
         Mockito.when(tweet.getSource()).thenReturn("\\u003Ca href=\"http:\\/\\/itunes.apple.com\\/us\\/app\\/twitter\\/id409789998?mt=12\" \\u003ETwitter for Mac\\u003C\\/a\\u003E");
         Mockito.when(tweet.getWithheldInCountries()).thenReturn(new String[]{"EN", "GB", "SE"});
@@ -72,6 +77,9 @@ public class TwitterLibraryMock {
         Mockito.when(tweet.isRetweeted()).thenReturn(false);
         Mockito.when(tweet.isRetweetedByMe()).thenReturn(false);
         Mockito.when(tweet.isTruncated()).thenReturn(false);
+        Mockito.when(tweet.getInReplyToUserId()).thenReturn(495834390114736416L);
+        Place place = Mockito.mock(Place.class);
+        Mockito.when(tweet.getPlace()).thenReturn(place);
 
         return tweet;
     }

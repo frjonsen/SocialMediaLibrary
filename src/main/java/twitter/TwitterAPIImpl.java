@@ -32,8 +32,8 @@ public class TwitterAPIImpl extends TwitterAPI {
     public TwitterUser getUser(String id){
         User user;
         try {
-            long lId = Long.valueOf(id);
-            getUser(lId);
+            long lId = Long.parseLong(id);
+            return getUser(lId);
         }
         catch (NumberFormatException nfe) {}
 
@@ -44,7 +44,9 @@ public class TwitterAPIImpl extends TwitterAPI {
             debug(tw);
             throw new TwitterAPIException(tw.getMessage());
         }
-        if(user == null) { throw new TwitterAPIException("No user with id " + "\"" + id + "\""); }
+        if(user == null) {
+            throw new TwitterAPIException("No user with id " + "\"" + id + "\"");
+        }
 
         return createUser(user);
     }
@@ -68,7 +70,8 @@ public class TwitterAPIImpl extends TwitterAPI {
     public TwitterPost getPost(String id) {
         Status status;
         try {
-            long lId = Long.valueOf(id);
+            long lId = Long.parseLong(id);
+
             status = libraryInstance.showStatus(lId);
         }
         catch (NumberFormatException nfe) {
@@ -79,9 +82,9 @@ public class TwitterAPIImpl extends TwitterAPI {
             debug(te);
             throw new TwitterAPIException(te.getMessage());
         }
-        if(status == null) { throw new TwitterAPIException("No tweet with id " + "\"" + id + "\""); }
-
-
+        if(status == null) {
+            throw new TwitterAPIException("No tweet with id " + "\"" + id + "\"");
+        }
 
         return createStatus(status);
     }
@@ -96,10 +99,15 @@ public class TwitterAPIImpl extends TwitterAPI {
         tp.setId(String.valueOf(status.getId()));
         tp.setSharedCount(status.getRetweetCount());
         tp.setTo(createToList(status.getUserMentionEntities()));
-        tp.setTags(createTagsList(status.getHashtagEntities()));
+        if(status.getHashtagEntities() != null) {
+            tp.setTags(Stream.of(status.getHashtagEntities())
+                    .map(HashtagEntity::getText)
+                    .collect(Collectors.toList()));
+        }
         tp.setAuthor(createUser(status.getUser()));
         try {
-            tp.setPermalink(new URL("https://twitter.com/" + tp.getAuthor().getUsername() + "/" + tp.getId()));
+            URL url = new URL("https://twitter.com/" + tp.getAuthor().getUsername() + "/" + tp.getId());
+            tp.setPermalink(url);
         }
         catch (MalformedURLException mue) {
             debug(mue);
@@ -131,6 +139,8 @@ public class TwitterAPIImpl extends TwitterAPI {
     }
 
     private TwitterUser createUser(User user) {
+        if(user == null) { return null; }
+
         TwitterUser twUser = new TwitterUser();
         twUser.setName(user.getName());
         twUser.setId(String.valueOf(user.getId()));
@@ -156,6 +166,8 @@ public class TwitterAPIImpl extends TwitterAPI {
     private Iterable<TwitterUser> createToList(UserMentionEntity[] mentions) {
         ArrayList<TwitterUser> usersList = new ArrayList<>();
 
+        if(mentions == null) { return usersList; }
+
         TwitterUser user;
         for(UserMentionEntity entity : mentions) {
             user = new TwitterUser();
@@ -168,9 +180,4 @@ public class TwitterAPIImpl extends TwitterAPI {
         return usersList;
     }
 
-    private Iterable<String> createTagsList(HashtagEntity[] tags) {
-        return Stream.of(tags)
-                .map(HashtagEntity::getText)
-                .collect(Collectors.toList());
-    }
 }
