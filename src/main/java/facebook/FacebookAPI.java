@@ -1,5 +1,6 @@
 package facebook;
 
+import socialmedia.NotSupportedException;
 import socialmedia.SocialMediaAPI;
 
 import java.net.URL;
@@ -11,6 +12,8 @@ import java.util.List;
  * get all information about the current user.
  */
 public abstract class FacebookAPI extends SocialMediaAPI<FacebookUser> {
+
+    protected static final String PLATFORM = "Facebook";
 
     /**
      * Gets a Facebook user, filling a user object with the available information.
@@ -52,4 +55,24 @@ public abstract class FacebookAPI extends SocialMediaAPI<FacebookUser> {
      * @return true if successful
      */
     public abstract boolean likePost(String id);
+
+
+    /**
+     * Unlikes a post. Currently, Facebook only allows for pages
+     * liking posts and comments on itself or other pages.
+     * User likes can not be managed through the API.
+     * @param id Id of the post
+     * @return true if successful
+     */
+    public abstract boolean unlikePost(String id);
+
+    /**
+     * Not supported by facebook. Always throws an exception.
+     * @return Always throws an exception
+     */
+    public FacebookPost searchPost(String query) {
+        throw new NotSupportedException("searchPost", PLATFORM);
+    }
+
+    public abstract List<FacebookPost> getPostFeed(String id);
 }

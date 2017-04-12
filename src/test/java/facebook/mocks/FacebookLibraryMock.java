@@ -81,7 +81,13 @@ public class FacebookLibraryMock {
         Mockito.when(f.getPictureURL("56726489657236574", Integer.MAX_VALUE, 0))
                 .thenReturn(new URL("https://scontent.xx.fbcdn.net/v/t31.0-1/otheruserpicture"));
         Mockito.when(f.likePost("10202360904079395_10208824524985878")).thenReturn(true);
-        Mockito.when(f.likePost("nonexistent")).thenThrow(FacebookException.class);
+        Mockito.when(f.likePost("nonexistent")).thenReturn(false);
+        Mockito.when(f.unlikePost("10202360904079395_10208824524985878")).thenReturn(true);
+        Mockito.when(f.unlikePost("nonexistent")).thenReturn(false);
+        ResponseList<Post> selfFeed = intoResponseList(generateBasicFacebookPosts(3));
+        Mockito.when(f.getFeed()).thenReturn(selfFeed);
+        ResponseList<Post> otherFeed = intoResponseList(generateBasicFacebookPosts(2));
+        Mockito.when(f.getFeed("56726489657236574")).thenReturn(otherFeed);
 
         return f;
     }
@@ -101,6 +107,27 @@ public class FacebookLibraryMock {
         }
 
         return users;
+    }
+
+    private static List<Post> generateBasicFacebookPosts(int numberOfPosts) throws ParseException {
+        List<Post> posts = new ArrayList<>();
+        final Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse("2017-03-18T16:59:49+0000");
+        Category c = Mockito.mock(Category.class);
+        Mockito.when(c.getCategory()).thenReturn("User");
+        Mockito.when(c.getName()).thenReturn("someuser");
+        Mockito.when(c.getId()).thenReturn("someuserid");
+        Mockito.when(c.getCreatedTime()).thenReturn(date);
+        for (int i = 0; i < numberOfPosts; ++i) {
+            Post post = Mockito.mock(Post.class);
+            Mockito.when(post.getId()).thenReturn("PostId"  + i + 1);
+            Mockito.when(post.getMessage()).thenReturn("Message of post " + i + 1);
+            Mockito.when(post.getStatusType()).thenReturn("status");
+            Date d = new Date(date.getTime() + i);
+            Mockito.when(post.getCreatedTime()).thenReturn(d);
+            Mockito.when(post.getFrom()).thenReturn(c);
+            posts.add(post);
+        }
+        return posts;
     }
 
     private static User getFacebookFullUserMock() throws MalformedURLException {

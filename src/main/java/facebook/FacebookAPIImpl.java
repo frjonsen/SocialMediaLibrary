@@ -45,7 +45,7 @@ public class FacebookAPIImpl extends FacebookAPI {
                 .collect(Collectors.toList());
     }
 
-    private List<FacebookUser> convertNameIdToSimpleUsers(List<IdNameEntity> users) {
+    static private List<FacebookUser> convertNameIdToSimpleUsers(List<IdNameEntity> users) {
         List<FacebookUser> u = new ArrayList<>();
         for (IdNameEntity user : users) {
             FacebookUser converted = new FacebookUser();
@@ -65,7 +65,7 @@ public class FacebookAPIImpl extends FacebookAPI {
         libraryInstance = new FacebookFactory(cb.build()).getInstance();
     }
 
-    private FacebookPost facebook4jPostConversion(Post post) {
+    static private FacebookPost facebook4jPostConversion(Post post) {
         FacebookPost fbPost = new FacebookPost();
         fbPost.setId(post.getId());
         fbPost.setType(convertFacebookType(post.getType()));
@@ -89,7 +89,7 @@ public class FacebookAPIImpl extends FacebookAPI {
         return fbPost;
     }
 
-    private FacebookUser facebook4jUserConversion(User user) {
+    static private FacebookUser facebook4jUserConversion(User user) {
         FacebookUser fbUser = new FacebookUser();
         fbUser.setId(user.getId());
         fbUser.setUsername(user.getUsername());
@@ -130,8 +130,10 @@ public class FacebookAPIImpl extends FacebookAPI {
             debug(fe);
             throw new FacebookAPIException(fe.getMessage());
         }
-
-        if (user == null) throw new FacebookAPIException("No user with id \"" + id + "\"");
+        if (user == null) {
+            debug("Attempted to retrieve user with id \"" + id + "\". No user with this id was found.");
+            return null;
+        }
         FacebookUser fUser = facebook4jUserConversion(user);
         debugf("Retrieved Facebook user", fUser);
         return fUser;
@@ -153,7 +155,10 @@ public class FacebookAPIImpl extends FacebookAPI {
             debug(fe);
             throw new FacebookAPIException(fe.getMessage());
         }
-        if (post == null) throw new FacebookAPIException("No post with id \"" + id + "\"");
+        if (post == null) {
+            debug("Attempted to retrieve post with id \"" + id + "\". No post with this id was found.");
+            return null;
+        }
         FacebookPost fPost = facebook4jPostConversion(post);
         debugf("Retrieved Facebook post", fPost);
         return fPost;
@@ -207,6 +212,35 @@ public class FacebookAPIImpl extends FacebookAPI {
             throw new FacebookAPIException(fe.getMessage());
         }
     }
+
+    @Override
+    public boolean unlikePost(String id) {
+        try {
+            return libraryInstance.unlikePost(id);
+        } catch (FacebookException fe) {
+            debug(fe);
+            throw new FacebookAPIException(fe.getMessage());
+        }
+    }
+
+    @Override
+    public List<FacebookPost> getPostFeed(String id) {
+        try {
+            List<Post> feed = null;
+            if (id.equals(SELF_ID)) {
+                feed = libraryInstance.getFeed();
+            } else {
+                feed = libraryInstance.getFeed(id);
+            }
+
+            return feed.stream().map(FacebookAPIImpl::facebook4jPostConversion).collect(Collectors.toList());
+        }
+        catch (FacebookException fe) {
+            debug(fe);
+            throw new FacebookAPIException(fe.getMessage());
+        }
+    }
+
 
     //TODO:: Overloads for pagination
    /* public List<FacebookUser> searchUser(String query) {

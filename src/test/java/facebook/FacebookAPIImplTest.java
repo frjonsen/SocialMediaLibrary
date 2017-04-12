@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import socialmedia.NotSupportedException;
 
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
@@ -91,10 +92,10 @@ class FacebookAPIImplTest {
     }
 
     @Test
-    @DisplayName("should throw exception for non-existant post id")
+    @DisplayName("should return null for non-existant post id")
     void testNonExistentGetUser() {
         assertNotNull(this.facebook);
-        assertThrows(FacebookAPIException.class, () -> this.facebook.getUser("noexist"));
+        assertNull(this.facebook.getUser("noexist"));
     }
 
 
@@ -146,10 +147,10 @@ class FacebookAPIImplTest {
     }
 
     @Test
-    @DisplayName("should throw exception for non-existant post id")
+    @DisplayName("should return null for non-existant post id")
     void testNonExistentGetPost() {
         assertNotNull(this.facebook);
-        assertThrows(FacebookAPIException.class, () -> this.facebook.getPost("noexist"));
+        assertNull(this.facebook.getPost("noexist"));
     }
 
     @Test
@@ -188,6 +189,38 @@ class FacebookAPIImplTest {
     @Test
     @DisplayName("should fail to like a non-existent post")
     void testLikeInvalidPost() {
-        assertThrows(FacebookAPIException.class, () -> facebook.likePost("nonexistent"));
+        assertFalse(facebook.likePost("nonexistent"));
+    }
+
+    @Test
+    @DisplayName("should successfully like a post")
+    void testUnlikePost() {
+        assertTrue(facebook.unlikePost("10202360904079395_10208824524985878"));
+    }
+
+    @Test
+    @DisplayName("should fail to like a non-existent post")
+    void testUnlikeInvalidPost() {
+        assertFalse(facebook.unlikePost("nonexistent"));
+    }
+
+    @Test
+    @DisplayName("should throw an error when trying to search for posts")
+    void testSearchPosts() {
+        assertThrows(NotSupportedException.class, () -> facebook.searchPost("keyword"));
+    }
+
+    @Test
+    @DisplayName("should get the feed of self")
+    void testGetSelfFeed() {
+        List<FacebookPost> feed = facebook.getPostFeed("me");
+        assertEquals(3, feed.size());
+    }
+
+    @Test
+    @DisplayName("should get the feed of another, existing, user")
+    void testGetOtherFeed() {
+        List<FacebookPost> feed = facebook.getPostFeed("56726489657236574");
+        assertEquals(2, feed.size());
     }
 }
