@@ -11,6 +11,7 @@ import org.mockito.Mockito;
 
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.ParseException;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -23,6 +24,30 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class FacebookAPIImplTest {
     private FacebookAPI facebook;
+
+    private static boolean verifyFullUser(FacebookUser user) {
+        assertEquals("56726489657236574", user.getId());
+        assertEquals("Man", user.getGender());
+        assertEquals("some name", user.getName());
+        assertEquals("someusername", user.getUsername());
+        assertNotNull(user.getAgeRange());
+        assertNull(user.getAgeRange().getMax());
+        Integer age = user.getAgeRange().getMin();
+        assertEquals(21, age.intValue());
+        assertEquals("A very short biography", user.getBiography());
+        assertEquals(1986, user.getBirthday().getDate().getYear());
+        assertEquals(2, user.getBirthday().getDate().getDayOfMonth());
+        assertEquals(FacebookBirthDateUtil.DateType.FULL, user.getBirthday().getType());
+        assertEquals("atown", user.getCity());
+        assertEquals("email@example.com", user.getEmail());
+        assertEquals("https://example.com/user", user.getWebsite().toString());
+        List<String> languages = new ArrayList<>();
+        languages.add("English");
+        languages.add("Swedish");
+        assertEquals(languages.size(), user.getLanguages().size());
+        assertTrue(user.getLanguages().containsAll(languages));
+        return true;
+    }
 
     @BeforeEach
     void init() throws FacebookException, MalformedURLException, ParseException {
@@ -54,27 +79,17 @@ class FacebookAPIImplTest {
     void testGetFullValidUser() {
         assertNotNull(this.facebook);
         FacebookUser user = facebook.getUser("56726489657236574");
-        assertEquals("56726489657236574", user.getId());
-        assertEquals("Man", user.getGender());
-        assertEquals("some name", user.getName());
-        assertEquals("someusername", user.getUsername());
-        assertNotNull(user.getAgeRange());
-        assertNull(user.getAgeRange().getMax());
-        Integer age = user.getAgeRange().getMin();
-        assertEquals(21, age.intValue());
-        assertEquals("A very short biography", user.getBiography());
-        assertEquals(1986, user.getBirthday().getDate().getYear());
-        assertEquals(2, user.getBirthday().getDate().getDayOfMonth());
-        assertEquals(FacebookBirthDateUtil.DateType.FULL, user.getBirthday().getType());
-        assertEquals("atown", user.getCity());
-        assertEquals("email@example.com", user.getEmail());
-        assertEquals("https://example.com/user", user.getWebsite().toString());
-        List<String> languages = new ArrayList<>();
-        languages.add("English");
-        languages.add("Swedish");
-        assertEquals(languages.size(), user.getLanguages().size());
-        assertTrue(user.getLanguages().containsAll(languages));
+        assertTrue(verifyFullUser(user));
     }
+
+    @Test
+    @DisplayName("should return a full user using 'me' as id")
+    void testgetFullMeUser() {
+        assertNotNull(this.facebook);
+        FacebookUser user = facebook.getUser("me");
+        assertTrue(verifyFullUser(user));
+    }
+
     @Test
     @DisplayName("should throw exception for non-existant post id")
     void testNonExistentGetUser() {
@@ -142,5 +157,19 @@ class FacebookAPIImplTest {
     void testSearchUsers() {
         List<FacebookUser> results = facebook.searchUsers("User");
         assertEquals(3, results.size());
+    }
+
+    @Test
+    @DisplayName("should get the profile picture of a user")
+    void testGetProfilePicture() {
+        URL url = facebook.getProfilePicture("56726489657236574");
+        assertEquals("https://scontent.xx.fbcdn.net/v/t31.0-1/otheruserpicture", url.toString());
+    }
+
+    @Test
+    @DisplayName("should get the profile picture of self")
+    void testGetOwnProfilePicture() {
+        URL url = facebook.getProfilePicture("me");
+        assertEquals("https://scontent.xx.fbcdn.net/v/t31.0-1/selfpicture", url.toString());
     }
 }

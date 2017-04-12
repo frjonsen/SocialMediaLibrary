@@ -2,14 +2,21 @@ package facebook;
 
 import socialmedia.SocialMediaAPI;
 
+import java.net.URL;
 import java.util.List;
 
+/**
+ * Handles API calls for Facebook. Where functions take an id of a specific user,
+ * an id of 'me' will translate to the current user. getUser("me") will as such
+ * get all information about the current user.
+ */
 public abstract class FacebookAPI extends SocialMediaAPI<FacebookUser> {
 
     /**
      * Gets a Facebook user, filling a user object with the available information.
      * As users have a large degree of flexibility regarding what's visible,
      * some data may be null, even if the user has set the information.
+     * If id is 'me', will retrieve the current user
      * @param id Site-wide id of the user
      * @return A FacebookUser
      */
@@ -28,4 +35,12 @@ public abstract class FacebookAPI extends SocialMediaAPI<FacebookUser> {
      * @return A list of matching FacebookUsers
      */
     public abstract List<FacebookUser> searchUsers(String query);
+
+    /**
+     * Retrieves the profile picture of a user. Where several sizes are
+     * available, will retrieve the largest available
+     * @param id Id of the user
+     * @return A URL to the profile picture
+     */
+    public abstract URL getProfilePicture(String id);
 }

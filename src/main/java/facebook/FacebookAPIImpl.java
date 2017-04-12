@@ -5,6 +5,7 @@ import facebook4j.User;
 import facebook4j.conf.ConfigurationBuilder;
 import socialmedia.Post.Type;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,6 +14,7 @@ import java.util.stream.Stream;
 public class FacebookAPIImpl extends FacebookAPI {
 
     private Facebook libraryInstance;
+    private static final String SELF_ID = "me";
 
     private static socialmedia.Post.Type convertFacebookType(String type) {
         if (type == null) return Type.UNKNOWN;
@@ -117,7 +119,12 @@ public class FacebookAPIImpl extends FacebookAPI {
     public FacebookUser getUser(String id) {
         User user;
         try {
-            user = libraryInstance.getUser(id);
+            if (id.equals(SELF_ID)) {
+                user = libraryInstance.getMe();
+            } else {
+                user = libraryInstance.getUser(id);
+            }
+
         }
         catch (FacebookException fe) {
             debug(fe);
@@ -152,6 +159,7 @@ public class FacebookAPIImpl extends FacebookAPI {
         return fPost;
     }
 
+    @Override
     public List<FacebookUser> searchUsers(String query) {
         ResponseList<User> results;
         try {
@@ -167,6 +175,20 @@ public class FacebookAPIImpl extends FacebookAPI {
             users.add(facebook4jUserConversion(user));
         }
         return users;
+    }
+
+    @Override
+    public URL getProfilePicture(String id) {
+        try {
+            if (id.equals(SELF_ID)) {
+                return libraryInstance.getPictureURL(Integer.MAX_VALUE, 0);
+            }
+            return libraryInstance.getPictureURL(id, Integer.MAX_VALUE, 0);
+        }
+        catch (FacebookException fe) {
+            debug(fe);
+            throw new FacebookAPIException(fe.getMessage());
+        }
     }
 
     //TODO:: Overloads for pagination
