@@ -223,4 +223,28 @@ class FacebookAPIImplTest {
         List<FacebookPost> feed = facebook.getPostFeed("56726489657236574");
         assertEquals(2, feed.size());
     }
+
+    @Test
+    @DisplayName("should throw an error when trying to get followers")
+    void testGetFollowers() {
+        assertThrows(NotSupportedException.class, () -> facebook.getFollowers("someid"));
+    }
+
+    @Test
+    @DisplayName("should throw an error when trying to get following")
+    void testGetFollowing() {
+        assertThrows(NotSupportedException.class, () -> facebook.getFollowing("someid"));
+    }
+
+    @Test
+    @DisplayName("should throw an error when trying to follow")
+    void testFollow() {
+        assertThrows(NotSupportedException.class, () -> facebook.follow("someid"));
+    }
+
+    @Test
+    @DisplayName("should throw an error when trying to unfollow")
+    void testUnfollow() {
+        assertThrows(NotSupportedException.class, () -> facebook.unfollow("someid"));
+    }
 }

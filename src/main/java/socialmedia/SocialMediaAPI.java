@@ -55,7 +55,7 @@ public abstract class SocialMediaAPI<T extends User>{
 
     //public abstract follow();
 
-    //public abstract unFollow();
+    //public abstract unfollow();
 
 
 

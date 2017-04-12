@@ -74,5 +74,47 @@ public abstract class FacebookAPI extends SocialMediaAPI<FacebookUser> {
         throw new NotSupportedException("searchPost", PLATFORM);
     }
 
+    /**
+     * Gets the feed of a user or page.
+     * If id is "me", will return the feed of the current user or page
+     * @param id id of user or page
+     * @return A list of posts
+     */
     public abstract List<FacebookPost> getPostFeed(String id);
+
+    /**
+     * Not supported by facebook. Always throws an exception.
+     * @param id -
+     * @return Always throws an exception
+     */
+    public List<FacebookUser> getFollowers(String id) {
+        throw new NotSupportedException("getFollowers", PLATFORM);
+    }
+
+    /**
+     * Not supported by facebook. Always throws an exception.
+     * @param id -
+     * @return Always throws an exception
+     */
+    public List<FacebookUser> getFollowing(String id) {
+        throw new NotSupportedException("getFollowing", PLATFORM);
+    }
+
+    /**
+     * Not supported by facebook. Always throws an exception.
+     * @param id -
+     * @return Always throws an exception
+     */
+    public boolean follow(String id) {
+        throw new NotSupportedException("follow", PLATFORM);
+    }
+
+    /**
+     * Not supported by facebook. Always throws an exception.
+     * @param id -
+     * @return Always throws an exception
+     */
+    public boolean unfollow(String id) {
+        throw new NotSupportedException("unfollow", PLATFORM);
+    }
 }
