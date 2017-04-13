@@ -16,7 +16,7 @@ public class FacebookAPIImpl extends FacebookAPI {
     private Facebook libraryInstance;
     private static final String SELF_ID = "me";
 
-    private static socialmedia.Post.Type convertFacebookType(String type) {
+    static socialmedia.Post.Type convertFacebookType(String type) {
         if (type == null) return Type.UNKNOWN;
         String convertedType = type.toLowerCase();
         switch (convertedType) {
@@ -65,7 +65,7 @@ public class FacebookAPIImpl extends FacebookAPI {
         libraryInstance = new FacebookFactory(cb.build()).getInstance();
     }
 
-    static private FacebookPost facebook4jPostConversion(Post post) {
+    private static FacebookPost facebook4jPostConversion(Post post) {
         FacebookPost fbPost = new FacebookPost();
         fbPost.setId(post.getId());
         fbPost.setType(convertFacebookType(post.getType()));
