@@ -1,32 +1,6 @@
 package socialmedia;
 
-import java.io.PrintStream;
-import java.net.URL;
-import java.util.List;
-
-public abstract class SocialMediaAPI<T extends User>{
-    private PrintStream stream;
-
-    public void setDebugStream(PrintStream stream) {
-        this.stream = stream;
-    }
-
-    protected void debug(Object o) {
-        if (stream != null) {
-            stream.println(o.toString());
-        }
-    }
-
-    protected void debug(String s) {
-        if(stream != null)
-            stream.println(s);
-    }
-
-    protected void debugf(String s, Object... args) {
-        if(stream != null)
-            stream.printf(s, args);
-    }
-
+public interface SocialMediaAPI<T extends User> {
     public abstract User getUser(String id);
 
     //public abstract List<T> searchUsers(String query);
@@ -56,8 +30,6 @@ public abstract class SocialMediaAPI<T extends User>{
     //public abstract follow();
 
     //public abstract unfollow();
-
-
 
 
     /* Implemented individually

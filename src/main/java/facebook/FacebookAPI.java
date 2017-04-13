@@ -1,7 +1,7 @@
 package facebook;
 
 import socialmedia.NotSupportedException;
-import socialmedia.SocialMediaAPI;
+import socialmedia.SocialMediaBase;
 
 import java.net.URL;
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
  * an id of 'me' will translate to the current user. getUser("me") will as such
  * get all information about the current user.
  */
-public abstract class FacebookAPI extends SocialMediaAPI<FacebookUser> {
+public abstract class FacebookAPI extends SocialMediaBase<FacebookUser> {
 
     protected static final String PLATFORM = "Facebook";
 

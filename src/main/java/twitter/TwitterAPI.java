@@ -1,10 +1,8 @@
 package twitter;
 
-import socialmedia.SocialMediaAPI;
+import socialmedia.SocialMediaBase;
 
-import java.util.List;
-
-public abstract class TwitterAPI extends SocialMediaAPI<TwitterUser>{
+public abstract class TwitterAPI extends SocialMediaBase<TwitterUser> {
 
     /**
      * Gets a TwitterUser by provided screenName, filling a user object
