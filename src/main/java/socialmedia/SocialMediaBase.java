@@ -1,8 +1,6 @@
 package socialmedia;
 
 import java.io.PrintStream;
-import java.net.URL;
-import java.util.List;
 
 public abstract class SocialMediaBase<T extends User> implements SocialMediaAPI<T>{
     private PrintStream stream;
