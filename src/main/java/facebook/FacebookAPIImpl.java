@@ -14,10 +14,13 @@ import java.util.stream.Stream;
 public class FacebookAPIImpl extends FacebookAPI {
 
     private Facebook libraryInstance;
+    private static final String PLATFORM = "FACEBOOK";
     private static final String SELF_ID = "me";
 
-    private static socialmedia.Post.Type convertFacebookType(String type) {
-        if (type == null) return Type.UNKNOWN;
+    static socialmedia.Post.Type convertFacebookType(String type) {
+        if (type == null) {
+            return Type.UNKNOWN;
+        }
         String convertedType = type.toLowerCase();
         switch (convertedType) {
             case "photo":
@@ -36,7 +39,9 @@ public class FacebookAPIImpl extends FacebookAPI {
     }
 
     static List<String> getHashTags(String message) {
-        if (message == null) return new ArrayList<>();
+        if (message == null) {
+            return new ArrayList<>();
+        }
         String[] words = message.split(" ");
         return Stream.of(words)
                 .filter(word -> word.startsWith("#"))
@@ -45,8 +50,11 @@ public class FacebookAPIImpl extends FacebookAPI {
                 .collect(Collectors.toList());
     }
 
-    static private List<FacebookUser> convertNameIdToSimpleUsers(List<IdNameEntity> users) {
+    private static List<FacebookUser> convertNameIdToSimpleUsers(List<IdNameEntity> users) {
         List<FacebookUser> u = new ArrayList<>();
+        if (users == null) {
+            return u;
+        }
         for (IdNameEntity user : users) {
             FacebookUser converted = new FacebookUser();
             converted.setName(user.getName());
@@ -65,7 +73,10 @@ public class FacebookAPIImpl extends FacebookAPI {
         libraryInstance = new FacebookFactory(cb.build()).getInstance();
     }
 
-    static private FacebookPost facebook4jPostConversion(Post post) {
+    private static FacebookPost facebook4jPostConversion(Post post) {
+        if (post == null) {
+            return null;
+        }
         FacebookPost fbPost = new FacebookPost();
         fbPost.setId(post.getId());
         fbPost.setType(convertFacebookType(post.getType()));
@@ -89,7 +100,10 @@ public class FacebookAPIImpl extends FacebookAPI {
         return fbPost;
     }
 
-    static private FacebookUser facebook4jUserConversion(User user) {
+    private static FacebookUser facebook4jUserConversion(User user) {
+        if (user == null) {
+            return null;
+        }
         FacebookUser fbUser = new FacebookUser();
         fbUser.setId(user.getId());
         fbUser.setUsername(user.getUsername());
@@ -111,7 +125,7 @@ public class FacebookAPIImpl extends FacebookAPI {
     }
 
     /**
-     * Retreives a facebook user, using its id
+     * Retrieves a facebook user, using its id
      * @param id Site-wide id of the user
      * @return A facebook user, filled in with all visible information
      */
@@ -140,7 +154,7 @@ public class FacebookAPIImpl extends FacebookAPI {
     }
 
     /**
-     * Retreives a facebook post, using its id.
+     * Retrieves a facebook post, using its id.
      * Post IDs are generally formatted as "12345678901234567_12345678901234567", where the
      * left side of the _ is the id of the author, and the right side is the actual post identifier.
      * @param id Full id of the post.
@@ -173,13 +187,12 @@ public class FacebookAPIImpl extends FacebookAPI {
             debug(fe);
             throw new FacebookAPIException(fe.getMessage());
         }
-        if (results == null) throw new FacebookAPIException("Unable to query for \"" + query + "\"");
-
-        List<FacebookUser> users = new ArrayList<>();
-        for (User user : results) {
-            users.add(facebook4jUserConversion(user));
+        if (results == null) {
+            throw new FacebookAPIException("Unable to query for \"" + query + "\"");
         }
-        return users;
+        debug("Searched for query \"" + query + "\". Found " + results.size() + " results.");
+
+        return results.stream().map(FacebookAPIImpl::facebook4jUserConversion).collect(Collectors.toList());
     }
 
     @Override
@@ -191,9 +204,7 @@ public class FacebookAPIImpl extends FacebookAPI {
             } else {
                 url = libraryInstance.getPictureURL(id, Integer.MAX_VALUE, 0);
             }
-            if (url == null) {
-                throw new FacebookAPIException("No profile picture for id \"" + id + "\". User probably does not exist");
-            }
+            debug("Retrieved profile picture for id \"" + id + "\". Found at URL " + (url == null ? null : url.toString()));
             return url;
 
         }
@@ -232,7 +243,7 @@ public class FacebookAPIImpl extends FacebookAPI {
             } else {
                 feed = libraryInstance.getFeed(id);
             }
-
+            debug("Got the feed for id \"" + id + "\". Found " + feed.size() + "results.");
             return feed.stream().map(FacebookAPIImpl::facebook4jPostConversion).collect(Collectors.toList());
         }
         catch (FacebookException fe) {
@@ -241,8 +252,12 @@ public class FacebookAPIImpl extends FacebookAPI {
         }
     }
 
+    @Override
+    protected void debug(String s) {
+        super.debug(PLATFORM + ": " + s);
+    }
 
-    //TODO:: Overloads for pagination
+//TODO:: Overloads for pagination
    /* public List<FacebookUser> searchUser(String query) {
 
     }*/

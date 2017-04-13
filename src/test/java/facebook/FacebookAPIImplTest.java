@@ -2,25 +2,23 @@ package facebook;
 
 import facebook.mocks.FacebookLibraryMock;
 import facebook4j.FacebookException;
-import facebook4j.IdNameEntity;
-import facebook4j.internal.org.json.JSONException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import socialmedia.NotSupportedException;
+import socialmedia.Post;
 
-import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.ParseException;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
-import java.util.stream.Stream;
 
+import static facebook.FacebookAPIImpl.convertFacebookType;
+import static facebook.FacebookAPIImpl.getHashTags;
 import static org.junit.jupiter.api.Assertions.*;
 
 class FacebookAPIImplTest {
@@ -53,6 +51,23 @@ class FacebookAPIImplTest {
     @BeforeEach
     void init() throws FacebookException, MalformedURLException, ParseException {
         this.facebook = new FacebookAPIImpl(FacebookLibraryMock.getFacebookMock());
+    }
+
+    @Test
+    @DisplayName("should convert between string-types to proper enum-types")
+    void testConvertPostType() {
+        String[] types = {"photo", "link", "status", "video", "offer", "nonexistent", null};
+        Post.Type[] corresponding = {Post.Type.IMAGE, Post.Type.LINK, Post.Type.TEXT, Post.Type.VIDEO, Post.Type.OFFER, Post.Type.UNKNOWN, Post.Type.UNKNOWN};
+        assertEquals(types.length, Post.Type.values().length + 1); // Plus 1, since we're checking null
+        for (int i = 0; i < types.length; i++) {
+            assertEquals(corresponding[i], convertFacebookType(types[i]));
+        }
+    }
+
+    @Test
+    @DisplayName("should return an empty list when text is null")
+    void testNullHastagText() {
+        assertEquals(0, getHashTags(null).size());
     }
 
     @Test
@@ -177,7 +192,7 @@ class FacebookAPIImplTest {
     @Test
     @DisplayName("should fail to get profile picture of non-existent user")
     void testGetInvalidProfilePicture() {
-        assertThrows(FacebookAPIException.class, () -> facebook.getProfilePicture("nonexistent"));
+        assertNull(facebook.getProfilePicture("nonexistent"));
     }
 
     @Test

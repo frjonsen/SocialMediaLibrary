@@ -12,5 +12,7 @@ buildNumber.properties
 .idea/sonarlint
 .idea/libraries
 .idea/encodings.xml
+.idea/preferred-vcs.xml
 out
+.vs/
 

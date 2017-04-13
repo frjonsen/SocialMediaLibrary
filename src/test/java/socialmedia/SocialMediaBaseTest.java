@@ -7,16 +7,14 @@ import org.mockito.Mockito;
 
 import java.io.PrintStream;
 
-import static org.junit.jupiter.api.Assertions.*;
+public class SocialMediaBaseTest {
 
-public class SocialMediaAPITest {
-
-    SocialMediaAPI sm;
+    SocialMediaBase sm;
     PrintStream ps;
 
     @BeforeEach
     void init() {
-        sm = Mockito.mock(SocialMediaAPI.class, Mockito.CALLS_REAL_METHODS);
+        sm = Mockito.mock(SocialMediaBase.class, Mockito.CALLS_REAL_METHODS);
         ps = Mockito.mock(PrintStream.class);
         sm.setDebugStream(ps);
     }

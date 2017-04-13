@@ -26,7 +26,7 @@ public class TwitterAPIImpl extends TwitterAPI {
         libraryInstance = tf.getInstance();
     }
 
-    TwitterAPIImpl (Twitter twitter) { this.libraryInstance = twitter; }
+    TwitterAPIImpl(Twitter twitter) { this.libraryInstance = twitter; }
 
     @Override
     public TwitterUser getUser(String id){
