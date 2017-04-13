@@ -57,7 +57,6 @@ public class TwitterLibraryMock {
         Mockito.when(tweet.getSymbolEntities()).thenReturn(new SymbolEntity[]{});
         Mockito.when(tweet.getURLEntities()).thenReturn(new URLEntity[]{});
         User user = getTwitterFullUserMock();
-        System.out.println("Is baed<<<<<<" + (user == null));
         Mockito.when(tweet.getUser()).thenReturn(user);
         Mockito.when(tweet.getLang()).thenReturn("Testarian");
         GeoLocation geo = new GeoLocation(28.385233,-81.563874);

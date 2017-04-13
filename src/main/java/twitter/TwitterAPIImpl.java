@@ -45,7 +45,7 @@ public class TwitterAPIImpl extends TwitterAPI {
             throw new TwitterAPIException(tw.getMessage());
         }
         if(user == null) {
-            throw new TwitterAPIException("No user with id " + "\"" + id + "\"");
+            return null;
         }
 
         return createUser(user);
@@ -61,7 +61,9 @@ public class TwitterAPIImpl extends TwitterAPI {
             debug(tw);
             throw new TwitterAPIException(tw.getMessage());
         }
-        if(user == null) { throw new TwitterAPIException("No user with id " + "\"" + id + "\""); }
+        if(user == null) {
+            return null;
+        }
 
         return createUser(user);
     }
@@ -83,14 +85,16 @@ public class TwitterAPIImpl extends TwitterAPI {
             throw new TwitterAPIException(te.getMessage());
         }
         if(status == null) {
-            throw new TwitterAPIException("No tweet with id " + "\"" + id + "\"");
+            return null;
         }
 
         return createStatus(status);
     }
 
     private TwitterPost createStatus(Status status) {
-        if( status == null ) { return null; }
+        if( status == null ) {
+            return null;
+        }
 
         TwitterPost tp = new TwitterPost();
         tp.setType(Post.Type.UNKNOWN);
@@ -139,7 +143,9 @@ public class TwitterAPIImpl extends TwitterAPI {
     }
 
     private TwitterUser createUser(User user) {
-        if(user == null) { return null; }
+        if(user == null) {
+            return null;
+        }
 
         TwitterUser twUser = new TwitterUser();
         twUser.setName(user.getName());
@@ -166,7 +172,9 @@ public class TwitterAPIImpl extends TwitterAPI {
     private Iterable<TwitterUser> createToList(UserMentionEntity[] mentions) {
         ArrayList<TwitterUser> usersList = new ArrayList<>();
 
-        if(mentions == null) { return usersList; }
+        if(mentions == null) {
+            return usersList;
+        }
 
         TwitterUser user;
         for(UserMentionEntity entity : mentions) {

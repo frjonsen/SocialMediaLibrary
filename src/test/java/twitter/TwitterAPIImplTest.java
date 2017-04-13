@@ -29,6 +29,13 @@ public class TwitterAPIImplTest {
     }
 
     @Test
+    @DisplayName("should create a TwitterAPIImpl through regular constructor")
+    void testConstructor() {
+        TwitterAPI twitterTest = new TwitterAPIImpl("consumerKey", "consumerSecret", "accessToken", "accessSecret", true);
+        assertNotNull(twitterTest);
+    }
+
+    @Test
     @DisplayName("should return a full user with correct fields")
     void testGetFullValidUser() throws MalformedURLException {
         assertNotNull(this.twitter);
@@ -49,9 +56,25 @@ public class TwitterAPIImplTest {
 
     @Test
     @DisplayName("should throw exception for non-existant post id")
-    void testNonExistantUser() {
+    void testNonExistantUserID() {
         assertNotNull(this.twitter);
-        assertThrows(TwitterAPIException.class, () -> this.twitter.getUser(123546875L));
+        assertNull(this.twitter.getUser(123546875L));
+    }
+
+    @Test
+    @DisplayName("should get a TwitterUser through ScreenName")
+    void testNonExistantUserScreenName() {
+        assertNotNull(this.twitter);
+        TwitterUser user = this.twitter.getUser("TestyMcFaulty");
+        assertNull(user);
+    }
+
+    @Test
+    @DisplayName("should get a TwitterUser through ScreenName")
+    void testGetUserWithScreenName() {
+        assertNotNull(this.twitter);
+        TwitterUser user = this.twitter.getUser("TestyMcTest");
+        assertEquals("6253282", user.getId());
     }
 
     @Test
