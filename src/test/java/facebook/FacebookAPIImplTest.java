@@ -56,8 +56,8 @@ class FacebookAPIImplTest {
     @Test
     @DisplayName("should convert between string-types to proper enum-types")
     void testConvertPostType() {
-        String[] types = {"photo", "link", "status", "video", "offer", "nonexistent"};
-        Post.Type[] corresponding = {Post.Type.IMAGE, Post.Type.LINK, Post.Type.TEXT, Post.Type.VIDEO, Post.Type.OFFER, Post.Type.UNKNOWN};
+        String[] types = {"photo", "link", "status", "video", "offer", "nonexistent", null};
+        Post.Type[] corresponding = {Post.Type.IMAGE, Post.Type.LINK, Post.Type.TEXT, Post.Type.VIDEO, Post.Type.OFFER, Post.Type.UNKNOWN, Post.Type.UNKNOWN};
         assertEquals(types.length, Post.Type.values().length);
         for (int i = 0; i < types.length; i++) {
             assertEquals(corresponding[i], convertFacebookType(types[i]));

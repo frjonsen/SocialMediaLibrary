@@ -17,7 +17,9 @@ public class FacebookAPIImpl extends FacebookAPI {
     private static final String SELF_ID = "me";
 
     static socialmedia.Post.Type convertFacebookType(String type) {
-        if (type == null) return Type.UNKNOWN;
+        if (type == null) {
+            return Type.UNKNOWN;
+        }
         String convertedType = type.toLowerCase();
         switch (convertedType) {
             case "photo":
@@ -36,7 +38,9 @@ public class FacebookAPIImpl extends FacebookAPI {
     }
 
     static List<String> getHashTags(String message) {
-        if (message == null) return new ArrayList<>();
+        if (message == null) {
+            return new ArrayList<>();
+        }
         String[] words = message.split(" ");
         return Stream.of(words)
                 .filter(word -> word.startsWith("#"))
@@ -45,7 +49,7 @@ public class FacebookAPIImpl extends FacebookAPI {
                 .collect(Collectors.toList());
     }
 
-    static private List<FacebookUser> convertNameIdToSimpleUsers(List<IdNameEntity> users) {
+    private static List<FacebookUser> convertNameIdToSimpleUsers(List<IdNameEntity> users) {
         List<FacebookUser> u = new ArrayList<>();
         for (IdNameEntity user : users) {
             FacebookUser converted = new FacebookUser();
@@ -89,7 +93,7 @@ public class FacebookAPIImpl extends FacebookAPI {
         return fbPost;
     }
 
-    static private FacebookUser facebook4jUserConversion(User user) {
+    private static FacebookUser facebook4jUserConversion(User user) {
         FacebookUser fbUser = new FacebookUser();
         fbUser.setId(user.getId());
         fbUser.setUsername(user.getUsername());
@@ -111,7 +115,7 @@ public class FacebookAPIImpl extends FacebookAPI {
     }
 
     /**
-     * Retreives a facebook user, using its id
+     * Retrieves a facebook user, using its id
      * @param id Site-wide id of the user
      * @return A facebook user, filled in with all visible information
      */
