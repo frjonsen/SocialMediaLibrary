@@ -192,7 +192,7 @@ class FacebookAPIImplTest {
     @Test
     @DisplayName("should fail to get profile picture of non-existent user")
     void testGetInvalidProfilePicture() {
-        assertThrows(FacebookAPIException.class, () -> facebook.getProfilePicture("nonexistent"));
+        assertNull(facebook.getProfilePicture("nonexistent"));
     }
 
     @Test
