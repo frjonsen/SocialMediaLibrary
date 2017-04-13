@@ -143,14 +143,6 @@ class TwitterPostTest {
     }
 
     @Test
-    @DisplayName("should set and get scopes unchanged")
-    void testScopes(){
-        Scopes scopes = Mockito.mock(Scopes.class);
-        post.setScopes(scopes);
-        assertEquals(scopes, post.getScopes());
-    }
-
-    @Test
     @DisplayName("should set and get source unchanged")
     void testSource(){
         String source = "\\u003Ca href=\"http:\\/\\/itunes.apple.com\\/us\\/app\\/twitter\\/id409789998?mt=12\" \\u003ETwitter for Mac\\u003C\\/a\\u003E";

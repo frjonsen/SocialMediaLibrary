@@ -22,7 +22,6 @@ public class TwitterPost extends Post<TwitterUser>{
     private TwitterPost quotedStatus;
     private TwitterPost retweetedStatus;
     private long currentUserRetweetId;
-    private Scopes scopes;
     private String source;
     private String[] withheldInCountries;
     private boolean favorited;
@@ -283,22 +282,6 @@ public class TwitterPost extends Post<TwitterUser>{
      */
     public void setCurrentUserRetweetId(long currentUserRetweetId) {
         this.currentUserRetweetId = currentUserRetweetId;
-    }
-
-    /**
-     * Returns the targeting scopes applied to a tweet.
-     * @return scopes
-     */
-    public Scopes getScopes() {
-        return scopes;
-    }
-
-    /**
-     * Sets the scopes locally.
-     * @param scopes new scopes
-     */
-    public void setScopes(Scopes scopes) {
-        this.scopes = scopes;
     }
 
     /**

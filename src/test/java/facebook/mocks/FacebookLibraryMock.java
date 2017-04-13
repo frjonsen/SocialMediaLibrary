@@ -39,7 +39,7 @@ public class FacebookLibraryMock {
                 return town;
             }
         };
-    };
+    }
 
     private static List<IdNameEntity> createIdNameList(List<String> items) {
         List<IdNameEntity> listed = new ArrayList<IdNameEntity>();
@@ -60,7 +60,7 @@ public class FacebookLibraryMock {
         }
 
         return listed;
-    };
+    }
 
     private static <T> ResponseList<T> intoResponseList(List<T> l) {
         ResponseListMock<T> list = new ResponseListMock<>();
