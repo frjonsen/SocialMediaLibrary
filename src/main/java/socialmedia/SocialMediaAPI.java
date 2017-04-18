@@ -1,6 +1,7 @@
 package socialmedia;
 
 import java.net.URL;
+import java.util.List;
 
 public interface SocialMediaAPI<T extends User, E extends Post> {
     T getUser(String id);
@@ -18,29 +19,36 @@ public interface SocialMediaAPI<T extends User, E extends Post> {
     //public abstract boolean unlikePost(String id);
 
     /**
-     * Gets the post
-     * @param id
-     * @return
+     * Gets the post with the id. Differs what type of post
+     * returned depending on what platform it is called from.
+     * @param id id of the post
+     * @return post of type associated with platform
      */
     E getPost(String id);
 
-    //public abstract searchPost();
+    //public abstract searchPost(); finns inte fb
 
-    //public abstract getPostFeed();
+    /**
+     * Gets the users most recent posts published. Might differ
+     * on different platforms where it can be screen name as well.
+     * @param id id of the user
+     * @return a list of posts
+     */
+    List<E> getPostFeed(String id);
 
     //public abstract publishPost();
 
-    //public abstract getComments();
+    //public abstract getComments(); finns inte twitter
 
     //public abstract publishComment();
 
-    //public abstract getFollowers();
+    //public abstract getFollowers(); finns inte fb
 
-    //public abstract getFollowing();
+    //public abstract getFollowing(); finns inte fb
 
-    //public abstract follow();
+    //public abstract follow(); finns inte fb
 
-    //public abstract unfollow();
+    //public abstract unfollow(); finns inte fb
 
 
     /* Implemented individually
