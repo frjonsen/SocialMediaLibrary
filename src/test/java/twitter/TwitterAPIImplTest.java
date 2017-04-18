@@ -38,7 +38,7 @@ public class TwitterAPIImplTest {
     @DisplayName("should return a full user with correct fields")
     void testGetFullValidUser() throws MalformedURLException {
         assertNotNull(this.twitter);
-        TwitterUser user = twitter.getUser(6253282L);
+        TwitterUser user = this.twitter.getUser(6253282L);
         assertEquals("6253282", user.getId());
         assertEquals("Testington", user.getName());
         assertEquals("TestyMcTest", user.getUsername());
@@ -58,6 +58,14 @@ public class TwitterAPIImplTest {
     void testNonExistantUserID() {
         assertNotNull(this.twitter);
         assertNull(this.twitter.getUser(123546875L));
+    }
+
+    @Test
+    @DisplayName("")
+    void testExistantUserIdString() {
+        assertNotNull(this.twitter);
+        TwitterUser user = this.twitter.getUser("6253282");
+        assertEquals("6253282", user.getId());
     }
 
     @Test

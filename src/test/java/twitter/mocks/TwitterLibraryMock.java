@@ -1,7 +1,6 @@
 package twitter.mocks;
 
 import org.mockito.Mockito;
-import twitter.TwitterUser;
 import twitter4j.*;
 
 import java.util.Date;
