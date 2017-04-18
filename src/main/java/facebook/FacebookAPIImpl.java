@@ -72,6 +72,17 @@ public class FacebookAPIImpl extends FacebookAPI {
         return fbUser;
     }
 
+    private static FacebookComment facebook4jCommentConversion(Comment comment) {
+        FacebookComment fComment = new FacebookComment();
+        fComment.setId(comment.getId());
+        fComment.setMessage(comment.getMessage());
+        fComment.setLikeCount(comment.getLikeCount());
+        fComment.setCreated(comment.getCreatedTime());
+        fComment.setFrom(FacebookUtil.categoryToUser(comment.getFrom()));
+
+        return fComment;
+    }
+
     FacebookAPIImpl(Facebook facebook) {
         this.libraryInstance = facebook;
     }
