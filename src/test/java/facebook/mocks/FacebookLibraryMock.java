@@ -92,7 +92,7 @@ public class FacebookLibraryMock {
         return f;
     }
 
-    private static List<User> generateBasicFacebookUsers(int numberOfUsers) {
+    public static List<User> generateBasicFacebookUsers(int numberOfUsers) {
         List<User> users = new ArrayList<>();
         for (int i = 0; i < numberOfUsers; ++i) {
             User user = Mockito.mock(User.class);

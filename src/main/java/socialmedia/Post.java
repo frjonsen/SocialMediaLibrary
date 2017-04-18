@@ -105,10 +105,7 @@ public abstract class Post <T extends User> {
      * @param time Creation time of the post
      */
     public void setCreationTime(java.util.Date time) {
-        if (time == null) {
-            this.creationTime = null;
-        }
-        else this.creationTime = ZonedDateTime.ofInstant(time.toInstant(), ZoneOffset.UTC);
+        this.creationTime = SocialMediaUtil.UTCJavaDateToZonedDateTime(time);
     }
 
     /**
@@ -159,10 +156,7 @@ public abstract class Post <T extends User> {
      * @param time Creation time of the post
      */
     public void setEditTime(java.util.Date time) {
-        if (time == null) {
-            this.editTime = null;
-        }
-        else this.editTime = ZonedDateTime.ofInstant(time.toInstant(), ZoneOffset.UTC);
+        this.editTime = SocialMediaUtil.UTCJavaDateToZonedDateTime(time);
     }
 
     /**
