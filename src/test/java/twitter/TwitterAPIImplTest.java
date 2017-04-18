@@ -153,4 +153,11 @@ public class TwitterAPIImplTest {
         assertNull(tweet.getRetweetedStatus());
     }
 
+    @Test
+    @DisplayName("should return the url for the profile image")
+    void testGetProfilePicture() {
+        assertNotNull(this.twitter);
+        URL picture = twitter.getProfilePicture("6253282");
+        assertEquals("https://pbs.twimg.com/profile_images/123123123123123123/IPv4Cubt_400x400.jpg", picture.toString());
+    }
 }

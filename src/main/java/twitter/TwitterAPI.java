@@ -2,7 +2,9 @@ package twitter;
 
 import socialmedia.SocialMediaBase;
 
-public abstract class TwitterAPI extends SocialMediaBase<TwitterUser> {
+import java.net.URL;
+
+public abstract class TwitterAPI extends SocialMediaBase<TwitterUser, TwitterPost> {
 
     /**
      * Gets a TwitterUser by provided screenName, filling a user object
@@ -25,9 +27,11 @@ public abstract class TwitterAPI extends SocialMediaBase<TwitterUser> {
     public abstract TwitterUser getUser(long id);
 
     /**
-     *
+     * Gets a TwitterPost by provided id, filling a post object
+     * with available information. Some fields may be null.
      * @param id
      * @return
      */
     public abstract TwitterPost getPost(String id);
+
 }

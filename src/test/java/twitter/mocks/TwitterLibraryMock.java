@@ -31,6 +31,7 @@ public class TwitterLibraryMock {
         Mockito.when(user.getEmail()).thenReturn("testify@test.com");
         Mockito.when(user.getLocation()).thenReturn("Testing Street");
         Mockito.when(user.getLang()).thenReturn("Testarian");
+        Mockito.when(user.getBiggerProfileImageURLHttps()).thenReturn("https://pbs.twimg.com/profile_images/123123123123123123/IPv4Cubt_400x400.jpg");
 
         return user;
     }

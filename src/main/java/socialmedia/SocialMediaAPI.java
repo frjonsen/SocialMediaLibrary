@@ -1,17 +1,28 @@
 package socialmedia;
 
-public interface SocialMediaAPI<T extends User> {
-    public abstract User getUser(String id);
+import java.net.URL;
+
+public interface SocialMediaAPI<T extends User, E extends Post> {
+    T getUser(String id);
 
     //public abstract List<T> searchUsers(String query);
-
-    //public abstract URL getProfilePicture(String id, int size);
+    /**
+     * Gets the URL of the users profile image.
+     * @param id site-wide id of the user
+     * @return  the URL for the profile image of the user
+     */
+    URL getProfilePicture(String id);
 
     //public abstract boolean likePost(String id);
 
     //public abstract boolean unlikePost(String id);
 
-    public abstract Post getPost(String id);
+    /**
+     * Gets the post
+     * @param id
+     * @return
+     */
+    E getPost(String id);
 
     //public abstract searchPost();
 

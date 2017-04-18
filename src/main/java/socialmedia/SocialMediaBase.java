@@ -2,7 +2,7 @@ package socialmedia;
 
 import java.io.PrintStream;
 
-public abstract class SocialMediaBase<T extends User> implements SocialMediaAPI<T>{
+public abstract class SocialMediaBase<T extends User, E extends Post> implements SocialMediaAPI<T,E>{
     private PrintStream stream;
 
     public void setDebugStream(PrintStream stream) {

@@ -91,6 +91,24 @@ public class TwitterAPIImpl extends TwitterAPI {
         return createStatus(status);
     }
 
+    @Override
+    public URL getProfilePicture(String id) {
+        User user;
+        long lId = Long.parseLong(id);
+
+        try {
+            user = libraryInstance.showUser(lId);
+            if(user == null) {
+                return null;
+            }
+
+            return new URL(user.getBiggerProfileImageURLHttps());
+        } catch (TwitterException|MalformedURLException e) {
+            debug(e);
+            throw new TwitterAPIException(e.getMessage());
+        }
+    }
+
     private TwitterPost createStatus(Status status) {
         if( status == null ) {
             return null;
