@@ -14,55 +14,7 @@ import java.util.stream.Stream;
 public class FacebookAPIImpl extends FacebookAPI {
 
     private Facebook libraryInstance;
-    private static final String PLATFORM = "FACEBOOK";
     private static final String SELF_ID = "me";
-
-    static socialmedia.Post.Type convertFacebookType(String type) {
-        if (type == null) {
-            return Type.UNKNOWN;
-        }
-        String convertedType = type.toLowerCase();
-        switch (convertedType) {
-            case "photo":
-                return Type.IMAGE;
-            case "link":
-                return Type.LINK;
-            case "status":
-                return Type.TEXT;
-            case "video":
-                return Type.VIDEO;
-            case "offer":
-                return Type.OFFER;
-            default:
-                return Type.UNKNOWN;
-        }
-    }
-
-    static List<String> getHashTags(String message) {
-        if (message == null) {
-            return new ArrayList<>();
-        }
-        String[] words = message.split(" ");
-        return Stream.of(words)
-                .filter(word -> word.startsWith("#"))
-                .map(word -> word.substring(1))
-                .filter(word -> word.trim().length() > 0)
-                .collect(Collectors.toList());
-    }
-
-    private static List<FacebookUser> convertNameIdToSimpleUsers(List<IdNameEntity> users) {
-        List<FacebookUser> u = new ArrayList<>();
-        if (users == null) {
-            return u;
-        }
-        for (IdNameEntity user : users) {
-            FacebookUser converted = new FacebookUser();
-            converted.setName(user.getName());
-            converted.setId(user.getId());
-            u.add(converted);
-        }
-        return u;
-    }
 
     public FacebookAPIImpl(String appId, String appSecret, String userAccessToken, String permissions) {
         ConfigurationBuilder cb = new ConfigurationBuilder();
@@ -79,13 +31,13 @@ public class FacebookAPIImpl extends FacebookAPI {
         }
         FacebookPost fbPost = new FacebookPost();
         fbPost.setId(post.getId());
-        fbPost.setType(convertFacebookType(post.getType()));
+        fbPost.setType(FacebookUtil.convertFacebookType(post.getType()));
         fbPost.setCreationTime(post.getCreatedTime());
         fbPost.setEditTime(post.getUpdatedTime());
         fbPost.setText(post.getMessage());
-        fbPost.setTo(convertNameIdToSimpleUsers(post.getTo()));
-        fbPost.setWithTags(convertNameIdToSimpleUsers(post.getWithTags()));
-        List<String> hashTags = getHashTags(post.getMessage());
+        fbPost.setTo(FacebookUtil.convertNameIdToSimpleUsers(post.getTo()));
+        fbPost.setWithTags(FacebookUtil.convertNameIdToSimpleUsers(post.getWithTags()));
+        List<String> hashTags = FacebookUtil.getHashTags(post.getMessage());
         fbPost.setTags(hashTags);
         fbPost.setHidden(post.isHidden());
         fbPost.setPublished(post.isPublished());
