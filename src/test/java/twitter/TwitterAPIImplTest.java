@@ -5,16 +5,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import socialmedia.Post;
 import twitter.mocks.TwitterLibraryMock;
+import twitter4j.RateLimitStatus;
 import twitter4j.TwitterException;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -155,6 +153,13 @@ public class TwitterAPIImplTest {
     }
 
     @Test
+    @DisplayName("tries to get a post with a faulty id, should throw an TwitterAPIException")
+    void testGetInvalidPostId(){
+        assertNotNull(this.twitter);
+        assertThrows(TwitterAPIException.class, ()->twitter.getPost("12B"));
+    }
+
+    @Test
     @DisplayName("should return the url for the profile image")
     void testGetProfilePicture() {
         assertNotNull(this.twitter);
@@ -177,6 +182,17 @@ public class TwitterAPIImplTest {
         List<TwitterPost> postfeed = twitter.getPostFeed("TestyMcTest");
         assertEquals(3, postfeed.size());
         assertEquals("123123", postfeed.get(0).getId());
+    }
+
+    @Test
+    @DisplayName("Should get a valid rateStatus")
+    void testGetRateLimite() {
+        assertNotNull(this.twitter);
+        Map<String, RateLimitStatus> status;
+        status = twitter.getRateLimitStatus();
+
+        assertEquals(200, status.get("rate1").getLimit());
+        assertEquals(50, status.get("rate2").getLimit());
     }
 
 }

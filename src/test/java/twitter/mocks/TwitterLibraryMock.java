@@ -33,7 +33,7 @@ public class TwitterLibraryMock {
         Mockito.when(status2.getLimit()).thenReturn(50);
 
         status.put("rate1", status1);
-        status.put("rate1", status2);
+        status.put("rate2", status2);
 
         return status;
     }
