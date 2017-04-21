@@ -40,10 +40,6 @@ public interface SocialMediaAPI<T extends User, E extends Post> {
 
     //public abstract publishPost();
 
-    //public abstract getComments(); finns inte twitter
-
-    //public abstract publishComment();
-
     //public abstract getFollowers(); finns inte fb
 
     //public abstract getFollowing(); finns inte fb

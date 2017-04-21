@@ -143,6 +143,19 @@ class FacebookAPIImplTest {
     }
 
     @Test
+    @DisplayName("should return zero posts for non-existant post id")
+    void testGetCommentsFromNonexistantPost() {
+        assertEquals(0, this.facebook.getComments("noexist").size());
+    }
+
+    @Test
+    @DisplayName("should return three posts when fetch comments from existing post")
+    void testGetCommentsFromValidPost() {
+        List<FacebookComment> comments = this.facebook.getComments("somepostid");
+        assertEquals(3, comments.size());
+    }
+
+    @Test
     @DisplayName("should search for and find three users")
     void testSearchUsers() {
         List<FacebookUser> results = facebook.searchUsers("User");

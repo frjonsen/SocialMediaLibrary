@@ -88,6 +88,8 @@ public class FacebookLibraryMock {
         Mockito.when(f.getFeed()).thenReturn(selfFeed);
         ResponseList<Post> otherFeed = intoResponseList(generateBasicFacebookPosts(2));
         Mockito.when(f.getFeed("56726489657236574")).thenReturn(otherFeed);
+        ResponseList<Comment> comments = generateBasicFacebookPostComments(3);
+        Mockito.when(f.getPostComments("somepostid")).thenReturn(comments);
 
         return f;
     }
@@ -109,14 +111,20 @@ public class FacebookLibraryMock {
         return users;
     }
 
-    private static List<Post> generateBasicFacebookPosts(int numberOfPosts) throws ParseException {
-        List<Post> posts = new ArrayList<>();
-        final Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse("2017-03-18T16:59:49+0000");
+    private static Category generateCategory() throws ParseException {
         Category c = Mockito.mock(Category.class);
         Mockito.when(c.getCategory()).thenReturn("User");
         Mockito.when(c.getName()).thenReturn("someuser");
         Mockito.when(c.getId()).thenReturn("someuserid");
+        final Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse("2017-03-18T16:59:49+0000");
         Mockito.when(c.getCreatedTime()).thenReturn(date);
+        return c;
+    }
+
+    private static List<Post> generateBasicFacebookPosts(int numberOfPosts) throws ParseException {
+        List<Post> posts = new ArrayList<>();
+        final Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse("2017-03-18T16:59:49+0000");
+        Category c = generateCategory();
         for (int i = 0; i < numberOfPosts; ++i) {
             Post post = Mockito.mock(Post.class);
             Mockito.when(post.getId()).thenReturn("PostId"  + i + 1);
@@ -128,6 +136,24 @@ public class FacebookLibraryMock {
             posts.add(post);
         }
         return posts;
+    }
+
+    private static ResponseList<Comment> generateBasicFacebookPostComments(int nrOfComments) throws ParseException {
+        List<Comment> comments = new ArrayList<>();
+        final Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse("2017-03-18T16:59:49+0000");
+        for (int i = 0; i < nrOfComments; ++i) {
+            Comment comment = Mockito.mock(Comment.class);
+            Date d = new Date(date.getTime() + i);
+            Mockito.when(comment.getCreatedTime()).thenReturn(d);
+            Mockito.when(comment.getMessage()).thenReturn("Comment message " + i);
+            Category c = generateCategory();
+            Mockito.when(comment.getFrom()).thenReturn(c);
+            Mockito.when(comment.getLikeCount()).thenReturn(i);
+            Mockito.when(comment.getId()).thenReturn("commentid" + i);
+            comments.add(comment);
+        }
+
+        return intoResponseList(comments);
     }
 
     private static User getFacebookFullUserMock() throws MalformedURLException {

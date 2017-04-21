@@ -40,14 +40,6 @@ public abstract class FacebookAPI extends SocialMediaBase<FacebookUser, Facebook
     public abstract List<FacebookUser> searchUsers(String query);
 
     /**
-     * Retrieves the profile picture of a user. Where several sizes are
-     * available, will retrieve the largest available
-     * @param id Id of the user
-     * @return A URL to the profile picture
-     */
-    public abstract URL getProfilePicture(String id);
-
-    /**
      * Likes a post. Currently, Facebook only allows for pages
      * liking posts and comments on itself or other pages.
      * User likes can not be managed through the API.
@@ -81,6 +73,13 @@ public abstract class FacebookAPI extends SocialMediaBase<FacebookUser, Facebook
      * @return A list of posts
      */
     public abstract List<FacebookPost> getPostFeed(String id);
+
+    /**
+     * Gets the comments from a Facebook post
+     * @param postId
+     * @return
+     */
+    public abstract List<FacebookComment> getComments(String postId);
 
     /**
      * Not supported by facebook. Always throws an exception.
@@ -117,4 +116,6 @@ public abstract class FacebookAPI extends SocialMediaBase<FacebookUser, Facebook
     public boolean unfollow(String id) {
         throw new NotSupportedException("unfollow", PLATFORM);
     }
+
+
 }
