@@ -1,8 +1,11 @@
 package facebook;
 
+import facebook4j.Category;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import socialmedia.Post;
+import socialmedia.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +24,12 @@ public class FacebookUtilTest {
         for (int i = 0; i < types.length; i++) {
             assertEquals(corresponding[i], FacebookUtil.convertFacebookType(types[i]));
         }
+    }
+
+    @Test
+    @DisplayName("convertNameId should handle null appropriately")
+    void testConvertNameIdWhenNull() {
+        assertEquals(0, FacebookUtil.convertNameIdToSimpleUsers(null).size());
     }
 
     @Test
@@ -47,5 +56,17 @@ public class FacebookUtilTest {
         String msg = "A message with weird hashtag # hello";
         List<String> tags = FacebookUtil.getHashTags(msg);
         assertEquals(0, tags.size());
+    }
+
+    @Test
+    @DisplayName("should convert a basic facebook4j category to a user")
+    void testCategoryConverter() {
+        Category c = Mockito.mock(Category.class);
+        Mockito.when(c.getId()).thenReturn("someid");
+        Mockito.when(c.getName()).thenReturn("somename");
+
+        User user = FacebookUtil.categoryToUser(c);
+        assertEquals("someid", user.getId());
+        assertEquals("somename", user.getName());
     }
 }

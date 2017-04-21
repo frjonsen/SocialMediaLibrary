@@ -9,7 +9,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class FacebookUtil {
+class FacebookUtil {
+
+    private FacebookUtil() { }
+
     static List<String> getHashTags(String message) {
         if (message == null) {
             return new ArrayList<>();
@@ -37,24 +40,33 @@ public class FacebookUtil {
     }
 
     static socialmedia.Post.Type convertFacebookType(String type) {
+        Post.Type t;
         if (type == null) {
-            return Post.Type.UNKNOWN;
+            t = Post.Type.UNKNOWN;
         }
-        String convertedType = type.toLowerCase();
-        switch (convertedType) {
-            case "photo":
-                return Post.Type.IMAGE;
-            case "link":
-                return Post.Type.LINK;
-            case "status":
-                return Post.Type.TEXT;
-            case "video":
-                return Post.Type.VIDEO;
-            case "offer":
-                return Post.Type.OFFER;
-            default:
-                return Post.Type.UNKNOWN;
+        else {
+            String convertedType = type.toLowerCase();
+            switch (convertedType) {
+                case "photo":
+                    t = Post.Type.IMAGE;
+                    break;
+                case "link":
+                    t = Post.Type.LINK;
+                    break;
+                case "status":
+                    t = Post.Type.TEXT;
+                    break;
+                case "video":
+                    t = Post.Type.VIDEO;
+                    break;
+                case "offer":
+                    t = Post.Type.OFFER;
+                    break;
+                default:
+                    t = Post.Type.UNKNOWN;
+            }
         }
+        return t;
     }
 
     static FacebookUser categoryToUser(Category category) {
