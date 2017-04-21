@@ -14,6 +14,7 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -160,4 +161,22 @@ public class TwitterAPIImplTest {
         URL picture = twitter.getProfilePicture("6253282");
         assertEquals("https://pbs.twimg.com/profile_images/123123123123123123/IPv4Cubt_400x400.jpg", picture.toString());
     }
+
+    @Test
+    @DisplayName("should return a valid list of statuses representing a users post feed by long id")
+    void testGetPostFeedLong() {
+        assertNotNull(this.twitter);
+        List<TwitterPost> postfeed = twitter.getPostFeed(6253282L);
+        assertEquals(3, postfeed.size());
+        assertEquals("123123", postfeed.get(0).getId());
+    }
+    @Test
+    @DisplayName("should return a valid list of statuses representing a users post feed by string")
+    void testGetPostFeedString() {
+        assertNotNull(this.twitter);
+        List<TwitterPost> postfeed = twitter.getPostFeed("TestyMcTest");
+        assertEquals(3, postfeed.size());
+        assertEquals("123123", postfeed.get(0).getId());
+    }
+
 }
