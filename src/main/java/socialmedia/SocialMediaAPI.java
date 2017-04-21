@@ -51,7 +51,7 @@ public interface SocialMediaAPI<T extends User, E extends Post> {
      * @return a list of posts
      */
     List<E> getPostFeed(String id);
-    
+
     //public abstract publishStatusPost(String message);
 
     //public abstract publishComment();
