@@ -43,12 +43,6 @@ public abstract class TwitterAPI extends SocialMediaBase<TwitterUser, TwitterPos
 
     //public abstract List<TwitterPost> searchPost(String query);
 
-    public abstract boolean likePost(String id);
-
-    public abstract boolean unlikePost(String id);
-
-    //public abstract publishStatusPost(String message);
-
     /**
      * Gets the post-feed of a user.
      * If id is "me", will return the feed of the authenticating user.
@@ -66,8 +60,13 @@ public abstract class TwitterAPI extends SocialMediaBase<TwitterUser, TwitterPos
 
     //public abstract List<TwitterUser> getFollowers(String id);
     //public abstract List<TwitterUser> getFollowing(String id);
-    //public abstract boolean follow(String id);
-    //public abstract boolean unfollow(String id);
+    public abstract boolean follow(String screenName);
+    public abstract boolean follow(String screenName, boolean notifications);
+    public abstract boolean follow(long id);
+    public abstract boolean follow(long id, boolean notifications);
+
+    public abstract boolean unfollow(String id);
+    public abstract boolean unfollow(long id);
 
     /**
      * Gets the rate limit status for the authenticating user

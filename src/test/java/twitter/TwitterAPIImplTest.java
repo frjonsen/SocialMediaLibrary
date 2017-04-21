@@ -200,9 +200,7 @@ public class TwitterAPIImplTest {
         List<TwitterPost> postfeed = twitter.getPostFeed("156482");
         assertEquals(0, postfeed.size());
     }
-
-
-
+    
     @Test
     @DisplayName("Should get a valid rateStatus")
     void testGetRateLimit() {
@@ -258,6 +256,162 @@ public class TwitterAPIImplTest {
     void testUnlikePostBadId(){
         assertNotNull(this.twitter);
         assertThrows(TwitterAPIException.class, ()-> twitter.unlikePost("6253211bad"));
+    }
+
+    @Test
+    @DisplayName("should publish a post and return id of new post")
+    void testPublishPost(){
+        assertNotNull(this.twitter);
+        String id = twitter.publishStatusPost("The best tweet for testing");
+        assertEquals("114749583439036416", id);
+    }
+
+    @Test
+    @DisplayName("should return true for a follow call on valid id")
+    void testFollowValid(){
+        assertNotNull(this.twitter);
+        boolean success = twitter.follow("6253282");
+        assertTrue(success);
+    }
+
+    @Test
+    @DisplayName("should return false for a follow call on invalid id")
+    void testFollowInvalid(){
+        assertNotNull(this.twitter);
+        boolean success = twitter.follow("6253211");
+        assertFalse(success);
+    }
+
+    @Test
+    @DisplayName("should return true for a follow call on valid id with notifications turned on")
+    void testFollowValidWithNotifications(){
+        assertNotNull(this.twitter);
+        boolean success = twitter.follow("6253282", true);
+        assertTrue(success);
+    }
+
+    @Test
+    @DisplayName("should return false for a follow call on invalid id with notifications turned off")
+    void testFollowInvalidWithNotifications(){
+        assertNotNull(this.twitter);
+        boolean success = twitter.follow("6253211", true);
+        assertFalse(success);
+    }
+
+    @Test
+    @DisplayName("should return true for a follow call on valid long id")
+    void testFollowValidLong(){
+        assertNotNull(this.twitter);
+        boolean success = twitter.follow(6253282L);
+        assertTrue(success);
+    }
+
+    @Test
+    @DisplayName("should return false for a follow call on invalid long id")
+    void testFollowInvalidLong(){
+        assertNotNull(this.twitter);
+        boolean success = twitter.follow(6253211L);
+        assertFalse(success);
+
+    }
+
+    @Test
+    @DisplayName("should return true for a follow call on valid long id with notifications turned on")
+    void testFollowValidWithNotificationsLong(){
+        assertNotNull(this.twitter);
+        boolean success = twitter.follow(6253282L, true);
+        assertTrue(success);
+
+    }
+
+    @Test
+    @DisplayName("should return false for a follow call on invalid id with notifications turned off")
+    void testFollowInvalidWithNotificationsLong(){
+        assertNotNull(this.twitter);
+        boolean success = twitter.follow(6253211L, true);
+        assertFalse(success);
+    }
+
+    @Test
+    @DisplayName("should return true for a follow call on valid screenName")
+    void testFollowValidScreenName(){
+        assertNotNull(this.twitter);
+        boolean success = twitter.follow("TestyMcTest");
+        assertTrue(success);
+    }
+
+    @Test
+    @DisplayName("should return false for a follow call on invalid screenName")
+    void testFollowInvalidScreenName(){
+        assertNotNull(this.twitter);
+        boolean success = twitter.follow("NotTesty");
+        assertFalse(success);
+    }
+
+    @Test
+    @DisplayName("should return true for a follow call on valid screenName with notifications turned on")
+    void testFollowValidWithNotificationsScreenName(){
+        assertNotNull(this.twitter);
+        boolean success = twitter.follow("TestyMcTest", true);
+        assertTrue(success);
+    }
+
+    @Test
+    @DisplayName("should return false for a follow call on invalid screenName with notifications turned off")
+    void testFollowInvalidWithNotificationsScreenName(){
+        assertNotNull(this.twitter);
+        boolean success = twitter.follow("NotTesty", true);
+        assertFalse(success);
+    }
+
+    @Test
+    @DisplayName("should return true for a unfollow call on valid long id")
+    void testUnfollowValidLong(){
+        assertNotNull(this.twitter);
+        boolean success = twitter.unfollow(6253282L);
+        assertTrue(success);
+
+    }
+
+    @Test
+    @DisplayName("should return false for a unfollow call on invalid id")
+    void testUnfollowInvalidLong(){
+        assertNotNull(this.twitter);
+        boolean success = twitter.unfollow(6253211L);
+        assertFalse(success);
+    }
+
+    @Test
+    @DisplayName("should return true for a unfollow call on valid id")
+    void testUnfollowValid(){
+        assertNotNull(this.twitter);
+        boolean success = twitter.unfollow("6253282");
+        assertTrue(success);
+
+    }
+
+    @Test
+    @DisplayName("should return false for a unfollow call on invalid id")
+    void testUnfollowInvalid(){
+        assertNotNull(this.twitter);
+        boolean success = twitter.unfollow("6253211");
+        assertFalse(success);
+    }
+
+    @Test
+    @DisplayName("should return true for a unfollow call on valid screenName")
+    void testUnfollowValidScreenName(){
+        assertNotNull(this.twitter);
+        boolean success = twitter.unfollow("TestyMcTest");
+        assertTrue(success);
+    }
+
+    @Test
+    @DisplayName("should return false for a unfollow call on invalid screenName")
+    void testUnfollowInvalidScreenName(){
+        assertNotNull(this.twitter);
+        boolean success = twitter.unfollow("NotTesty");
+        assertFalse(success);
     }
 
 }
