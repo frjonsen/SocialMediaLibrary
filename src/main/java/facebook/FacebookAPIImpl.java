@@ -3,13 +3,11 @@ package facebook;
 import facebook4j.*;
 import facebook4j.User;
 import facebook4j.conf.ConfigurationBuilder;
-import socialmedia.Post.Type;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class FacebookAPIImpl extends FacebookAPI {
 
@@ -223,6 +221,18 @@ public class FacebookAPIImpl extends FacebookAPI {
             debug(fe);
             throw new FacebookAPIException(fe.getMessage());
         }
+    }
+
+    @Override
+    public List<FacebookComment> getComments(String postId) {
+        List<Comment> comments = null;
+        try {
+            comments = libraryInstance.getPostComments(postId);
+        } catch(FacebookException fe) {
+            debug(fe);
+            throw new FacebookAPIException(fe.getMessage());
+        }
+        return comments == null ? new ArrayList<>() : comments.stream().map(FacebookAPIImpl::facebook4jCommentConversion).collect(Collectors.toList());
     }
 
     @Override
