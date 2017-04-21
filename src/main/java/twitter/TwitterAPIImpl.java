@@ -206,4 +206,8 @@ public class TwitterAPIImpl extends TwitterAPI {
         return usersList;
     }
 
+    @Override
+    public String publishStatusPost(String message) {
+        return null;
+    }
 }

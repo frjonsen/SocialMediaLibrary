@@ -173,10 +173,6 @@ public class FacebookLibraryMock {
         with.add("friend2");
         Mockito.when(post.getWithTags()).thenReturn(createIdNameList(with));
         List<Post.Property> properties = new ArrayList<>();
-        Post.Property property = Mockito.mock(Post.Property.class);
-        Mockito.when(property.getName()).thenReturn("length");
-        Mockito.when(property.getText()).thenReturn("10");
-        properties.add(property);
         Mockito.when(post.getProperties()).thenReturn(properties);
 
         return post;

@@ -142,31 +142,6 @@ class FacebookPostTest {
     }
 
     @Test
-    @DisplayName("should set and get properties unchanged")
-    void testProperties() {
-        List<Post.Property> properties = new ArrayList<>();
-        Post.Property prop1 = new Post.Property() {
-            @Override
-            public String getName() {
-                return "length";
-            }
-
-            @Override
-            public String getText() {
-                return "10";
-            }
-
-            @Override
-            public String getHref() {
-                return null;
-            }
-        };
-        properties.add(prop1);
-        post.setProperties(properties);
-        assertEquals("10", post.getProperties().get(0).getText());
-    }
-
-    @Test
     @DisplayName("should set and get source unchanged")
     void testSource() throws MalformedURLException {
         post.setSource(new URL("https://example.com"));
