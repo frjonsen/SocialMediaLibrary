@@ -156,7 +156,15 @@ public class TwitterAPIImpl extends TwitterAPI {
 
     @Override
     public String publishStatusPost(String message){
-        return null;
+        Status status = null;
+        try {
+            status = libraryInstance.updateStatus(message);
+        } catch (TwitterException te){
+            debug(te);
+            throw new TwitterAPIException(te.getMessage());
+        }
+
+        return status == null ? null : String.valueOf(status.getId());
     }
 
     @Override
@@ -175,7 +183,7 @@ public class TwitterAPIImpl extends TwitterAPI {
             throw new TwitterAPIException(te.getMessage());
         }
 
-        return (status != null);
+        return status != null;
     }
 
     @Override
@@ -194,7 +202,7 @@ public class TwitterAPIImpl extends TwitterAPI {
             throw new TwitterAPIException(te.getMessage());
         }
 
-        return (status != null);
+        return status != null;
     }
 
     private List<TwitterPost> responseListConverter(ResponseList<Status> responseList){

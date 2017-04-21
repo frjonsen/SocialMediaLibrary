@@ -194,8 +194,18 @@ public class TwitterAPIImplTest {
     }
 
     @Test
+    @DisplayName("tries to get post-feed from unknown id, should return an empty list")
+    void testGetPostFeedUnknownId() {
+        assertNotNull(this.twitter);
+        List<TwitterPost> postfeed = twitter.getPostFeed("156482");
+        assertEquals(0, postfeed.size());
+    }
+
+
+
+    @Test
     @DisplayName("Should get a valid rateStatus")
-    void testGetRateLimite() {
+    void testGetRateLimit() {
         assertNotNull(this.twitter);
         Map<String, RateLimitStatus> status;
         status = twitter.getRateLimitStatus();

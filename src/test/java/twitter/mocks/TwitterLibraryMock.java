@@ -1,9 +1,6 @@
 package twitter.mocks;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import twitter.TwitterPost;
 import twitter4j.*;
 
 import java.util.*;
@@ -25,6 +22,7 @@ public class TwitterLibraryMock {
         Mockito.when(tw.getUserTimeline(6253282L)).thenReturn(timeLine);
         Mockito.when(tw.createFavorite(6253282L)).thenReturn(tweet);
         Mockito.when(tw.destroyFavorite(6253282L)).thenReturn(tweet);
+        Mockito.when(tw.updateStatus("The best tweet for testing")).thenReturn(tweet);
 
         return tw;
     }
