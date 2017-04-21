@@ -21,7 +21,7 @@ public interface SocialMediaAPI<T extends User, E extends Post> {
      * @param id Id of the post
      * @return true if successful
      */
-    public abstract boolean likePost(String id);
+    boolean likePost(String id);
 
     /**
      * Unlikes a post. Currently, Facebook only allows for pages
@@ -30,7 +30,7 @@ public interface SocialMediaAPI<T extends User, E extends Post> {
      * @param id Id of the post
      * @return true if successful
      */
-    public abstract boolean unlikePost(String id);
+    boolean unlikePost(String id);
 
     /**
      * Gets the post with the id. Differs what type of post
@@ -60,9 +60,9 @@ public interface SocialMediaAPI<T extends User, E extends Post> {
 
     //public abstract getFollowing(); finns inte fb
 
-    //public abstract follow(); finns inte fb
+    boolean follow(String id);
 
-    //public abstract unfollow(); finns inte fb
+    boolean unfollow(String id);
 
 
     /* Implemented individually

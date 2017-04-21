@@ -205,6 +205,102 @@ public class TwitterAPIImpl extends TwitterAPI {
         return status != null;
     }
 
+    @Override
+    public boolean follow(String screenName){
+        try {
+            long lId = Long.parseLong(screenName);
+            return follow(lId);
+        } catch (NumberFormatException nfe) {} //NOSONAR
+
+        User user;
+        try {
+            user = libraryInstance.createFriendship(screenName);
+        } catch (TwitterException te){
+            debug(te);
+            throw new TwitterAPIException(te.getMessage());
+        }
+
+        return user != null;
+    }
+
+    @Override
+    public boolean follow(String screenName, boolean notifications){
+        try {
+            long lId = Long.parseLong(screenName);
+            return follow(lId);
+        } catch (NumberFormatException nfe) {} //NOSONAR
+
+        User user;
+        try {
+            user = libraryInstance.createFriendship(screenName, notifications);
+        } catch (TwitterException te){
+            debug(te);
+            throw new TwitterAPIException(te.getMessage());
+        }
+
+        return user != null;
+    }
+
+    @Override
+    public boolean follow(long id){
+        User user;
+        try {
+            user = libraryInstance.createFriendship(id);
+        } catch (TwitterException te){
+            debug(te);
+            throw new TwitterAPIException(te.getMessage());
+        }
+
+        return user != null;
+    }
+
+    @Override
+    public boolean follow(long id, boolean notifications){
+        User user;
+        try {
+            user = libraryInstance.createFriendship(id, notifications);
+        } catch (TwitterException te){
+            debug(te);
+            throw new TwitterAPIException(te.getMessage());
+        }
+
+        return user != null;
+
+    }
+
+    @Override
+    public boolean unfollow(String screenName){
+        try {
+            long lId = Long.parseLong(screenName);
+            return unfollow(lId);
+        } catch (NumberFormatException nfe) {} //NOSONAR
+
+        User user;
+        try {
+            user = libraryInstance.destroyFriendship(screenName);
+        } catch (TwitterException te){
+            debug(te);
+            throw new TwitterAPIException(te.getMessage());
+        }
+
+        return user != null;
+
+    }
+
+    @Override
+    public boolean unfollow(long id){
+        User user;
+        try {
+            user = libraryInstance.createFriendship(id);
+        } catch (TwitterException te){
+            debug(te);
+            throw new TwitterAPIException(te.getMessage());
+        }
+
+        return user != null;
+
+    }
+
     private List<TwitterPost> responseListConverter(ResponseList<Status> responseList){
         if(responseList == null) {
             return Collections.emptyList();

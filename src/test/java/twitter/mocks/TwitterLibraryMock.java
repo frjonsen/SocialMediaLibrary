@@ -23,6 +23,15 @@ public class TwitterLibraryMock {
         Mockito.when(tw.createFavorite(6253282L)).thenReturn(tweet);
         Mockito.when(tw.destroyFavorite(6253282L)).thenReturn(tweet);
         Mockito.when(tw.updateStatus("The best tweet for testing")).thenReturn(tweet);
+        Mockito.when(tw.createFriendship("TestyMcTest", true)).thenReturn(user);
+        Mockito.when(tw.createFriendship("TestyMcTest")).thenReturn(user);
+        Mockito.when(tw.createFriendship(6253282L, true)).thenReturn(user);
+        Mockito.when(tw.createFriendship(6253282L)).thenReturn(user);
+        Mockito.when(tw.destroyFriendship("TestyMcTest")).thenReturn(user);
+        Mockito.when(tw.destroyFriendship(6253282L)).thenReturn(user);
+
+
+
 
         return tw;
     }
