@@ -140,7 +140,6 @@ public class TwitterAPIImpl extends TwitterAPI {
             debug(te);
             throw new TwitterAPIException(te.getMessage());
         }
-        System.out.println("I is in getpost");
         return responseListConverter(timeLine);
     }
 
@@ -156,13 +155,10 @@ public class TwitterAPIImpl extends TwitterAPI {
 
     private List<TwitterPost> responseListConverter(ResponseList<Status> responseList){
         if(responseList == null) {
-            System.out.println("My lawd such NULL");
             return null;
         }
         List<TwitterPost> postList = new ArrayList<>();
         responseList.forEach(status -> postList.add(createStatus(status)));
-
-        System.out.println(postList);
         return postList;
     }
 
@@ -184,15 +180,18 @@ public class TwitterAPIImpl extends TwitterAPI {
                     .collect(Collectors.toList()));
         }
         tp.setAuthor(createUser(status.getUser()));
-        try {
-            URL url = new URL("https://twitter.com/" + tp.getAuthor().getUsername() + "/" + tp.getId());
-            tp.setPermalink(url);
-        }
-        catch (MalformedURLException mue) {
-            debug(mue);
+        if(status.getUser() != null) {
+            try {
+                URL url = new URL("https://twitter.com/" + tp.getAuthor().getUsername() + "/" + tp.getId());
+                tp.setPermalink(url);
+            } catch (MalformedURLException mue) {
+                debug(mue);
+            }
         }
         tp.setLanguage(status.getLang());
-        tp.setCoordinate(new Coordinate(status.getGeoLocation().getLatitude(), status.getGeoLocation().getLongitude()));
+        if(status.getGeoLocation() != null){
+            tp.setCoordinate(new Coordinate(status.getGeoLocation().getLatitude(), status.getGeoLocation().getLongitude()));
+        }
         tp.setPlace(status.getPlace());
         tp.setMediaEntities(status.getMediaEntities());
         tp.setSymbolEntities(status.getSymbolEntities());
