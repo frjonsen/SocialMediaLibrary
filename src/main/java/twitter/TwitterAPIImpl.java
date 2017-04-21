@@ -8,6 +8,7 @@ import twitter4j.conf.ConfigurationBuilder;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -155,7 +156,7 @@ public class TwitterAPIImpl extends TwitterAPI {
 
     private List<TwitterPost> responseListConverter(ResponseList<Status> responseList){
         if(responseList == null) {
-            return null;
+            return Collections.emptyList();
         }
         List<TwitterPost> postList = new ArrayList<>();
         responseList.forEach(status -> postList.add(createStatus(status)));

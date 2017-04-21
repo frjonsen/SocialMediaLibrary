@@ -175,6 +175,15 @@ public class TwitterAPIImplTest {
         assertEquals(3, postfeed.size());
         assertEquals("123123", postfeed.get(0).getId());
     }
+
+    @Test
+    @DisplayName("should return a valid list of statuses representing a users post feed by string id")
+    void testGetPostFeedStringId() {
+        assertNotNull(this.twitter);
+        List<TwitterPost> postfeed = twitter.getPostFeed("6253282");
+        assertEquals(3, postfeed.size());
+        assertEquals("123123", postfeed.get(0).getId());
+    }
     @Test
     @DisplayName("should return a valid list of statuses representing a users post feed by string")
     void testGetPostFeedString() {
