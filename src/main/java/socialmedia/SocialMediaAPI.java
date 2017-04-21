@@ -26,6 +26,8 @@ public interface SocialMediaAPI<T extends User, E extends Post> {
      */
     E getPost(String id);
 
+    String publishStatusPost(String message);
+
     //public abstract searchPost(); finns inte fb
 
     /**

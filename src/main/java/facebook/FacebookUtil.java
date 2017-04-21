@@ -1,5 +1,6 @@
 package facebook;
 
+import facebook4j.Category;
 import facebook4j.IdNameEntity;
 import socialmedia.Post;
 
@@ -54,5 +55,12 @@ public class FacebookUtil {
             default:
                 return Post.Type.UNKNOWN;
         }
+    }
+
+    static FacebookUser categoryToUser(Category category) {
+        FacebookUser user = new FacebookUser();
+        user.setId(category.getId());
+        user.setName(category.getName());
+        return user;
     }
 }

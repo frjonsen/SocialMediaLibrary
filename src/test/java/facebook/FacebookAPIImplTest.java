@@ -1,6 +1,8 @@
 package facebook;
 
 import facebook.mocks.FacebookLibraryMock;
+import facebook4j.Category;
+import facebook4j.Comment;
 import facebook4j.FacebookException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -13,6 +15,7 @@ import java.net.URL;
 import java.text.ParseException;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.function.Predicate;
 import static org.junit.jupiter.api.Assertions.*;
@@ -72,6 +75,19 @@ class FacebookAPIImplTest {
         assertNull(this.facebook.getUser("noexist"));
     }
 
+    @Test
+    @DisplayName("should convert a f4j comment")
+    void testConvertFacebook4jComment() {
+        Date d = new Date();
+        Category category = Mockito.mock(Category.class);
+        Mockito.when(category.getId()).thenReturn("userid");
+        Mockito.when(category.getName()).thenReturn("User Name");
+        Comment comment = Mockito.mock(Comment.class);
+        Mockito.when(comment.getId()).thenReturn("id");
+        Mockito.when(comment.getMessage()).thenReturn("Message of the comment");
+        Mockito.when(comment.getCreatedTime()).thenReturn(d);
+        Mockito.when(comment.getFrom()).thenReturn(category);
+    }
 
     @Test
     @DisplayName("should return a full post")
@@ -117,7 +133,6 @@ class FacebookAPIImplTest {
             tagCount++;
         }
         assertEquals(1, tagCount);
-        assertEquals("10", post.getProperties().get(0).getText());
     }
 
     @Test

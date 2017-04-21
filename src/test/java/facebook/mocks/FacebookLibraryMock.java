@@ -92,7 +92,7 @@ public class FacebookLibraryMock {
         return f;
     }
 
-    private static List<User> generateBasicFacebookUsers(int numberOfUsers) {
+    public static List<User> generateBasicFacebookUsers(int numberOfUsers) {
         List<User> users = new ArrayList<>();
         for (int i = 0; i < numberOfUsers; ++i) {
             User user = Mockito.mock(User.class);
@@ -173,10 +173,6 @@ public class FacebookLibraryMock {
         with.add("friend2");
         Mockito.when(post.getWithTags()).thenReturn(createIdNameList(with));
         List<Post.Property> properties = new ArrayList<>();
-        Post.Property property = Mockito.mock(Post.Property.class);
-        Mockito.when(property.getName()).thenReturn("length");
-        Mockito.when(property.getText()).thenReturn("10");
-        properties.add(property);
         Mockito.when(post.getProperties()).thenReturn(properties);
 
         return post;

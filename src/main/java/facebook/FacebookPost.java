@@ -188,25 +188,6 @@ public class FacebookPost extends Post<FacebookUser> {
     }
 
     /**
-     * Returns properties for any attached video. For example
-     * length of video.
-     * @see facebook4j.Post.Property
-     * @return  properties
-     */
-    public List<facebook4j.Post.Property> getProperties() {
-        return properties;
-    }
-
-    /**
-     * Sets the properties locally.
-     * @see facebook4j.Post.Property
-     * @param properties    new properties
-     */
-    public void setProperties(List<facebook4j.Post.Property> properties) {
-        this.properties = properties;
-    }
-
-    /**
      * Returns the url source of any flash movie/video
      * attached to post.
      * @return  url of source

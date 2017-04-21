@@ -47,7 +47,6 @@ public class FacebookAPIImpl extends FacebookAPI {
         fbPost.setObjectId(post.getObjectId());
         fbPost.setParentId(post.getParentId());
         fbPost.setStatusType(post.getStatusType());
-        fbPost.setProperties(post.getProperties());
 
         return fbPost;
     }
@@ -70,6 +69,17 @@ public class FacebookAPIImpl extends FacebookAPI {
         fbUser.setName(user.getName());
         fbUser.setWebsite(user.getWebsite());
         return fbUser;
+    }
+
+    static FacebookComment facebook4jCommentConversion(Comment comment) {
+        FacebookComment fComment = new FacebookComment();
+        fComment.setId(comment.getId());
+        fComment.setMessage(comment.getMessage());
+        fComment.setLikeCount(comment.getLikeCount());
+        fComment.setCreated(comment.getCreatedTime());
+        fComment.setFrom(FacebookUtil.categoryToUser(comment.getFrom()));
+
+        return fComment;
     }
 
     FacebookAPIImpl(Facebook facebook) {
@@ -199,6 +209,17 @@ public class FacebookAPIImpl extends FacebookAPI {
             return feed.stream().map(FacebookAPIImpl::facebook4jPostConversion).collect(Collectors.toList());
         }
         catch (FacebookException fe) {
+            debug(fe);
+            throw new FacebookAPIException(fe.getMessage());
+        }
+    }
+
+    @Override
+    public String publishStatusPost(String message) {
+        try {
+            return libraryInstance.postStatusMessage(message);
+        }
+        catch(FacebookException fe) {
             debug(fe);
             throw new FacebookAPIException(fe.getMessage());
         }
