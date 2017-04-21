@@ -1,9 +1,10 @@
 package twitter.mocks;
 
 import org.mockito.Mockito;
+import twitter.TwitterPost;
 import twitter4j.*;
 
-import java.util.Date;
+import java.util.*;
 
 public class TwitterLibraryMock {
 
@@ -11,10 +12,54 @@ public class TwitterLibraryMock {
         Twitter tw = Mockito.mock(Twitter.class);
         User user = getTwitterFullUserMock();
         Status tweet = getTwitterFullStatusMock();
+        Map<String, RateLimitStatus> rateStatus = getStatusMock();
+        ResponseList<Status> timeLine = getTimeLineMock();
+
         Mockito.when(tw.showUser("TestyMcTest")).thenReturn(user);
         Mockito.when(tw.showUser(6253282L)).thenReturn(user);
         Mockito.when(tw.showStatus(114749583439036416L)).thenReturn(tweet);
+        Mockito.when(tw.getRateLimitStatus()).thenReturn(rateStatus);
+        Mockito.when(tw.getUserTimeline("TestyMcTest")).thenReturn(timeLine);
+        Mockito.when(tw.getUserTimeline(6253282L)).thenReturn(timeLine);
+
         return tw;
+    }
+
+    public static Map<String, RateLimitStatus> getStatusMock() {
+        Map<String, RateLimitStatus> status = new HashMap<>();
+        RateLimitStatus status1 = Mockito.mock(RateLimitStatus.class);
+        RateLimitStatus status2 = Mockito.mock(RateLimitStatus.class);
+        Mockito.when(status1.getLimit()).thenReturn(200);
+        Mockito.when(status2.getLimit()).thenReturn(50);
+
+        status.put("rate1", status1);
+        status.put("rate2", status2);
+
+        return status;
+    }
+
+    public static  ResponseList<Status> getTimeLineMock() {
+        ResponseListMock<Status> timeLine = new ResponseListMock<>();
+        List<Status> l = generateStatuses(3);
+        timeLine.addAll(l);
+
+        return timeLine;
+    }
+
+    private static List<Status> generateStatuses(int n) {
+        List<Status> statuses = new ArrayList<>();
+        User user = getTwitterFullUserMock();
+        for (int i = 0; i < n; ++i) {
+            Status status = Mockito.mock(Status.class); //TODO:: fix it fix it
+            Mockito.when(status.getId()).thenReturn(123123L + i);
+            Mockito.when(status.getText()).thenReturn("Basic small text");
+            Mockito.when(status.getUser()).thenReturn(user);
+
+
+            statuses.add(status);
+        }
+
+        return statuses;
     }
 
     public static User getTwitterFullUserMock() {
@@ -67,7 +112,6 @@ public class TwitterLibraryMock {
         Mockito.when(tweet.isPossiblySensitive()).thenReturn(false);
         Mockito.when(tweet.getQuotedStatus()).thenReturn(null);
         Mockito.when(tweet.getQuotedStatusId()).thenReturn(903641611474958343L);
-       // Mockito.when(tweet.getRetweetedStatus()).thenReturn(Mockito.mock(Status.class));
         Mockito.when(tweet.getCurrentUserRetweetId()).thenReturn(26815871309L);
         Mockito.when(tweet.getSource()).thenReturn("\\u003Ca href=\"http:\\/\\/itunes.apple.com\\/us\\/app\\/twitter\\/id409789998?mt=12\" \\u003ETwitter for Mac\\u003C\\/a\\u003E");
         Mockito.when(tweet.getWithheldInCountries()).thenReturn(new String[]{"EN", "GB", "SE"});

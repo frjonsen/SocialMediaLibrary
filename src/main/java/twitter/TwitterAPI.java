@@ -1,8 +1,11 @@
 package twitter;
 
 import socialmedia.SocialMediaBase;
+import twitter4j.RateLimitStatus;
 
 import java.net.URL;
+import java.util.List;
+import java.util.Map;
 
 public abstract class TwitterAPI extends SocialMediaBase<TwitterUser, TwitterPost> {
 
@@ -34,4 +37,9 @@ public abstract class TwitterAPI extends SocialMediaBase<TwitterUser, TwitterPos
      */
     public abstract TwitterPost getPost(String id);
 
+    public abstract List<TwitterPost> getPostFeed(String screenName);
+
+    public abstract List<TwitterPost> getPostFeed(long id);
+
+    public abstract Map<String, RateLimitStatus> getRateLimitStatus();
 }

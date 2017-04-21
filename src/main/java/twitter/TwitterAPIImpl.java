@@ -8,6 +8,8 @@ import twitter4j.conf.ConfigurationBuilder;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -35,7 +37,7 @@ public class TwitterAPIImpl extends TwitterAPI {
             long lId = Long.parseLong(id);
             return getUser(lId);
         }
-        catch (NumberFormatException nfe) {}
+        catch (NumberFormatException nfe) {} //NOSONAR
 
         try {
             user = libraryInstance.showUser(id);
@@ -108,6 +110,57 @@ public class TwitterAPIImpl extends TwitterAPI {
             throw new TwitterAPIException(e.getMessage());
         }
     }
+    @Override
+    public List<TwitterPost> getPostFeed(String screenName){
+        try {
+            long lId = Long.parseLong(screenName);
+            return getPostFeed(lId);
+        }
+        catch (NumberFormatException nfe) {} //NOSONAR
+
+        ResponseList<Status> timeLine;
+        try {
+            timeLine = libraryInstance.getUserTimeline(screenName);
+        } catch (TwitterException te) {
+            debug(te);
+            throw new TwitterAPIException(te.getMessage());
+        }
+
+        return responseListConverter(timeLine);
+    }
+
+
+
+    @Override
+    public List<TwitterPost> getPostFeed(long id){
+        ResponseList<Status> timeLine;
+        try {
+            timeLine = libraryInstance.getUserTimeline(id);
+        } catch (TwitterException te) {
+            debug(te);
+            throw new TwitterAPIException(te.getMessage());
+        }
+        return responseListConverter(timeLine);
+    }
+
+    @Override
+    public Map<String, RateLimitStatus> getRateLimitStatus(){
+        try {
+            return libraryInstance.getRateLimitStatus();
+        } catch (TwitterException te) {
+            debug(te);
+            return null;
+        }
+    }
+
+    private List<TwitterPost> responseListConverter(ResponseList<Status> responseList){
+        if(responseList == null) {
+            return null;
+        }
+        List<TwitterPost> postList = new ArrayList<>();
+        responseList.forEach(status -> postList.add(createStatus(status)));
+        return postList;
+    }
 
     private TwitterPost createStatus(Status status) {
         if( status == null ) {
@@ -127,15 +180,18 @@ public class TwitterAPIImpl extends TwitterAPI {
                     .collect(Collectors.toList()));
         }
         tp.setAuthor(createUser(status.getUser()));
-        try {
-            URL url = new URL("https://twitter.com/" + tp.getAuthor().getUsername() + "/" + tp.getId());
-            tp.setPermalink(url);
-        }
-        catch (MalformedURLException mue) {
-            debug(mue);
+        if(status.getUser() != null) {
+            try {
+                URL url = new URL("https://twitter.com/" + tp.getAuthor().getUsername() + "/" + tp.getId());
+                tp.setPermalink(url);
+            } catch (MalformedURLException mue) {
+                debug(mue);
+            }
         }
         tp.setLanguage(status.getLang());
-        tp.setCoordinate(new Coordinate(status.getGeoLocation().getLatitude(), status.getGeoLocation().getLongitude()));
+        if(status.getGeoLocation() != null){
+            tp.setCoordinate(new Coordinate(status.getGeoLocation().getLatitude(), status.getGeoLocation().getLongitude()));
+        }
         tp.setPlace(status.getPlace());
         tp.setMediaEntities(status.getMediaEntities());
         tp.setSymbolEntities(status.getSymbolEntities());
