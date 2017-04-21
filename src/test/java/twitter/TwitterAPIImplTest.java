@@ -204,4 +204,50 @@ public class TwitterAPIImplTest {
         assertEquals(50, status.get("rate2").getLimit());
     }
 
+    @Test
+    @DisplayName("should return true for liking a tweet")
+    void testLikePostValid(){
+        assertNotNull(this.twitter);
+        boolean success = twitter.likePost("6253282");
+        assertTrue(success);
+    }
+
+    @Test
+    @DisplayName("should return true for unliking a tweet")
+    void testUnlikePostValid(){
+        assertNotNull(this.twitter);
+        boolean success = twitter.unlikePost("6253282");
+        assertTrue(success);
+    }
+
+    @Test
+    @DisplayName("should return false for not being able to like a tweet")
+    void testLikePostInvalid(){
+        assertNotNull(this.twitter);
+        boolean success = twitter.likePost("6251111");
+        assertFalse(success);
+    }
+
+    @Test
+    @DisplayName("should return false for not being able to unlike a tweet")
+    void testUnlikePostInvalid(){
+        assertNotNull(this.twitter);
+        boolean success = twitter.likePost("6253211");
+        assertFalse(success);
+    }
+
+    @Test
+    @DisplayName("should throw exception for a bad id provided")
+    void testLikePostBadId(){
+        assertNotNull(this.twitter);
+        assertThrows(TwitterAPIException.class, ()-> twitter.likePost("6253211bad"));
+    }
+
+    @Test
+    @DisplayName("should throw exception for a bad id provided")
+    void testUnlikePostBadId(){
+        assertNotNull(this.twitter);
+        assertThrows(TwitterAPIException.class, ()-> twitter.unlikePost("6253211bad"));
+    }
+
 }

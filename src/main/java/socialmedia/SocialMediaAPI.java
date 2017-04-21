@@ -14,9 +14,23 @@ public interface SocialMediaAPI<T extends User, E extends Post> {
      */
     URL getProfilePicture(String id);
 
-    //public abstract boolean likePost(String id);
+    /**
+     * Likes a post. Currently, Facebook only allows for pages
+     * liking posts and comments on itself or other pages.
+     * User likes can not be managed through the API.
+     * @param id Id of the post
+     * @return true if successful
+     */
+    public abstract boolean likePost(String id);
 
-    //public abstract boolean unlikePost(String id);
+    /**
+     * Unlikes a post. Currently, Facebook only allows for pages
+     * liking posts and comments on itself or other pages.
+     * User likes can not be managed through the API.
+     * @param id Id of the post
+     * @return true if successful
+     */
+    public abstract boolean unlikePost(String id);
 
     /**
      * Gets the post with the id. Differs what type of post
@@ -38,9 +52,7 @@ public interface SocialMediaAPI<T extends User, E extends Post> {
      */
     List<E> getPostFeed(String id);
 
-    //public abstract publishPost();
-
-    //public abstract getComments(); finns inte twitter
+    //public abstract publishStatusPost(String message);
 
     //public abstract publishComment();
 

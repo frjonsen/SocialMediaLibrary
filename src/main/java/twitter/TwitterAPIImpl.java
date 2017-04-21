@@ -154,6 +154,49 @@ public class TwitterAPIImpl extends TwitterAPI {
         }
     }
 
+    @Override
+    public String publishStatusPost(String message){
+        return null;
+    }
+
+    @Override
+    public boolean likePost(String id){
+        Status status = null;
+        try {
+            long lId = Long.parseLong(id);
+            status = libraryInstance.createFavorite(lId);
+        }
+        catch (NumberFormatException nfe){
+            debug(nfe);
+            throw new TwitterAPIException("invalid id" + "\"" + id + "\"");
+        }
+        catch (TwitterException te){
+            debug(te);
+            throw new TwitterAPIException(te.getMessage());
+        }
+
+        return (status != null);
+    }
+
+    @Override
+    public boolean unlikePost(String id){
+        Status status = null;
+        try {
+            long lId = Long.parseLong(id);
+            status = libraryInstance.destroyFavorite(lId);
+        }
+        catch (NumberFormatException nfe){
+            debug(nfe);
+            throw new TwitterAPIException("invalid id" + "\"" + id + "\"");
+        }
+        catch (TwitterException te){
+            debug(te);
+            throw new TwitterAPIException(te.getMessage());
+        }
+
+        return (status != null);
+    }
+
     private List<TwitterPost> responseListConverter(ResponseList<Status> responseList){
         if(responseList == null) {
             return Collections.emptyList();
@@ -263,8 +306,4 @@ public class TwitterAPIImpl extends TwitterAPI {
         return usersList;
     }
 
-    @Override
-    public String publishStatusPost(String message) {
-        return null;
-    }
 }

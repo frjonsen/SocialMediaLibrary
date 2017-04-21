@@ -1,5 +1,7 @@
 package twitter.mocks;
 
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import twitter.TwitterPost;
 import twitter4j.*;
@@ -21,6 +23,8 @@ public class TwitterLibraryMock {
         Mockito.when(tw.getRateLimitStatus()).thenReturn(rateStatus);
         Mockito.when(tw.getUserTimeline("TestyMcTest")).thenReturn(timeLine);
         Mockito.when(tw.getUserTimeline(6253282L)).thenReturn(timeLine);
+        Mockito.when(tw.createFavorite(6253282L)).thenReturn(tweet);
+        Mockito.when(tw.destroyFavorite(6253282L)).thenReturn(tweet);
 
         return tw;
     }
@@ -126,4 +130,6 @@ public class TwitterLibraryMock {
 
         return tweet;
     }
+
+
 }
