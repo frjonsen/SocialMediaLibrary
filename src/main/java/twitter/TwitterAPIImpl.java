@@ -1,7 +1,10 @@
 package twitter;
 
+import facebook4j.*;
 import socialmedia.*;
+import socialmedia.Post;
 import twitter4j.*;
+import twitter4j.ResponseList;
 import twitter4j.User;
 import twitter4j.conf.ConfigurationBuilder;
 
@@ -354,6 +357,44 @@ public class TwitterAPIImpl extends TwitterAPI {
         }
 
         return followers;
+    }
+
+    @Override
+    public List<TwitterPost> searchPost(String query, int maxCalls){
+        if(SocialMediaUtil.isNullOrWhitespace(query)){
+            throw new TwitterAPIException("query cannot be empty");
+        }
+
+        List<TwitterPost> foundPosts = new ArrayList<>();
+        try {
+            Query searchQuery = new Query(query);
+            searchQuery.setCount(100);
+
+            QueryResult result = libraryInstance.search(searchQuery);
+
+            if(result.getTweets().isEmpty()){
+                for(Status post : result.getTweets()){
+                    foundPosts.add(createStatus(post));
+                }
+            }
+
+            int callsMade = 1;
+            while(result.hasNext() && (callsMade < maxCalls || maxCalls == -1)){
+                result = libraryInstance.search(result.nextQuery());
+                callsMade ++;
+                if(result.getTweets().isEmpty()){
+                    for(Status post : result.getTweets()){
+                        foundPosts.add(createStatus(post));
+                    }
+                }
+            }
+            return foundPosts;
+
+        } catch (TwitterException te){
+            debug(te);
+            throw new TwitterAPIException(te.getMessage());
+        }
+
     }
 
     private List<TwitterUser> getFollowersMe(int maxCalls){

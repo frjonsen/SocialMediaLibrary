@@ -42,7 +42,7 @@ public abstract class FacebookAPI extends SocialMediaBase<FacebookUser, Facebook
      * Not supported by facebook. Always throws an exception.
      * @return Always throws an exception
      */
-    public FacebookPost searchPost(String query) {
+    public List<FacebookPost> searchPost(String query, int maxCalls) {
         throw new NotSupportedException("searchPost", PLATFORM);
     }
 

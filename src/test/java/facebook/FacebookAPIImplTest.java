@@ -274,7 +274,7 @@ class FacebookAPIImplTest {
     @Test
     @DisplayName("should throw an error when trying to search for posts")
     void testSearchPosts() {
-        assertThrows(NotSupportedException.class, () -> facebook.searchPost("keyword"));
+        assertThrows(NotSupportedException.class, () -> facebook.searchPost("keyword", -1));
     }
 
     @Test
