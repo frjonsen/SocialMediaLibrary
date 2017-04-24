@@ -40,9 +40,22 @@ public interface SocialMediaAPI<T extends User, E extends Post> {
      */
     E getPost(String id);
 
+    /**
+     * Publishes a status post by the authenticating user containing
+     * the text body given to the function.
+     * @param message text to post
+     * @return id of created post
+     */
     String publishStatusPost(String message);
 
-    //public abstract searchPost(); finns inte fb
+    /**
+     * Searches for posts matching the given string. Pages can hold up to
+     * 100 posts. To fetch all results set maxCalls to -1.
+     * @param query text to search for
+     * @param maxCalls number of calls to limit to
+     * @return list of posts
+     */
+    List<E> searchPost(String query, int maxCalls);
 
     /**
      * Gets the users most recent posts published. Might differ
