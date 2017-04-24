@@ -15,14 +15,14 @@ class SocialMediaUtilTest {
     @Test
     @DisplayName("should return null when time is null")
     void testUTCJavaDateToZonedDateTimeNull() {
-        assertNull(SocialMediaUtil.UTCJavaDateToZonedDateTime(null));
+        assertNull(SocialMediaUtil.dateToZonedDateTime(null));
     }
 
     @Test
     @DisplayName("should correctly convert java.util.Date to java.time.ZonedDateTime")
     void testUTCJavaDateToZonedDateTimeValid() throws ParseException {
         Date d = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse("2017-03-18T16:59:49+0000");
-        ZonedDateTime time = SocialMediaUtil.UTCJavaDateToZonedDateTime(d);
+        ZonedDateTime time = SocialMediaUtil.dateToZonedDateTime(d);
         assertEquals(2017, time.getYear());
         assertEquals(16, time.getHour());
         assertEquals(time.getZone(), ZoneOffset.UTC);

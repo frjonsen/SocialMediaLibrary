@@ -105,7 +105,7 @@ public abstract class Post <T extends User> {
      * @param time Creation time of the post
      */
     public void setCreationTime(java.util.Date time) {
-        this.creationTime = SocialMediaUtil.UTCJavaDateToZonedDateTime(time);
+        this.creationTime = SocialMediaUtil.dateToZonedDateTime(time);
     }
 
     /**
@@ -156,7 +156,7 @@ public abstract class Post <T extends User> {
      * @param time Creation time of the post
      */
     public void setEditTime(java.util.Date time) {
-        this.editTime = SocialMediaUtil.UTCJavaDateToZonedDateTime(time);
+        this.editTime = SocialMediaUtil.dateToZonedDateTime(time);
     }
 
     /**

@@ -85,7 +85,7 @@ public class FacebookComment {
      * @param time Creation time
      */
     public void setCreated(Date time) {
-        this.created = SocialMediaUtil.UTCJavaDateToZonedDateTime(time);
+        this.created = SocialMediaUtil.dateToZonedDateTime(time);
     }
 
     /**

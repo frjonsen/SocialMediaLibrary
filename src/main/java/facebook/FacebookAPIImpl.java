@@ -14,6 +14,7 @@ public class FacebookAPIImpl extends FacebookAPI {
 
     private Facebook libraryInstance;
     private static final String SELF_ID = "me";
+    private static final String ERROR_MISSING_ID = "Id cannot be empty";
 
     public FacebookAPIImpl(String appId, String appSecret, String userAccessToken, String permissions) {
         ConfigurationBuilder cb = new ConfigurationBuilder();
@@ -93,7 +94,7 @@ public class FacebookAPIImpl extends FacebookAPI {
     @Override
     public FacebookUser getUser(String id) {
         if (SocialMediaUtil.isNullOrWhitespace(id)) {
-            throw new FacebookAPIException("id cannot be empty");
+            throw new FacebookAPIException(ERROR_MISSING_ID);
         }
         User user;
         try {
@@ -127,7 +128,7 @@ public class FacebookAPIImpl extends FacebookAPI {
     @Override
     public FacebookPost getPost(String id) {
         if (SocialMediaUtil.isNullOrWhitespace(id)) {
-            throw new FacebookAPIException("id cannot be empty");
+            throw new FacebookAPIException(ERROR_MISSING_ID);
         }
         facebook4j.Post post = null;
         try {
@@ -168,7 +169,7 @@ public class FacebookAPIImpl extends FacebookAPI {
     @Override
     public URL getProfilePicture(String id) {
         if (SocialMediaUtil.isNullOrWhitespace(id)) {
-            throw new FacebookAPIException("id cannot be empty");
+            throw new FacebookAPIException(ERROR_MISSING_ID);
         }
         try {
             URL url = null;
@@ -190,7 +191,7 @@ public class FacebookAPIImpl extends FacebookAPI {
     @Override
     public boolean likePost(String id) {
         if (SocialMediaUtil.isNullOrWhitespace(id)) {
-            throw new FacebookAPIException("id cannot be empty");
+            throw new FacebookAPIException(ERROR_MISSING_ID);
         }
         try {
             return libraryInstance.likePost(id);
@@ -203,7 +204,7 @@ public class FacebookAPIImpl extends FacebookAPI {
     @Override
     public boolean unlikePost(String id) {
         if (SocialMediaUtil.isNullOrWhitespace(id)) {
-            throw new FacebookAPIException("id cannot be empty");
+            throw new FacebookAPIException(ERROR_MISSING_ID);
         }
         try {
             return libraryInstance.unlikePost(id);
@@ -216,7 +217,7 @@ public class FacebookAPIImpl extends FacebookAPI {
     @Override
     public List<FacebookPost> getPostFeed(String id) {
         if (SocialMediaUtil.isNullOrWhitespace(id)) {
-            throw new FacebookAPIException("id cannot be empty");
+            throw new FacebookAPIException(ERROR_MISSING_ID);
         }
         try {
             List<Post> feed = null;
@@ -251,7 +252,7 @@ public class FacebookAPIImpl extends FacebookAPI {
     @Override
     public List<FacebookComment> getComments(String postId) {
         if (SocialMediaUtil.isNullOrWhitespace(postId)) {
-            throw new FacebookAPIException("postId cannot be empty");
+            throw new FacebookAPIException(ERROR_MISSING_ID);
         }
         List<Comment> comments = null;
         try {
@@ -266,7 +267,7 @@ public class FacebookAPIImpl extends FacebookAPI {
     @Override
     public String publishComment(String postId, String commentMessage) {
         if (SocialMediaUtil.isNullOrWhitespace(postId)) {
-            throw new FacebookAPIException("postId cannot be empty");
+            throw new FacebookAPIException(ERROR_MISSING_ID);
         } else if (SocialMediaUtil.isNullOrWhitespace(commentMessage)) {
             throw new FacebookAPIException("commentMessage cannot be empty");
         }
@@ -282,9 +283,4 @@ public class FacebookAPIImpl extends FacebookAPI {
     protected void debug(String s) {
         super.debug(PLATFORM + ": " + s);
     }
-
-//TODO:: Overloads for pagination
-   /* public List<FacebookUser> searchUser(String query) {
-
-    }*/
 }

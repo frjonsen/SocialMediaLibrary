@@ -3,7 +3,6 @@ package facebook;
 import socialmedia.NotSupportedException;
 import socialmedia.SocialMediaBase;
 
-import java.net.URL;
 import java.util.List;
 
 /**

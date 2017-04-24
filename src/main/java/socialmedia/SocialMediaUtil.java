@@ -16,7 +16,7 @@ public class SocialMediaUtil {
      * @param date Date to convert
      * @return ZonedDateTime with same date and time
      */
-    public static ZonedDateTime UTCJavaDateToZonedDateTime(Date date) {
+    public static ZonedDateTime dateToZonedDateTime(Date date) {
         if (date == null) {
             return null;
         }
