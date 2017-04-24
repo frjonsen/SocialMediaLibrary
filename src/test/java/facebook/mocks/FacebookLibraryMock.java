@@ -90,6 +90,8 @@ public class FacebookLibraryMock {
         Mockito.when(f.getFeed("56726489657236574")).thenReturn(otherFeed);
         ResponseList<Comment> comments = generateBasicFacebookPostComments(3);
         Mockito.when(f.getPostComments("somepostid")).thenReturn(comments);
+        Mockito.when(f.postStatusMessage("message")).thenReturn("postid");
+        Mockito.when(f.commentPost("postid", "comment message")).thenReturn("commentid");
 
         return f;
     }

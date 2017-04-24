@@ -40,25 +40,6 @@ public abstract class FacebookAPI extends SocialMediaBase<FacebookUser, Facebook
     public abstract List<FacebookUser> searchUsers(String query);
 
     /**
-     * Likes a post. Currently, Facebook only allows for pages
-     * liking posts and comments on itself or other pages.
-     * User likes can not be managed through the API.
-     * @param id Id of the post
-     * @return true if successful
-     */
-    public abstract boolean likePost(String id);
-
-
-    /**
-     * Unlikes a post. Currently, Facebook only allows for pages
-     * liking posts and comments on itself or other pages.
-     * User likes can not be managed through the API.
-     * @param id Id of the post
-     * @return true if successful
-     */
-    public abstract boolean unlikePost(String id);
-
-    /**
      * Not supported by facebook. Always throws an exception.
      * @return Always throws an exception
      */
@@ -67,19 +48,19 @@ public abstract class FacebookAPI extends SocialMediaBase<FacebookUser, Facebook
     }
 
     /**
-     * Gets the feed of a user or page.
-     * If id is "me", will return the feed of the current user or page
-     * @param id id of user or page
-     * @return A list of posts
-     */
-    public abstract List<FacebookPost> getPostFeed(String id);
-
-    /**
      * Gets the comments from a Facebook post
-     * @param postId
-     * @return
+     * @param postId Id of post
+     * @return A list of comments
      */
     public abstract List<FacebookComment> getComments(String postId);
+
+    /**
+     * Publishes a comment on a post
+     * @param postId Id of the post
+     * @param commentMessage Comment contents
+     * @return Id of the new comment
+     */
+    public abstract String publishComment(String postId, String commentMessage);
 
     /**
      * Not supported by facebook. Always throws an exception.

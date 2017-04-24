@@ -76,6 +76,13 @@ class FacebookAPIImplTest {
     }
 
     @Test
+    @DisplayName("should throw an exception when user id is null or whitespace")
+    void testGetUserFailCheck() {
+        assertThrows(FacebookAPIException.class, () -> facebook.getUser(" "));
+        assertThrows(FacebookAPIException.class, () -> facebook.getUser(null));
+    }
+
+    @Test
     @DisplayName("should convert a f4j comment")
     void testConvertFacebook4jComment() {
         Date d = new Date();
@@ -136,6 +143,19 @@ class FacebookAPIImplTest {
     }
 
     @Test
+    @DisplayName("should post a comment")
+    void testValidPostComment() {
+        assertEquals("commentid", this.facebook.publishComment("postid", "comment message"));
+    }
+
+    @Test
+    @DisplayName("should throw an error when postid or comment is empty")
+    void testInvalidPostComment() {
+        assertThrows(FacebookAPIException.class, () -> this.facebook.publishComment(" ", "comment message"));
+        assertThrows(FacebookAPIException.class, () -> this.facebook.publishComment("postid", " "));
+    }
+
+    @Test
     @DisplayName("should return null for non-existant post id")
     void testNonExistentGetPost() {
         assertNotNull(this.facebook);
@@ -156,10 +176,24 @@ class FacebookAPIImplTest {
     }
 
     @Test
+    @DisplayName("should throw an exception when post id is null or whitespace")
+    void testGetCommentsFailCheck() {
+        assertThrows(FacebookAPIException.class, () ->facebook.getComments(" "));
+        assertThrows(FacebookAPIException.class, () ->facebook.getComments(null));
+    }
+
+    @Test
     @DisplayName("should search for and find three users")
     void testSearchUsers() {
         List<FacebookUser> results = facebook.searchUsers("User");
         assertEquals(3, results.size());
+    }
+
+    @Test
+    @DisplayName("should throw an exception when query is not specified")
+    void testSearchUsersFailCheck() {
+        assertThrows(FacebookAPIException.class, () -> facebook.searchUsers(" "));
+        assertThrows(FacebookAPIException.class, () -> facebook.searchUsers(null));
     }
 
     @Test
@@ -183,6 +217,13 @@ class FacebookAPIImplTest {
     }
 
     @Test
+    @DisplayName("should throw an exception when user id is empty or null")
+    void testGetProfilePictureFailCheck() {
+        assertThrows(FacebookAPIException.class, () -> this.facebook.getProfilePicture(null));
+        assertThrows(FacebookAPIException.class, () -> this.facebook.getProfilePicture(" "));
+    }
+
+    @Test
     @DisplayName("should successfully like a post")
     void testLikePost() {
         assertTrue(facebook.likePost("10202360904079395_10208824524985878"));
@@ -195,6 +236,13 @@ class FacebookAPIImplTest {
     }
 
     @Test
+    @DisplayName("should throw an exception when post id is empty or null")
+    void testLikeFailCheck() {
+        assertThrows(FacebookAPIException.class, () -> this.facebook.likePost(null));
+        assertThrows(FacebookAPIException.class, () -> this.facebook.likePost(" "));
+    }
+
+    @Test
     @DisplayName("should successfully like a post")
     void testUnlikePost() {
         assertTrue(facebook.unlikePost("10202360904079395_10208824524985878"));
@@ -204,6 +252,13 @@ class FacebookAPIImplTest {
     @DisplayName("should fail to like a non-existent post")
     void testUnlikeInvalidPost() {
         assertFalse(facebook.unlikePost("nonexistent"));
+    }
+
+    @Test
+    @DisplayName("should throw an exception when post id is empty or null")
+    void testUnlikeFailCheck() {
+        assertThrows(FacebookAPIException.class, () -> this.facebook.unlikePost(null));
+        assertThrows(FacebookAPIException.class, () -> this.facebook.unlikePost(" "));
     }
 
     @Test
@@ -224,6 +279,13 @@ class FacebookAPIImplTest {
     void testGetOtherFeed() {
         List<FacebookPost> feed = facebook.getPostFeed("56726489657236574");
         assertEquals(2, feed.size());
+    }
+
+    @Test
+    @DisplayName("should throw an exception when user id is empty or null")
+    void testGetFeedFailCheck() {
+        assertThrows(FacebookAPIException.class, () -> facebook.getPostFeed(" "));
+        assertThrows(FacebookAPIException.class, () -> facebook.getPostFeed(null));
     }
 
     @Test

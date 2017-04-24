@@ -5,6 +5,9 @@ import java.time.ZonedDateTime;
 import java.util.Date;
 
 public class SocialMediaUtil {
+
+    private SocialMediaUtil() {}
+
     /**
      * Converts a java.util.Date to a ZonedDateTime.
      * As java.util.Date lacks a timezone, this function
@@ -18,5 +21,14 @@ public class SocialMediaUtil {
             return null;
         }
         return ZonedDateTime.ofInstant(date.toInstant(), ZoneOffset.UTC);
+    }
+
+    /**
+     * Checks if a string is null or contains only whitespace or linebreaks
+     * @param str String to check
+     * @return True if string is null or contains only whitespace
+     */
+    public static boolean isNullOrWhitespace(String str) {
+        return str == null || str.trim().isEmpty();
     }
 }
