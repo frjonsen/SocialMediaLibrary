@@ -16,19 +16,28 @@ public class TwitterLibraryMock {
 
         Mockito.when(tw.showUser("TestyMcTest")).thenReturn(user);
         Mockito.when(tw.showUser(6253282L)).thenReturn(user);
+
         Mockito.when(tw.showStatus(114749583439036416L)).thenReturn(tweet);
         Mockito.when(tw.getRateLimitStatus()).thenReturn(rateStatus);
+
         Mockito.when(tw.getUserTimeline("TestyMcTest")).thenReturn(timeLine);
         Mockito.when(tw.getUserTimeline(6253282L)).thenReturn(timeLine);
+
         Mockito.when(tw.createFavorite(6253282L)).thenReturn(tweet);
         Mockito.when(tw.destroyFavorite(6253282L)).thenReturn(tweet);
+
         Mockito.when(tw.updateStatus("The best tweet for testing")).thenReturn(tweet);
+
         Mockito.when(tw.createFriendship("TestyMcTest", true)).thenReturn(user);
         Mockito.when(tw.createFriendship("TestyMcTest")).thenReturn(user);
         Mockito.when(tw.createFriendship(6253282L, true)).thenReturn(user);
         Mockito.when(tw.createFriendship(6253282L)).thenReturn(user);
         Mockito.when(tw.destroyFriendship("TestyMcTest")).thenReturn(user);
         Mockito.when(tw.destroyFriendship(6253282L)).thenReturn(user);
+
+        Query query = new Query("Test sweet tweet");
+        QueryResult querryRes = getQueryResultMock(query);
+        Mockito.when(tw.search(Mockito.any(Query.class))).thenReturn(querryRes);
 
 
 
@@ -49,7 +58,7 @@ public class TwitterLibraryMock {
         return status;
     }
 
-    public static  ResponseList<Status> getTimeLineMock() {
+    public static ResponseList<Status> getTimeLineMock() {
         ResponseListMock<Status> timeLine = new ResponseListMock<>();
         List<Status> l = generateStatuses(3);
         timeLine.addAll(l);
@@ -57,11 +66,22 @@ public class TwitterLibraryMock {
         return timeLine;
     }
 
+    private static QueryResult getQueryResultMock(Query query){
+        query.setCount(100);
+        QueryResult queryResult = Mockito.mock(QueryResult.class);
+        List<Status> statuses = generateStatuses(2);
+        Mockito.when(queryResult.getTweets()).thenReturn(statuses);
+        Mockito.when(queryResult.hasNext()).thenReturn(true);
+        Mockito.when(queryResult.nextQuery()).thenReturn(query);
+
+        return queryResult;
+    }
+
     private static List<Status> generateStatuses(int n) {
         List<Status> statuses = new ArrayList<>();
         User user = getTwitterFullUserMock();
         for (int i = 0; i < n; ++i) {
-            Status status = Mockito.mock(Status.class); //TODO:: fix it fix it
+            Status status = Mockito.mock(Status.class);
             Mockito.when(status.getId()).thenReturn(123123L + i);
             Mockito.when(status.getText()).thenReturn("Basic small text");
             Mockito.when(status.getUser()).thenReturn(user);
