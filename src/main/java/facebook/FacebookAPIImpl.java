@@ -25,7 +25,7 @@ public class FacebookAPIImpl extends FacebookAPI {
         libraryInstance = new FacebookFactory(cb.build()).getInstance();
     }
 
-    private static FacebookPost facebook4jPostConversion(Post post) {
+    static FacebookPost facebook4jPostConversion(Post post) {
         if (post == null) {
             return null;
         }
@@ -51,7 +51,7 @@ public class FacebookAPIImpl extends FacebookAPI {
         return fbPost;
     }
 
-    private static FacebookUser facebook4jUserConversion(User user) {
+    static FacebookUser facebook4jUserConversion(User user) {
         if (user == null) {
             return null;
         }
@@ -72,6 +72,9 @@ public class FacebookAPIImpl extends FacebookAPI {
     }
 
     static FacebookComment facebook4jCommentConversion(Comment comment) {
+        if (comment == null) {
+            return null;
+        }
         FacebookComment fComment = new FacebookComment();
         fComment.setId(comment.getId());
         fComment.setMessage(comment.getMessage());

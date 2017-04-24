@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import socialmedia.NotSupportedException;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.ParseException;
@@ -140,6 +142,14 @@ class FacebookAPIImplTest {
             tagCount++;
         }
         assertEquals(1, tagCount);
+    }
+
+    @Test
+    @DisplayName("conversion functions should handle null")
+    void testNullConversion() {
+        assertNull(FacebookAPIImpl.facebook4jCommentConversion(null));
+        assertNull(FacebookAPIImpl.facebook4jPostConversion(null));
+        assertNull(FacebookAPIImpl.facebook4jUserConversion(null));
     }
 
     @Test
@@ -310,5 +320,19 @@ class FacebookAPIImplTest {
     @DisplayName("should throw an error when trying to unfollow")
     void testUnfollow() {
         assertThrows(NotSupportedException.class, () -> facebook.unfollow("someid"));
+    }
+
+    @Test
+    @DisplayName("all functions should handle FacebookExceptions")
+    void testAPIExceptions() throws InvocationTargetException, IllegalAccessException {
+        assertThrows(FacebookAPIException.class, () -> facebook.getUser("fails"));
+        assertThrows(FacebookAPIException.class, () -> facebook.getPost("fails"));
+        assertThrows(FacebookAPIException.class, () -> facebook.searchUsers("fails"));
+        assertThrows(FacebookAPIException.class, () -> facebook.getProfilePicture("fails"));
+        assertThrows(FacebookAPIException.class, () -> facebook.likePost("fails"));
+        assertThrows(FacebookAPIException.class, () -> facebook.unlikePost("fails"));
+        assertThrows(FacebookAPIException.class, () -> facebook.getPostFeed("fails"));
+        assertThrows(FacebookAPIException.class, () -> facebook.publishStatusPost("fails"));
+        assertThrows(FacebookAPIException.class, () -> facebook.publishComment("fails", "message"));
     }
 }

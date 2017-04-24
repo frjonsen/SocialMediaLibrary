@@ -68,6 +68,20 @@ public class FacebookLibraryMock {
         return list;
     }
 
+    private static void addFailCalls(Facebook facebook) throws FacebookException {
+        Mockito.when(facebook.getUser("fails")).thenThrow(FacebookException.class);
+        Mockito.when(facebook.getPost("fails")).thenThrow(FacebookException.class);
+        Mockito.when(facebook.searchUsers("fails")).thenThrow(FacebookException.class);
+        Mockito.when(facebook.getPictureURL("fails", Integer.MAX_VALUE, 0)).thenThrow(FacebookException.class);
+        Mockito.when(facebook.likePost("fails")).thenThrow(FacebookException.class);
+        Mockito.when(facebook.unlikePost("fails")).thenThrow(FacebookException.class);
+        Mockito.when(facebook.getFeed("fails")).thenThrow(FacebookException.class);
+        Mockito.when(facebook.getPostComments("fails")).thenThrow(FacebookException.class);
+        Mockito.when(facebook.postStatusMessage("fails")).thenThrow(FacebookException.class);
+        Mockito.when(facebook.commentPost("fails", "message")).thenThrow(FacebookException.class);
+
+    }
+
     public static Facebook getFacebookMock() throws FacebookException, MalformedURLException, ParseException {
         Facebook f = Mockito.mock(Facebook.class);
         User user = getFacebookFullUserMock();
@@ -92,11 +106,11 @@ public class FacebookLibraryMock {
         Mockito.when(f.getPostComments("somepostid")).thenReturn(comments);
         Mockito.when(f.postStatusMessage("message")).thenReturn("postid");
         Mockito.when(f.commentPost("postid", "comment message")).thenReturn("commentid");
-
+        addFailCalls(f);
         return f;
     }
 
-    public static List<User> generateBasicFacebookUsers(int numberOfUsers) {
+    static List<User> generateBasicFacebookUsers(int numberOfUsers) {
         List<User> users = new ArrayList<>();
         for (int i = 0; i < numberOfUsers; ++i) {
             User user = Mockito.mock(User.class);
