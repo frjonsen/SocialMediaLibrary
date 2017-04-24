@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 public class FacebookAPIImpl extends FacebookAPI {
 
     private Facebook libraryInstance;
-    private static final String SELF_ID = "me";
     private static final String ERROR_MISSING_ID = "Id cannot be empty";
 
     public FacebookAPIImpl(String appId, String appSecret, String userAccessToken, String permissions) {

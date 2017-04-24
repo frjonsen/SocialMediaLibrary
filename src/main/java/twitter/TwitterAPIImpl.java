@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -300,100 +301,76 @@ public class TwitterAPIImpl extends TwitterAPI {
         return user != null;
     }
 
+    private IDs getFollowers(Long id, long cursor) throws TwitterException {
+        if (id == null) {
+            return libraryInstance.getFollowersIDs(cursor);
+        }
+        return libraryInstance.getFollowersIDs(id, cursor);
+    }
+
     @Override
     public List<TwitterUser> getFollowers(String id, int maxCalls){
-        if(id == "me") {
-            return getFollowersMe(maxCalls);
-        }
+        Long lId;
         List<TwitterUser> followers = new ArrayList<>();
         try {
-            long lId = Long.parseLong(id);
-            IDs ids = libraryInstance.getFollowersIDs(lId,-1L);
+            lId = Long.parseLong(id);
+        } catch(NumberFormatException nfe) {
+            if (id.equals(SELF_ID)) lId = null;
+            else throw new TwitterAPIException("Invalid id");
+        }
+        try {
+            IDs ids = getFollowers(lId, -1);
             if(ids.getIDs().length != 0){
                 followers.addAll(longListToUsers(ids.getIDs()));
             }
             int callsMade = 1;
-            while( ids.hasNext() && callsMade < maxCalls){
-                ids = libraryInstance.getFollowersIDs(lId, ids.getNextCursor());
+            while( ids.hasNext() && (maxCalls == -1 || callsMade++ < maxCalls)){
+                ids = getFollowers(lId, ids.getNextCursor());
                 if(ids.getIDs().length != 0) {
                     followers.addAll(longListToUsers(ids.getIDs()));
                 }
             }
-        } catch (NumberFormatException nfe) {}
+        }
         catch (TwitterException te) {
             debug(te);
             throw new TwitterAPIException(te.getMessage());
         }
 
         return followers;
+    }
+
+    private IDs getFollowing(Long id, long cursor) throws TwitterException {
+        if (id == null) {
+            return libraryInstance.getFriendsIDs(cursor);
+        }
+        return libraryInstance.getFriendsIDs(id, cursor);
     }
 
     @Override
     public List<TwitterUser> getFollowing(String id, int maxCalls){
-        if(id == "me") {
-            return getFollowingMe(maxCalls);
-        }
+
+        Long lId;
         List<TwitterUser> followers = new ArrayList<>();
         try {
-            long lId = Long.parseLong(id);
-            IDs ids = libraryInstance.getFriendsIDs(lId,-1L);
+            lId = Long.parseLong(id);
+        } catch (NumberFormatException nfe) {
+            if (id.equals(SELF_ID)) lId = null;
+            else throw new TwitterAPIException("Invalid id");
+        }
+
+        try {
+            IDs ids = getFollowing(lId, -1);
             if(ids.getIDs().length != 0){
                 followers.addAll(longListToUsers(ids.getIDs()));
             }
             int callsMade = 1;
-            while( ids.hasNext() && callsMade < maxCalls){
-                ids = libraryInstance.getFriendsIDs(lId, ids.getNextCursor());
+            while( ids.hasNext() && (maxCalls == -1 || callsMade++ < maxCalls)){
+                ids = getFollowing(lId, ids.getNextCursor());
                 if(ids.getIDs().length != 0) {
                     followers.addAll(longListToUsers(ids.getIDs()));
                 }
             }
-        } catch (NumberFormatException nfe) {}
-        catch (TwitterException te) {
-            debug(te);
-            throw new TwitterAPIException(te.getMessage());
         }
-
-        return followers;
-    }
-
-    private List<TwitterUser> getFollowersMe(int maxCalls){
-        List<TwitterUser> followers = new ArrayList<>();
-        try {
-            IDs ids = libraryInstance.getFollowersIDs(-1L);
-            if(ids.getIDs().length != 0){
-                followers.addAll(longListToUsers(ids.getIDs()));
-            }
-            int callsMade = 1;
-            while( ids.hasNext() && callsMade < maxCalls){
-                ids = libraryInstance.getFollowersIDs(ids.getNextCursor());
-                if(ids.getIDs().length != 0) {
-                    followers.addAll(longListToUsers(ids.getIDs()));
-                }
-            }
-        } catch (NumberFormatException nfe) {}
-        catch (TwitterException te) {
-            debug(te);
-            throw new TwitterAPIException(te.getMessage());
-        }
-
-        return followers;
-    }
-
-    private List<TwitterUser> getFollowingMe(int maxCalls){
-        List<TwitterUser> followers = new ArrayList<>();
-        try {
-            IDs ids = libraryInstance.getFriendsIDs(-1L);
-            if(ids.getIDs().length != 0){
-                followers.addAll(longListToUsers(ids.getIDs()));
-            }
-            int callsMade = 1;
-            while( ids.hasNext() && callsMade < maxCalls){
-                ids = libraryInstance.getFriendsIDs(ids.getNextCursor());
-                if(ids.getIDs().length != 0) {
-                    followers.addAll(longListToUsers(ids.getIDs()));
-                }
-            }
-        } catch (NumberFormatException nfe) {}
         catch (TwitterException te) {
             debug(te);
             throw new TwitterAPIException(te.getMessage());
