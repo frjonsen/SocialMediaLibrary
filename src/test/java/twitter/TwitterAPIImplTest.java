@@ -414,4 +414,15 @@ public class TwitterAPIImplTest {
         assertFalse(success);
     }
 
+    @Test
+    @DisplayName("")
+    void testSearchPost(){
+        assertNotNull(this.twitter);
+        List<TwitterPost> res = twitter.searchPost("Test sweet tweet", 2);
+        assertEquals("123123", res.get(0).getId());
+        assertEquals(4, res.size());
+    }
+
+
+
 }

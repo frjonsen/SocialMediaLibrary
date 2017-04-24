@@ -355,14 +355,15 @@ public class TwitterAPIImpl extends TwitterAPI {
             throw new TwitterAPIException("query cannot be empty");
         }
 
-        List<TwitterPost> foundPosts = new ArrayList<>();
         try {
+            List<TwitterPost> foundPosts = new ArrayList<>();
+
             Query searchQuery = new Query(query);
             searchQuery.setCount(100);
 
             QueryResult result = libraryInstance.search(searchQuery);
 
-            if(result.getTweets().isEmpty()){
+            if(!(result.getTweets().isEmpty())){
                 for(Status post : result.getTweets()){
                     foundPosts.add(createStatus(post));
                 }
@@ -372,7 +373,7 @@ public class TwitterAPIImpl extends TwitterAPI {
             while(result.hasNext() && (callsMade < maxCalls || maxCalls == -1)){
                 result = libraryInstance.search(result.nextQuery());
                 callsMade ++;
-                if(result.getTweets().isEmpty()){
+                if(!(result.getTweets().isEmpty())){
                     for(Status post : result.getTweets()){
                         foundPosts.add(createStatus(post));
                     }
