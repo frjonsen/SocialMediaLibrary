@@ -229,13 +229,13 @@ class FacebookAPIImplTest {
     @Test
     @DisplayName("should throw an error when trying to get followers")
     void testGetFollowers() {
-        assertThrows(NotSupportedException.class, () -> facebook.getFollowers("someid"));
+        assertThrows(NotSupportedException.class, () -> facebook.getFollowers("someid", -1));
     }
 
     @Test
     @DisplayName("should throw an error when trying to get following")
     void testGetFollowing() {
-        assertThrows(NotSupportedException.class, () -> facebook.getFollowing("someid"));
+        assertThrows(NotSupportedException.class, () -> facebook.getFollowing("someid", -1));
     }
 
     @Test
