@@ -56,9 +56,29 @@ public interface SocialMediaAPI<T extends User, E extends Post> {
 
     //public abstract publishComment();
 
-    //public abstract getFollowers(); finns inte fb
+    /**
+     * Gets followers for user with given id and returns a list
+     * of users for the platform. Only id field is always present.
+     * Call with maxCalls -1 to get all available users in list, else
+     * specify how many calls should be made to the api.If id parameter
+     * is set to "me", will fetch authenticating users following.
+     * @param id id of user
+     * @param maxCalls max number of calls to api
+     * @return list of users
+     */
+    List<T> getFollowers(String id, int maxCalls);
 
-    //public abstract getFollowing(); finns inte fb
+    /**
+     * Gets following for user with given id and returns a list
+     * of users for the platform. Only id field is always present.
+     * Call with maxCalls -1 to get all available users in list, else
+     * specify how many calls should be made to the api. If id parameter
+     * is set to "me", will fetch authenticating users following.
+     * @param id id of user
+     * @param maxCalls max number of calls to api
+     * @return list of users
+     */
+    List<T> getFollowing(String id, int maxCalls);
 
     boolean follow(String id);
 

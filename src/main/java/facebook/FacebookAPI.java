@@ -66,7 +66,7 @@ public abstract class FacebookAPI extends SocialMediaBase<FacebookUser, Facebook
      * @param id -
      * @return Always throws an exception
      */
-    public List<FacebookUser> getFollowers(String id) {
+    public List<FacebookUser> getFollowers(String id, int maxCalls) {
         throw new NotSupportedException("getFollowers", PLATFORM);
     }
 
@@ -75,7 +75,7 @@ public abstract class FacebookAPI extends SocialMediaBase<FacebookUser, Facebook
      * @param id -
      * @return Always throws an exception
      */
-    public List<FacebookUser> getFollowing(String id) {
+    public List<FacebookUser> getFollowing(String id, int maxCalls) {
         throw new NotSupportedException("getFollowing", PLATFORM);
     }
 

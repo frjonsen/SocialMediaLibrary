@@ -298,7 +298,118 @@ public class TwitterAPIImpl extends TwitterAPI {
         }
 
         return user != null;
+    }
 
+    @Override
+    public List<TwitterUser> getFollowers(String id, int maxCalls){
+        if(id == "me") {
+            return getFollowersMe(maxCalls);
+        }
+        List<TwitterUser> followers = new ArrayList<>();
+        try {
+            long lId = Long.parseLong(id);
+            IDs ids = libraryInstance.getFollowersIDs(lId,-1L);
+            if(ids.getIDs().length != 0){
+                followers.addAll(longListToUsers(ids.getIDs()));
+            }
+            int callsMade = 1;
+            while( ids.hasNext() && callsMade < maxCalls){
+                ids = libraryInstance.getFollowersIDs(lId, ids.getNextCursor());
+                if(ids.getIDs().length != 0) {
+                    followers.addAll(longListToUsers(ids.getIDs()));
+                }
+            }
+        } catch (NumberFormatException nfe) {}
+        catch (TwitterException te) {
+            debug(te);
+            throw new TwitterAPIException(te.getMessage());
+        }
+
+        return followers;
+    }
+
+    @Override
+    public List<TwitterUser> getFollowing(String id, int maxCalls){
+        if(id == "me") {
+            return getFollowingMe(maxCalls);
+        }
+        List<TwitterUser> followers = new ArrayList<>();
+        try {
+            long lId = Long.parseLong(id);
+            IDs ids = libraryInstance.getFriendsIDs(lId,-1L);
+            if(ids.getIDs().length != 0){
+                followers.addAll(longListToUsers(ids.getIDs()));
+            }
+            int callsMade = 1;
+            while( ids.hasNext() && callsMade < maxCalls){
+                ids = libraryInstance.getFriendsIDs(lId, ids.getNextCursor());
+                if(ids.getIDs().length != 0) {
+                    followers.addAll(longListToUsers(ids.getIDs()));
+                }
+            }
+        } catch (NumberFormatException nfe) {}
+        catch (TwitterException te) {
+            debug(te);
+            throw new TwitterAPIException(te.getMessage());
+        }
+
+        return followers;
+    }
+
+    private List<TwitterUser> getFollowersMe(int maxCalls){
+        List<TwitterUser> followers = new ArrayList<>();
+        try {
+            IDs ids = libraryInstance.getFollowersIDs(-1L);
+            if(ids.getIDs().length != 0){
+                followers.addAll(longListToUsers(ids.getIDs()));
+            }
+            int callsMade = 1;
+            while( ids.hasNext() && callsMade < maxCalls){
+                ids = libraryInstance.getFollowersIDs(ids.getNextCursor());
+                if(ids.getIDs().length != 0) {
+                    followers.addAll(longListToUsers(ids.getIDs()));
+                }
+            }
+        } catch (NumberFormatException nfe) {}
+        catch (TwitterException te) {
+            debug(te);
+            throw new TwitterAPIException(te.getMessage());
+        }
+
+        return followers;
+    }
+
+    private List<TwitterUser> getFollowingMe(int maxCalls){
+        List<TwitterUser> followers = new ArrayList<>();
+        try {
+            IDs ids = libraryInstance.getFriendsIDs(-1L);
+            if(ids.getIDs().length != 0){
+                followers.addAll(longListToUsers(ids.getIDs()));
+            }
+            int callsMade = 1;
+            while( ids.hasNext() && callsMade < maxCalls){
+                ids = libraryInstance.getFriendsIDs(ids.getNextCursor());
+                if(ids.getIDs().length != 0) {
+                    followers.addAll(longListToUsers(ids.getIDs()));
+                }
+            }
+        } catch (NumberFormatException nfe) {}
+        catch (TwitterException te) {
+            debug(te);
+            throw new TwitterAPIException(te.getMessage());
+        }
+
+        return followers;
+    }
+
+    private List<TwitterUser> longListToUsers(long[] ids){
+        List<TwitterUser> followers = new ArrayList<>();
+        for(long i : ids) {
+            TwitterUser user = new TwitterUser();
+            user.setId(String.valueOf(i));
+            followers.add(user);
+        }
+        return followers;
     }
 
     private List<TwitterPost> responseListConverter(ResponseList<Status> responseList){
