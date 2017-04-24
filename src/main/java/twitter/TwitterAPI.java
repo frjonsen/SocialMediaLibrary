@@ -1,6 +1,5 @@
 package twitter;
 
-import socialmedia.NotSupportedException;
 import socialmedia.SocialMediaBase;
 import twitter4j.RateLimitStatus;
 
@@ -58,8 +57,29 @@ public abstract class TwitterAPI extends SocialMediaBase<TwitterUser, TwitterPos
      */
     public abstract List<TwitterPost> getPostFeed(long id);
 
-    //public abstract List<TwitterUser> getFollowers(String id);
-    //public abstract List<TwitterUser> getFollowing(String id);
+    /**
+     * Gets followers for user with given id and returns a list
+     * of users for the platform. Only id field is always present.
+     * Call with maxCalls -1 to get all available users in list, else
+     * specify how many calls should be made to the api.If id parameter
+     * is set to "me", will fetch authenticating users following.
+     * @param id id of user
+     * @param maxCalls max number of calls to api
+     * @return list of users
+     */
+    public abstract List<TwitterUser> getFollowers(String id, int maxCalls);
+
+    /**
+     * Gets following for user with given id and returns a list
+     * of users for the platform. Only id field is always present.
+     * Call with maxCalls -1 to get all available users in list, else
+     * specify how many calls should be made to the api. If id parameter
+     * is set to "me", will fetch authenticating users following.
+     * @param id id of user
+     * @param maxCalls max number of calls to api
+     * @return list of users
+     */
+    public abstract List<TwitterUser> getFollowing(String id, int maxCalls);
     public abstract boolean follow(String screenName);
     public abstract boolean follow(String screenName, boolean notifications);
     public abstract boolean follow(long id);
