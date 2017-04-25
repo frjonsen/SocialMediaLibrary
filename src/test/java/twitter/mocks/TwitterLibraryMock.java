@@ -5,8 +5,10 @@ import twitter4j.*;
 
 import java.util.*;
 
+import static org.mockito.AdditionalMatchers.not;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.eq;
 
 public class TwitterLibraryMock {
 
@@ -43,19 +45,33 @@ public class TwitterLibraryMock {
         Mockito.when(tw.search(any(Query.class))).thenReturn(querryRes);
 
         IDsResponseMock response = new IDsResponseMock();
-        Mockito.when(tw.getFollowersIDs(anyLong())).thenAnswer(response);
-        Mockito.when(tw.getFollowersIDs(anyLong(), anyLong())).thenAnswer(response);
-        Mockito.when(tw.getFriendsIDs(anyLong())).thenAnswer(response);
-        Mockito.when(tw.getFriendsIDs(anyLong(), anyLong())).thenAnswer(response);
+        Mockito.when(tw.getFollowersIDs(not(eq(-2L)))).thenAnswer(response);
+        Mockito.when(tw.getFollowersIDs(not(eq(-2L)), anyLong())).thenAnswer(response);
+        Mockito.when(tw.getFriendsIDs(not(eq(-2L)))).thenAnswer(response);
+        Mockito.when(tw.getFriendsIDs(not(eq(-2L)), anyLong())).thenAnswer(response);
         Mockito.when(tw.search(Mockito.any(Query.class))).thenReturn(querryRes);
 
         ResponseList<User> searchUserList = getResponselistMock();
         Mockito.when(tw.searchUsers("Test", 1)).thenReturn(searchUserList);
-
+        addFailureCases(tw);
         return tw;
     }
 
-    public static Map<String, RateLimitStatus> getStatusMock() {
+    private static void addFailureCases(Twitter tw) throws TwitterException {
+        Mockito.when(tw.showUser("fails")).thenThrow(TwitterException.class);
+        Mockito.when(tw.showStatus(-1)).thenThrow(TwitterException.class);
+        Mockito.when(tw.getUserTimeline("fails")).thenThrow(TwitterException.class);
+        Mockito.when(tw.createFavorite(-1)).thenThrow(TwitterException.class);
+        Mockito.when(tw.destroyFavorite(-1)).thenThrow(TwitterException.class);
+        Mockito.when(tw.updateStatus("fails")).thenThrow(TwitterException.class);
+        Mockito.when(tw.createFriendship("fails")).thenThrow(TwitterException.class);
+        Mockito.when(tw.destroyFriendship("fails")).thenThrow(TwitterException.class);
+        Mockito.when(tw.getFollowersIDs(-2L)).thenThrow(TwitterException.class);
+        Mockito.when(tw.getFriendsIDs(-2L)).thenThrow(TwitterException.class);
+        Mockito.when(tw.searchUsers("fails", 1)).thenThrow(TwitterException.class);
+    }
+
+    private static Map<String, RateLimitStatus> getStatusMock() {
         Map<String, RateLimitStatus> status = new HashMap<>();
         RateLimitStatus status1 = Mockito.mock(RateLimitStatus.class);
         RateLimitStatus status2 = Mockito.mock(RateLimitStatus.class);
