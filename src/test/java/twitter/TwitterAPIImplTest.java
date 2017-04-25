@@ -423,12 +423,43 @@ public class TwitterAPIImplTest {
         assertEquals(4, res.size());
     }
 
-
     @Test
     @DisplayName("should fetch a single page of authed users followers")
     void testGetOwnFollowers() {
+        List<TwitterUser> followers = twitter.getFollowers("me", 1);
+        assertEquals(3, followers.size());
+        assertEquals("0", followers.get(0).getId());
+    }
+
+    @Test
+    @DisplayName("should get a single page of authed users when maxCalls is 0")
+    void testGetOwnFollowersNoMaxCalls() {
+        List<TwitterUser> followers = twitter.getFollowers("me", 0);
+        assertEquals(3, followers.size());
+        assertEquals("0", followers.get(0).getId());
+    }
+
+    @Test
+    @DisplayName("should get all available pages when maxCalls is -1")
+    void testGetFollowersAllPages() {
         List<TwitterUser> followers = twitter.getFollowers("me", -1);
         assertEquals(9, followers.size());
-        assertEquals("0", followers.get(0).getId());
+        assertEquals("7", followers.get(7).getId());
+    }
+
+    @Test
+    @DisplayName("should respect maxCalls parameter even when there's more pages to get")
+    void testGetFollowersSpecifiedCalls() {
+        List<TwitterUser> followers = twitter.getFollowers("me", 2);
+        assertEquals(6, followers.size());
+        assertEquals("3", followers.get(3).getId());
+    }
+
+    @Test
+    @DisplayName("get followers of specified user")
+    void testGetFollowersById() {
+        List<TwitterUser> followers = twitter.getFollowers("123", 1);
+        assertEquals(3, followers.size());
+        assertEquals("2", followers.get(1).getId());
     }
 }

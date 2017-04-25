@@ -42,7 +42,9 @@ public class TwitterLibraryMock {
         QueryResult querryRes = getQueryResultMock(query);
         Mockito.when(tw.search(any(Query.class))).thenReturn(querryRes);
 
-        Mockito.when(tw.getFollowersIDs(anyLong())).thenAnswer(new IDsResponseMock());
+        IDsResponseMock response = new IDsResponseMock();
+        Mockito.when(tw.getFollowersIDs(anyLong())).thenAnswer(response);
+        Mockito.when(tw.getFollowersIDs(anyLong(), anyLong())).thenAnswer(response);
 
 
         return tw;

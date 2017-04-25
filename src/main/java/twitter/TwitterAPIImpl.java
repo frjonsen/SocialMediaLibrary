@@ -10,10 +10,7 @@ import twitter4j.conf.ConfigurationBuilder;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -421,7 +418,7 @@ public class TwitterAPIImpl extends TwitterAPI {
     }
 
     private List<TwitterUser> longListToUsers(long[] ids){
-        List<TwitterUser> followers = new ArrayList<>();
+        List<TwitterUser> followers = new ArrayList<>(ids.length);
         for(long i : ids) {
             TwitterUser user = new TwitterUser();
             user.setId(String.valueOf(i));
