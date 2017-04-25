@@ -16,26 +16,6 @@ import java.util.List;
  * @see facebook4j.Post.Property
  */
 public class FacebookPost extends Post<FacebookUser> {
-    //id// ----- //TODO::Remove these comments when life is safe
-    //private Application application;
-    //private Action[] actions;
-    //private String caption;
-    //created_time
-    //private String description;
-    //from// ----- //
-    //private URL icon;
-    //permalink_url// -----
-    //private String name; //of link
-    //private URL picture; //pic scraped from any link in post
-    //private Privacy privacy;
-    // private String story;
-    // private Targeting targeting;
-
-    // EDGES
-    // private List<facebook4j.Post.Attachment> attachments;
-    //private PagableList<Like> likes;
-    // private PagableList<Reaction> reactions;
-    //  private PagableList<Comment> comments;
 
     private boolean hidden;
     private boolean published;

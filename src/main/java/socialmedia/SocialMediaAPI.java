@@ -105,8 +105,20 @@ public interface SocialMediaAPI<T extends User, E extends Post> {
      */
     List<T> getFollowing(String id, int maxCalls);
 
+    /**
+     * Makes authenticating users account follow account
+     * of given id. Returns true if successful
+     * @param id id of user to follow
+     * @return if successful
+     */
     boolean follow(String id);
 
+    /**
+     * Makes authenticating users account unfollow account
+     * of given id. Returns true if successful
+     * @param id id of user to unfollow
+     * @return if successful
+     */
     boolean unfollow(String id);
 
 }
