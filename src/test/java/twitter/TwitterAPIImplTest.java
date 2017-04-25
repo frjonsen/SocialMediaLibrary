@@ -415,12 +415,35 @@ public class TwitterAPIImplTest {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("should return a list of posts whith correct id")
     void testSearchPost(){
         assertNotNull(this.twitter);
         List<TwitterPost> res = twitter.searchPost("Test sweet tweet", 2);
         assertEquals("123123", res.get(0).getId());
         assertEquals(4, res.size());
+    }
+
+    @Test
+    @DisplayName("should throw a TwitterAPIException when an empty query is used")
+    void testEmptySearchPost(){
+        assertNotNull(this.twitter);
+        assertThrows(TwitterAPIException.class, () -> twitter.searchPost("", 2));
+    }
+
+    @Test
+    @DisplayName("should get a list of users, with correct length, with query string pattern related usernames")
+    void testSearchUsers(){
+        assertNotNull(this.twitter);
+        List<TwitterUser> res = twitter.searchUsers("Test");
+        assertEquals("Testy McTest1", res.get(1).getUsername());
+        assertEquals(20, res.size());
+    }
+
+    @Test
+    @DisplayName("should throw a TwitterAPIException when an empty query is used")
+    void testEmptySearchUsers(){
+        assertNotNull(this.twitter);
+        assertThrows(TwitterAPIException.class, () -> twitter.searchUsers(""));
     }
 
 

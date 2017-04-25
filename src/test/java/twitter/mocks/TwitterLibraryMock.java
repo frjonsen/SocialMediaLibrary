@@ -39,8 +39,8 @@ public class TwitterLibraryMock {
         QueryResult querryRes = getQueryResultMock(query);
         Mockito.when(tw.search(Mockito.any(Query.class))).thenReturn(querryRes);
 
-
-
+        ResponseList<User> searchUserList = getResponselistMock();
+        Mockito.when(tw.searchUsers("Test", 1)).thenReturn(searchUserList);
 
         return tw;
     }
@@ -58,12 +58,33 @@ public class TwitterLibraryMock {
         return status;
     }
 
-    public static ResponseList<Status> getTimeLineMock() {
+    public static ResponseList<Status> getTimeLineMock(){
         ResponseListMock<Status> timeLine = new ResponseListMock<>();
         List<Status> l = generateStatuses(3);
         timeLine.addAll(l);
 
         return timeLine;
+    }
+
+    private static ResponseList<User> getResponselistMock(){
+        ResponseListMock<User> users = new ResponseListMock<>();
+        List<User> u = generateUsers(20);
+        users.addAll(u);
+
+        return users;
+    }
+
+    private static List<User> generateUsers(int n){
+        List<User> users = new ArrayList<>();
+        for (int i = 0; i < n; ++i) {
+            User user = Mockito.mock(User.class);
+            Mockito.when(user.getId()).thenReturn(1L + i);
+            Mockito.when(user.getScreenName()).thenReturn("Testy McTest" + i);
+
+            users.add(user);
+        }
+
+        return users;
     }
 
     private static QueryResult getQueryResultMock(Query query){
@@ -85,7 +106,6 @@ public class TwitterLibraryMock {
             Mockito.when(status.getId()).thenReturn(123123L + i);
             Mockito.when(status.getText()).thenReturn("Basic small text");
             Mockito.when(status.getUser()).thenReturn(user);
-
 
             statuses.add(status);
         }
