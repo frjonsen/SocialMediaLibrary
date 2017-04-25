@@ -5,6 +5,9 @@ import twitter4j.*;
 
 import java.util.*;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+
 public class TwitterLibraryMock {
 
     public static Twitter getTwitterMock() throws TwitterException {
@@ -37,9 +40,9 @@ public class TwitterLibraryMock {
 
         Query query = new Query("Test sweet tweet");
         QueryResult querryRes = getQueryResultMock(query);
-        Mockito.when(tw.search(Mockito.any(Query.class))).thenReturn(querryRes);
+        Mockito.when(tw.search(any(Query.class))).thenReturn(querryRes);
 
-
+        Mockito.when(tw.getFollowersIDs(anyLong())).thenAnswer(new IDsResponseMock());
 
 
         return tw;

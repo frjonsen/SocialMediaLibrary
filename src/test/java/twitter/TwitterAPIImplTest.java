@@ -424,5 +424,11 @@ public class TwitterAPIImplTest {
     }
 
 
-
+    @Test
+    @DisplayName("should fetch a single page of authed users followers")
+    void testGetOwnFollowers() {
+        List<TwitterUser> followers = twitter.getFollowers("me", -1);
+        assertEquals(9, followers.size());
+        assertEquals("0", followers.get(0).getId());
+    }
 }
