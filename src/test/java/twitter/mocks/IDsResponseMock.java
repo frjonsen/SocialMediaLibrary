@@ -4,6 +4,7 @@ import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import twitter4j.IDs;
+import twitter4j.TwitterException;
 
 public class IDsResponseMock implements Answer<IDs> {
     private final static int MAX_PAGES = 3;
@@ -13,7 +14,10 @@ public class IDsResponseMock implements Answer<IDs> {
         Object[] args = invocationOnMock.getArguments();
         long offset = 0;
         long page = args.length == 1 ? (long)args[0] : (long)args[1];
-        if (args.length == 2) offset = 1;
+        if (args.length == 2) {
+            offset = 1;
+            if ((long)args[0] == 1234L) throw new TwitterException("Twitter down");
+        }
         long[] ids = new long[IDS_PER_PAGE];
         if (page < MAX_PAGES*IDS_PER_PAGE - 1) {
             for (long i = 0; i < IDS_PER_PAGE; ++i) {

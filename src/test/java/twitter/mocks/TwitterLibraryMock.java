@@ -45,10 +45,10 @@ public class TwitterLibraryMock {
         Mockito.when(tw.search(any(Query.class))).thenReturn(querryRes);
 
         IDsResponseMock response = new IDsResponseMock();
-        Mockito.when(tw.getFollowersIDs(not(eq(-2L)))).thenAnswer(response);
-        Mockito.when(tw.getFollowersIDs(not(eq(-2L)), anyLong())).thenAnswer(response);
-        Mockito.when(tw.getFriendsIDs(not(eq(-2L)))).thenAnswer(response);
-        Mockito.when(tw.getFriendsIDs(not(eq(-2L)), anyLong())).thenAnswer(response);
+        Mockito.when(tw.getFollowersIDs(anyLong())).thenAnswer(response);
+        Mockito.when(tw.getFollowersIDs(anyLong(), anyLong())).thenAnswer(response);
+        Mockito.when(tw.getFriendsIDs(anyLong())).thenAnswer(response);
+        Mockito.when(tw.getFriendsIDs(anyLong(), anyLong())).thenAnswer(response);
         Mockito.when(tw.search(Mockito.any(Query.class))).thenReturn(querryRes);
 
         ResponseList<User> searchUserList = getResponselistMock();
@@ -64,10 +64,8 @@ public class TwitterLibraryMock {
         Mockito.when(tw.createFavorite(-1)).thenThrow(TwitterException.class);
         Mockito.when(tw.destroyFavorite(-1)).thenThrow(TwitterException.class);
         Mockito.when(tw.updateStatus("fails")).thenThrow(TwitterException.class);
-        Mockito.when(tw.createFriendship("fails")).thenThrow(TwitterException.class);
-        Mockito.when(tw.destroyFriendship("fails")).thenThrow(TwitterException.class);
-        Mockito.when(tw.getFollowersIDs(-2L)).thenThrow(TwitterException.class);
-        Mockito.when(tw.getFriendsIDs(-2L)).thenThrow(TwitterException.class);
+        Mockito.when(tw.createFriendship(-1)).thenThrow(TwitterException.class);
+        Mockito.when(tw.destroyFriendship(-1)).thenThrow(TwitterException.class);
         Mockito.when(tw.searchUsers("fails", 1)).thenThrow(TwitterException.class);
     }
 
