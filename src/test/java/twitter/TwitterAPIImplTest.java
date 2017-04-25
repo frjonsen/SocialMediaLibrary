@@ -456,10 +456,38 @@ public class TwitterAPIImplTest {
     }
 
     @Test
-    @DisplayName("get followers of specified user")
+    @DisplayName("should get followers of specified user")
     void testGetFollowersById() {
         List<TwitterUser> followers = twitter.getFollowers("123", 1);
         assertEquals(3, followers.size());
         assertEquals("2", followers.get(1).getId());
+    }
+
+    @Test
+    @DisplayName("should throw an exception when id is invalid")
+    void testGetFollowersInvalidId() {
+        assertThrows(TwitterAPIException.class, () -> twitter.getFollowers("asd", -1));
+    }
+
+    @Test
+    @DisplayName("should get ids of users authed user is following")
+    void testGetAuthedUserFollowing() {
+        List<TwitterUser> following = twitter.getFollowing("me", 1);
+        assertEquals(3, following.size());
+        assertEquals("0", following.get(0).getId());
+    }
+
+    @Test
+    @DisplayName("should get ids of users followed by a specified id")
+    void testGetFollowingSpecifiedUser() {
+        List<TwitterUser> following = twitter.getFollowing("123", 1);
+        assertEquals(3, following.size());
+        assertEquals("1", following.get(0).getId());
+    }
+
+    @Test
+    @DisplayName("should throw an error when id is invalid")
+    void testGetFollowingInvalidId() {
+        assertThrows(TwitterAPIException.class, () -> twitter.getFollowers("asd", -1));
     }
 }

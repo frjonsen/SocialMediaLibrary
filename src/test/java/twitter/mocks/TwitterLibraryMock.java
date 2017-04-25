@@ -45,7 +45,8 @@ public class TwitterLibraryMock {
         IDsResponseMock response = new IDsResponseMock();
         Mockito.when(tw.getFollowersIDs(anyLong())).thenAnswer(response);
         Mockito.when(tw.getFollowersIDs(anyLong(), anyLong())).thenAnswer(response);
-
+        Mockito.when(tw.getFriendsIDs(anyLong())).thenAnswer(response);
+        Mockito.when(tw.getFriendsIDs(anyLong(), anyLong())).thenAnswer(response);
 
         return tw;
     }
