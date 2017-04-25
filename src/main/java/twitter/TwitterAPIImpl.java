@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -418,6 +417,29 @@ public class TwitterAPIImpl extends TwitterAPI {
         }
 
         return followers;
+    }
+
+    @Override
+    public List<TwitterUser> searchUsers(String query){
+        if(SocialMediaUtil.isNullOrWhitespace(query)){
+            throw new TwitterAPIException("query cannot be empty");
+        }
+
+        ResponseList<User> res;
+        List<TwitterUser> returnList = new ArrayList<>();
+        try{
+            res = libraryInstance.searchUsers(query, 1);
+        } catch (TwitterException te){
+            debug(te);
+            throw new TwitterAPIException(te.getMessage());
+        }
+        if( res != null){
+            for(User user : res){
+                returnList.add(createUser(user));
+            }
+        }
+
+        return returnList.isEmpty() ? Collections.emptyList() : returnList;
     }
 
     private List<TwitterUser> longListToUsers(long[] ids){
