@@ -439,6 +439,13 @@ public class TwitterAPIImplTest {
         assertEquals(20, res.size());
     }
 
+    @Test
+    @DisplayName("should throw a TwitterAPIException when an empty query is used")
+    void testEmptySearchUsers(){
+        assertNotNull(this.twitter);
+        assertThrows(TwitterAPIException.class, () -> twitter.searchUsers(""));
+    }
+
 
 
 }
