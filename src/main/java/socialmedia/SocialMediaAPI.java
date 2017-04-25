@@ -4,9 +4,23 @@ import java.net.URL;
 import java.util.List;
 
 public interface SocialMediaAPI<T extends User, E extends Post> {
+
+    /**
+     * Gets a user with given id and returns a user of
+     * platform specific type.
+     * @param id id of user
+     * @return user object
+     */
     T getUser(String id);
 
-    //public abstract List<T> searchUsers(String query);
+    /**
+     * Search for a user with given string. Returns a list of
+     * users of platform type that fits the query.
+     * @param query string query
+     * @return list of users
+     */
+    List<T> searchUsers(String query);
+
     /**
      * Gets the URL of the users profile image.
      * @param id site-wide id of the user
@@ -65,8 +79,6 @@ public interface SocialMediaAPI<T extends User, E extends Post> {
      */
     List<E> getPostFeed(String id);
 
-    //public abstract publishStatusPost(String message);
-
     //public abstract publishComment();
 
     /**
@@ -97,16 +109,4 @@ public interface SocialMediaAPI<T extends User, E extends Post> {
 
     boolean unfollow(String id);
 
-
-    /* Implemented individually
-    comments
-    likes post
-
-    get RSVP's
-    create event
-    user check ins??
-    friend request ---> NOH!
-    get friends
-    DM features
-     */
 }

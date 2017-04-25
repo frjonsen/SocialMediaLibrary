@@ -398,6 +398,29 @@ public class TwitterAPIImpl extends TwitterAPI {
 
     }
 
+    @Override
+    public List<TwitterUser> searchUsers(String query){
+        if(SocialMediaUtil.isNullOrWhitespace(query)){
+            throw new TwitterAPIException("query cannot be empty");
+        }
+
+        ResponseList<User> res;
+        List<TwitterUser> returnList = new ArrayList<>();
+        try{
+            res = libraryInstance.searchUsers(query, 1);
+        } catch (TwitterException te){
+            debug(te);
+            throw new TwitterAPIException(te.getMessage());
+        }
+        if( res != null){
+            for(User user : res){
+                returnList.add(createUser(user));
+            }
+        }
+
+        return returnList.isEmpty() ? Collections.emptyList() : returnList;
+    }
+
     private List<TwitterUser> getFollowersMe(int maxCalls){
         List<TwitterUser> followers = new ArrayList<>();
         try {
