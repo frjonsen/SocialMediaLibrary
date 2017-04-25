@@ -30,8 +30,6 @@ public abstract class TwitterAPI extends SocialMediaBase<TwitterUser, TwitterPos
      */
     public abstract TwitterUser getUser(long id);
 
-    //public abstract List<TwitterUser> searchUsers(String query);
-
     /**
      * Gets a TwitterPost by provided id, filling a post object
      * with available information. Some fields may be null.
@@ -55,12 +53,57 @@ public abstract class TwitterAPI extends SocialMediaBase<TwitterUser, TwitterPos
      */
     public abstract List<TwitterPost> getPostFeed(long id);
 
+    /**
+     * Makes authenticating users account follow account
+     * of given screen name. If input is an id it will try to
+     * redirect the call to the correct function. Returns true if successful
+     * @param screenName screen name of user to follow
+     * @return if successful
+     */
     public abstract boolean follow(String screenName);
+
+    /**
+     * Makes authenticating users account follow account
+     * of given screen name. If input is an id it will try to
+     * redirect the call to the correct function. Returns true if successful
+     * @param notifications if notifications should be enabled or disabled from this user
+     * @param screenName screen name of user to follow
+     * @return if successful
+     */
     public abstract boolean follow(String screenName, boolean notifications);
+
+    /**
+     * Makes authenticating users account follow account
+     * of given id. Returns true if successful
+     * @param id id of user to follow
+     * @return if successful
+     */
     public abstract boolean follow(long id);
+
+    /**
+     * Makes authenticating users account follow account
+     * of given id. Returns true if successful
+     * @param notifications if notifications should be enabled or disabled from this user
+     * @param id id of user to follow
+     * @return if successful
+     */
     public abstract boolean follow(long id, boolean notifications);
 
-    public abstract boolean unfollow(String id);
+    /**
+     * Makes authenticating users account unfollow account
+     * of screen name. If input is of id type it will redirect it
+     * to the correct function. Returns true if successful
+     * @param screenName id of user to unfollow
+     * @return if successful
+     */
+    public abstract boolean unfollow(String screenName);
+
+    /**
+     * Makes authenticating users account unfollow account
+     * of id. Returns true if successful
+     * @param id id of user to unfollow
+     * @return if successful
+     */
     public abstract boolean unfollow(long id);
 
     /**
