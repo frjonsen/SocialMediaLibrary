@@ -3,6 +3,7 @@ package facebook;
 import facebook4j.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import socialmedia.NotSupportedException;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Tag("regular")
 class FacebookUserTest {
 
     private FacebookUser user;

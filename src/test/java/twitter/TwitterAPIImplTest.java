@@ -2,6 +2,7 @@ package twitter;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import socialmedia.Post;
 import twitter.mocks.TwitterLibraryMock;
@@ -18,6 +19,7 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Tag("regular")
 public class TwitterAPIImplTest {
     private TwitterAPI twitter;
 

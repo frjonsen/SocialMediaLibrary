@@ -1,6 +1,7 @@
 package socialmedia;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.text.ParseException;
@@ -11,6 +12,7 @@ import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Tag("regular")
 class SocialMediaUtilTest {
     @Test
     @DisplayName("should return null when time is null")

@@ -6,6 +6,7 @@ import facebook4j.Comment;
 import facebook4j.FacebookException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import socialmedia.NotSupportedException;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.function.Predicate;
 import static org.junit.jupiter.api.Assertions.*;
 
+@Tag("regular")
 class FacebookAPIImplTest {
     private FacebookAPI facebook;
 

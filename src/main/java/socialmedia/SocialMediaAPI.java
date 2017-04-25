@@ -79,8 +79,6 @@ public interface SocialMediaAPI<T extends User, E extends Post> {
      */
     List<E> getPostFeed(String id);
 
-    //public abstract publishComment();
-
     /**
      * Gets followers for user with given id and returns a list
      * of users for the platform. Only id field is always present.

@@ -32,13 +32,6 @@ public abstract class FacebookAPI extends SocialMediaBase<FacebookUser, Facebook
     public abstract FacebookPost getPost(String id);
 
     /**
-     * Searches for all users matching the query.
-     * @param query Query to use as search word
-     * @return A list of matching FacebookUsers
-     */
-    public abstract List<FacebookUser> searchUsers(String query);
-
-    /**
      * Not supported by facebook. Always throws an exception.
      * @return Always throws an exception
      */

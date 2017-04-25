@@ -2,6 +2,7 @@ package twitter;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import socialmedia.Coordinate;
@@ -9,6 +10,7 @@ import twitter4j.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Tag("regular")
 class TwitterPostTest {
     TwitterPost post = null;
 
