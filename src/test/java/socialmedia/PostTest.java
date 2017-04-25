@@ -2,6 +2,7 @@ package socialmedia;
 
 import facebook.FacebookUser;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 
@@ -22,6 +23,8 @@ import static socialmedia.Post.Type.TEXT;
     This whole test class is mostly to add code coverage.
     The only functions with any actual logic is getEditTime
 */
+
+@Tag("regular")
 class PostTest {
 
     private Post<User> post = null;

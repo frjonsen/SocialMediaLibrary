@@ -20,6 +20,6 @@
     <orderEntry type="library" scope="TEST" name="Maven: net.bytebuddy:byte-buddy-agent:1.6.11" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.objenesis:objenesis:2.5" level="project" />
     <orderEntry type="library" name="Maven: org.twitter4j:twitter4j-core:4.0.6" level="project" />
-    <orderEntry type="library" name="Maven: org.facebook4j:facebook4j-core:2.4.8" level="project" />
+    <orderEntry type="library" name="Maven: org.facebook4j:facebook4j-core:2.4.9" level="project" />
   </component>
 </module>

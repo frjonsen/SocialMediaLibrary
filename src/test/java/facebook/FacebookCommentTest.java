@@ -3,6 +3,7 @@ package facebook;
 import facebook.mocks.FacebookLibraryMock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import socialmedia.SocialMediaUtil;
 
@@ -14,6 +15,7 @@ import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Tag("regular")
 class FacebookCommentTest {
 
     private FacebookComment comment = null;

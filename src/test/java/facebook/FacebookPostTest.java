@@ -6,6 +6,7 @@ import facebook4j.Place;
 import facebook4j.Post;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.net.MalformedURLException;
@@ -16,6 +17,7 @@ import java.util.function.Predicate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Tag("regular")
 class FacebookPostTest {
     private FacebookPost post;
 

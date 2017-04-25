@@ -8,11 +8,22 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <tests>regular</tests>
     </properties>
+
+    <profiles>
+        <profile>
+            <id>allTests</id>
+            <properties>
+                <tests>regular, apiCall</tests>
+            </properties>
+        </profile>
+    </profiles>
 
     <groupId>se.liu.exjobb.socialmedialibrary</groupId>
     <artifactId>socialmedia</artifactId>
     <version>1.0-SNAPSHOT</version>
+
     <dependencies>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -60,6 +71,12 @@
                         <version>5.0.0-M3</version>
                     </dependency>
                 </dependencies>
+                <configuration>
+                    <properties>
+                        <includeTags>${tests}</includeTags>
+                    </properties>
+                </configuration>
+
             </plugin>
         </plugins>
     </build>
