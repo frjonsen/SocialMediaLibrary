@@ -512,4 +512,11 @@ public class TwitterAPIImplTest {
     void testGetFollowingInvalidId() {
         assertThrows(TwitterAPIException.class, () -> twitter.getFollowers("asd", -1));
     }
+
+    @Test
+    @DisplayName("testing failure handling of all functions")
+    void testTwitterFailureHandling() {
+        assertThrows(TwitterAPIException.class, () -> twitter.getUser("fails"));
+        assertThrows(TwitterAPIException.class, () -> twitter.getPost("-1"));
+    }
 }
