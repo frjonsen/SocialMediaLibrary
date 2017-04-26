@@ -311,22 +311,17 @@ public class TwitterAPIImpl extends TwitterAPI {
     }
 
     @Override
-    public List<TwitterUser> getFollowers(String id, int maxCalls){
-        Long lId;
+    public List<TwitterUser> getFollowers(String id, int maxCalls) {
+        Long lId = convertIdToLong(id);
         List<TwitterUser> followers = new ArrayList<>();
-        try {
-            lId = Long.parseLong(id);
-        } catch(NumberFormatException nfe) {
-            if (id.equals(SELF_ID)) lId = null;
-            else throw new TwitterAPIException("Invalid id");
-        }
+
         try {
             IDs ids = getFollowers(lId, -1);
-            if(ids.getIDs().length != 0){
+            if (ids.getIDs().length != 0) {
                 followers.addAll(longListToUsers(ids.getIDs()));
             }
             int callsMade = 1;
-            while( ids.hasNext() && (maxCalls == -1 || callsMade++ < maxCalls)){
+            while (ids.hasNext() && (maxCalls == -1 || callsMade++ < maxCalls)) {
                 ids = getFollowers(lId, ids.getNextCursor());
                 if(ids.getIDs().length != 0) {
                     followers.addAll(longListToUsers(ids.getIDs()));
@@ -389,14 +384,8 @@ public class TwitterAPIImpl extends TwitterAPI {
     @Override
     public List<TwitterUser> getFollowing(String id, int maxCalls){
 
-        Long lId;
+        Long lId = convertIdToLong(id);
         List<TwitterUser> followers = new ArrayList<>();
-        try {
-            lId = Long.parseLong(id);
-        } catch (NumberFormatException nfe) {
-            if (id.equals(SELF_ID)) lId = null;
-            else throw new TwitterAPIException("Invalid id");
-        }
 
         try {
             IDs ids = getFollowing(lId, -1);
@@ -440,6 +429,17 @@ public class TwitterAPIImpl extends TwitterAPI {
         }
 
         return returnList.isEmpty() ? Collections.emptyList() : returnList;
+    }
+
+    private Long convertIdToLong(String id) {
+        try {
+            return Long.parseLong(id);
+        } catch (NumberFormatException nfe) {
+            if (id.equals(SELF_ID)) {
+                return null;
+            }
+            else throw new TwitterAPIException("Invalid id");
+        }
     }
 
     private List<TwitterUser> longListToUsers(long[] ids){
