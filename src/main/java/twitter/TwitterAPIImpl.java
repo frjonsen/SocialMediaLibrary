@@ -1,6 +1,5 @@
 package twitter;
 
-import facebook4j.*;
 import socialmedia.*;
 import socialmedia.Post;
 import twitter4j.*;
@@ -32,6 +31,15 @@ public class TwitterAPIImpl extends TwitterAPI {
         libraryInstance = tf.getInstance();
     }
 
+    public TwitterAPIImpl(String accessToken, String accessSecret, boolean debug) {
+        ConfigurationBuilder cb = new ConfigurationBuilder();
+        cb.setDebugEnabled(debug)
+                .setOAuthAccessToken(accessToken)
+                .setOAuthAccessTokenSecret(accessSecret);
+        TwitterFactory tf = new TwitterFactory(cb.build());
+        libraryInstance = tf.getSingleton();
+    }
+
     TwitterAPIImpl(Twitter twitter) { this.libraryInstance = twitter; }
 
     @Override
@@ -44,7 +52,11 @@ public class TwitterAPIImpl extends TwitterAPI {
         catch (NumberFormatException nfe) {} //NOSONAR
 
         try {
-            user = libraryInstance.showUser(id);
+            if(id.equals(SELF_ID)) {
+                user = libraryInstance.verifyCredentials();
+            }else {
+                user = libraryInstance.showUser(id);
+            }
         }
         catch(TwitterException tw) {
             debug(tw);

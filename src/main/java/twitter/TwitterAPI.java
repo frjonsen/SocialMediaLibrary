@@ -12,7 +12,9 @@ public abstract class TwitterAPI extends SocialMediaBase<TwitterUser, TwitterPos
 
     /**
      * Gets a TwitterUser by provided screenName, filling a user object
-     * with available information. As users have a large degree of flexibility
+     * with available information. Calling the function with the string "me"
+     * will return the authenticating users info.
+     * As users have a large degree of flexibility
      * regarding what's visible, some data may be null, even if the user has
      * set the information.
      * @param screenName site-wide screen name of the user

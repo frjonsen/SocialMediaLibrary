@@ -11,7 +11,7 @@ public interface SocialMediaAPI<T extends User, E extends Post> {
      * @param id id of user
      * @return user object
      */
-    T getUser(String id);
+    T getUser(String id); //TODO:: plis add test for getUser("me")
 
     /**
      * Search for a user with given string. Returns a list of
