@@ -460,7 +460,7 @@ public class TwitterAPIImplTest {
     @Test
     @DisplayName("should get followers of specified user")
     void testGetFollowersById() {
-        List<TwitterUser> followers = twitter.getFollowers("123", 1);
+        List<TwitterUser> followers = twitter.getFollowers("124", 1);
         assertEquals(3, followers.size());
         assertEquals("2", followers.get(1).getId());
     }
@@ -504,7 +504,7 @@ public class TwitterAPIImplTest {
     @Test
     @DisplayName("should get ids of users followed by a specified id")
     void testGetFollowingSpecifiedUser() {
-        List<TwitterUser> following = twitter.getFollowing("123", 1);
+        List<TwitterUser> following = twitter.getFollowing("124", 1);
         assertEquals(3, following.size());
         assertEquals("1", following.get(0).getId());
     }
@@ -520,5 +520,13 @@ public class TwitterAPIImplTest {
     void testTwitterFailureHandling() {
         assertThrows(TwitterAPIException.class, () -> twitter.getUser("fails"));
         assertThrows(TwitterAPIException.class, () -> twitter.getPost("-1"));
+        assertThrows(TwitterAPIException.class, () -> twitter.getPostFeed("fails"));
+        assertThrows(TwitterAPIException.class, () -> twitter.follow(-1));
+        assertThrows(TwitterAPIException.class, () -> twitter.unfollow(-1));
+        assertThrows(TwitterAPIException.class, () -> twitter.likePost("-1"));
+        assertThrows(TwitterAPIException.class, () -> twitter.unlikePost("-1"));
+        assertThrows(TwitterAPIException.class, () -> twitter.getFollowers("1234", 123));
+        assertThrows(TwitterAPIException.class, () -> twitter.getFollowing("1234", 123));
+
     }
 }
