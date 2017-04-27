@@ -11,7 +11,7 @@ public interface SocialMediaAPI<T extends User, E extends Post> {
      * @param id id of user
      * @return user object
      */
-    T getUser(String id); //TODO:: plis add test for getUser("me")
+    T getUser(String id);
 
     /**
      * Search for a user with given string. Returns a list of
@@ -61,6 +61,8 @@ public interface SocialMediaAPI<T extends User, E extends Post> {
      * @return id of created post
      */
     String publishStatusPost(String message);
+
+    //boolean destroyStatusPost(String id);
 
     /**
      * Searches for posts matching the given string. Pages can hold up to

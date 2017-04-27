@@ -20,6 +20,7 @@ public class TwitterLibraryMock {
         ResponseList<Status> timeLine = getTimeLineMock();
 
         Mockito.when(tw.showUser("TestyMcTest")).thenReturn(user);
+        Mockito.when(tw.verifyCredentials()).thenReturn(user);
         Mockito.when(tw.showUser(6253282L)).thenReturn(user);
 
         Mockito.when(tw.showStatus(114749583439036416L)).thenReturn(tweet);
@@ -51,14 +52,18 @@ public class TwitterLibraryMock {
         Mockito.when(tw.getFriendsIDs(anyLong(), anyLong())).thenAnswer(response);
         Mockito.when(tw.search(Mockito.any(Query.class))).thenReturn(querryRes);
 
+        Mockito.when(tw.destroyStatus(114749583439036416L)).thenReturn(tweet);
+
         ResponseList<User> searchUserList = getResponselistMock();
         Mockito.when(tw.searchUsers("Test", 1)).thenReturn(searchUserList);
         addFailureCases(tw);
+
         return tw;
     }
 
     private static void addFailureCases(Twitter tw) throws TwitterException {
         Mockito.when(tw.showUser("fails")).thenThrow(TwitterException.class);
+        Mockito.when(tw.showUser(-1)).thenThrow(TwitterException.class);
         Mockito.when(tw.showStatus(-1)).thenThrow(TwitterException.class);
         Mockito.when(tw.getUserTimeline("fails")).thenThrow(TwitterException.class);
         Mockito.when(tw.createFavorite(-1)).thenThrow(TwitterException.class);
@@ -67,6 +72,7 @@ public class TwitterLibraryMock {
         Mockito.when(tw.createFriendship(-1)).thenThrow(TwitterException.class);
         Mockito.when(tw.destroyFriendship(-1)).thenThrow(TwitterException.class);
         Mockito.when(tw.searchUsers("fails", 1)).thenThrow(TwitterException.class);
+        Mockito.when(tw.destroyStatus(-1)).thenThrow(TwitterException.class);
     }
 
     private static Map<String, RateLimitStatus> getStatusMock() {

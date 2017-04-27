@@ -527,6 +527,33 @@ public class TwitterAPIImplTest {
         assertThrows(TwitterAPIException.class, () -> twitter.unlikePost("-1"));
         assertThrows(TwitterAPIException.class, () -> twitter.getFollowers("1234", 123));
         assertThrows(TwitterAPIException.class, () -> twitter.getFollowing("1234", 123));
-
+        assertThrows(TwitterAPIException.class, () -> twitter.destroyStatusPost(-1));
+        assertThrows(TwitterAPIException.class, () -> twitter.searchUsers("fails"));
+        assertThrows(TwitterAPIException.class, () -> twitter.getProfilePicture("-1"));
+        assertThrows(TwitterAPIException.class, () -> twitter.publishStatusPost("fails"));
     }
+
+    @Test
+    @DisplayName("should return a valid user")
+    void testGetUserMe() {
+        assertNotNull(this.twitter);
+        TwitterUser authenticator = twitter.getUser("me");
+        assertEquals("6253282", authenticator.getId());
+    }
+
+    @Test
+    @DisplayName("should be able to destroy a status, by getting true back on function")
+    void testDestroyStatus() {
+        assertNotNull(this.twitter);
+        assertTrue(twitter.destroyStatusPost(114749583439036416L));
+        assertTrue(twitter.destroyStatusPost("114749583439036416"));
+    }
+
+    @Test
+    @DisplayName("should not be able to destroy a status")
+    void testDestroyStatusBadId() {
+        assertNotNull(this.twitter);
+        assertThrows(TwitterAPIException.class, () -> twitter.destroyStatusPost("this is bad id"));
+    }
+
 }

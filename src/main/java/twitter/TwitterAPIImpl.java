@@ -31,15 +31,6 @@ public class TwitterAPIImpl extends TwitterAPI {
         libraryInstance = tf.getInstance();
     }
 
-    public TwitterAPIImpl(String accessToken, String accessSecret, boolean debug) {
-        ConfigurationBuilder cb = new ConfigurationBuilder();
-        cb.setDebugEnabled(debug)
-                .setOAuthAccessToken(accessToken)
-                .setOAuthAccessTokenSecret(accessSecret);
-        TwitterFactory tf = new TwitterFactory(cb.build());
-        libraryInstance = tf.getSingleton();
-    }
-
     TwitterAPIImpl(Twitter twitter) { this.libraryInstance = twitter; }
 
     @Override
@@ -96,7 +87,7 @@ public class TwitterAPIImpl extends TwitterAPI {
         }
         catch (NumberFormatException nfe) {
             debug(nfe);
-            throw new TwitterAPIException("Invalid tweet id: " + "\"" + id + "\"");
+            throw new TwitterAPIException(idError(id));
         }
         catch (TwitterException te) {
             debug(te);
@@ -182,6 +173,28 @@ public class TwitterAPIImpl extends TwitterAPI {
         return status == null ? null : String.valueOf(status.getId());
     }
 
+    public boolean destroyStatusPost(String id) {
+        try {
+            long lId = Long.parseLong(id);
+            return destroyStatusPost(lId);
+        } catch (NumberFormatException nfe) {
+            debug(nfe);
+            throw new TwitterAPIException(idError(id));
+        }
+    }
+
+    public boolean destroyStatusPost(long id) {
+        Status status;
+        try {
+            status = libraryInstance.destroyStatus(id);
+        } catch (TwitterException te) {
+            debug(te);
+            throw new TwitterAPIException(te.getMessage());
+        }
+
+        return status != null;
+    }
+
     @Override
     public boolean likePost(String id){
         Status status = null;
@@ -191,7 +204,7 @@ public class TwitterAPIImpl extends TwitterAPI {
         }
         catch (NumberFormatException nfe){
             debug(nfe);
-            throw new TwitterAPIException("invalid id" + "\"" + id + "\"");
+            throw new TwitterAPIException(idError(id));
         }
         catch (TwitterException te){
             debug(te);
@@ -210,7 +223,7 @@ public class TwitterAPIImpl extends TwitterAPI {
         }
         catch (NumberFormatException nfe){
             debug(nfe);
-            throw new TwitterAPIException("invalid id" + "\"" + id + "\"");
+            throw new TwitterAPIException(idError(id));
         }
         catch (TwitterException te){
             debug(te);
@@ -450,7 +463,7 @@ public class TwitterAPIImpl extends TwitterAPI {
             if (id.equals(SELF_ID)) {
                 return null;
             }
-            else throw new TwitterAPIException("Invalid id");
+            else throw new TwitterAPIException(idError(id));
         }
     }
 
@@ -571,6 +584,14 @@ public class TwitterAPIImpl extends TwitterAPI {
             usersList.add(user);
         }
         return usersList;
+    }
+
+    private String idError(String id) {
+        return "invalid id" + "\"" + id + "\"";
+    }
+
+    private String idError(long id) {
+        return "invalid id" + "\"" + id + "\"";
     }
 
 }

@@ -115,5 +115,9 @@ public abstract class TwitterAPI extends SocialMediaBase<TwitterUser, TwitterPos
      */
     public abstract Map<String, RateLimitStatus> getRateLimitStatus();
 
+    public abstract boolean destroyStatusPost(String id);
+
+    public abstract boolean destroyStatusPost(long id);
+
 
 }
