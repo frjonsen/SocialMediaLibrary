@@ -129,10 +129,10 @@ class FacebookUserTest {
     }
 
     @Test
-    @DisplayName("")
-    void testStuff() {
-        FacebookBirthDateUtil.FacebookBirthDate birthday = Mockito.mock(FacebookBirthDateUtil.FacebookBirthDate.class);
-        user.setBirthday(birthday);
-        assertEquals(birthday, user.getBirthday());
+    @DisplayName("should throw when getting or setting username")
+    void testUsername() {
+        assertThrows(NotSupportedException.class, () -> user.setUsername("name"));
+        assertThrows(NotSupportedException.class, () -> user.getUsername());
+
     }
 }

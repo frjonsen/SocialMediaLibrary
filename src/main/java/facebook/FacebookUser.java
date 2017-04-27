@@ -21,6 +21,16 @@ public class FacebookUser extends User {
     private List<String> languages;
     private FacebookBirthDateUtil.FacebookBirthDate birthday;
 
+    @Override
+    public String getUsername() {
+        throw new NotSupportedException("username", PLATFORM);
+    }
+
+    @Override
+    public void setUsername(String username) {
+        throw new NotSupportedException("username", PLATFORM);
+    }
+
     public FacebookBirthDateUtil.FacebookBirthDate getBirthday() {
         return birthday;
     }
@@ -181,7 +191,7 @@ public class FacebookUser extends User {
                 ", email='" + email + '\'' +
                 ", city='" + city + '\'' +
                 ", languages=" + languages +
-                ", birthday=" + birthday +
+                ", birthday=" + birthday.toString() +
                 '}';
     }
 }

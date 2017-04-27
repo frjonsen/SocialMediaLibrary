@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @Tag("apiCall")
 public class FacebookIntegrationTest {
 
-    FacebookAPI facebook = null;
+    static FacebookAPI facebook = null;
     static String t = null;
 
     @BeforeAll
@@ -33,7 +33,16 @@ public class FacebookIntegrationTest {
         ConfigurationProvider provider = new ConfigurationProviderBuilder()
                 .withConfigurationSource(fallbackConfig)
                 .build();
-        //this.facebook = new FacebookAPIImpl();
+        String appId = provider.getProperty("FACEBOOK.APPID", String.class);
+        String appSecret = provider.getProperty("FACEBOOK.APPSECRET", String.class);
+        String token = provider.getProperty("FACEBOOK.ACCESSTOKEN", String.class);
+        facebook = new FacebookAPIImpl(appId, appSecret, token, "public_profile,email,user_about_me,user_hometown");
+    }
+
+    @Test
+    void testGetProfile() {
+        FacebookUser u = facebook.getUser("me");
+        System.out.println(u);
     }
 
 }

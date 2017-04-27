@@ -26,6 +26,14 @@ public class FacebookBirthDateUtil {
         public DateType getType() {
             return type;
         }
+
+        @Override
+        public String toString() {
+            return "FacebookBirthDate{" +
+                    "date=" + date +
+                    ", type=" + type +
+                    '}';
+        }
     }
 
     private static DateTimeFormatter buildFormatter(String format) {
@@ -126,4 +134,6 @@ public class FacebookBirthDateUtil {
         }
         return new FacebookBirthDate(LocalDate.parse(date, buildFormatter(type.getFormatter())), type);
     }
+
+
 }

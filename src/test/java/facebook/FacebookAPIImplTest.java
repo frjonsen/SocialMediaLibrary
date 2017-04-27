@@ -30,7 +30,6 @@ class FacebookAPIImplTest {
         assertEquals("56726489657236574", user.getId());
         assertEquals("Man", user.getGender());
         assertEquals("some name", user.getName());
-        assertEquals("someusername", user.getUsername());
         assertNotNull(user.getAgeRange());
         assertNull(user.getAgeRange().getMax());
         Integer age = user.getAgeRange().getMin();

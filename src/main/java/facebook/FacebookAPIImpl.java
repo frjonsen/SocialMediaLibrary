@@ -56,7 +56,6 @@ public class FacebookAPIImpl extends FacebookAPI {
         }
         FacebookUser fbUser = new FacebookUser();
         fbUser.setId(user.getId());
-        fbUser.setUsername(user.getUsername());
         fbUser.setGender(user.getGender());
         fbUser.setAge(user.getAgeRange());
         fbUser.setLanguages(user.getLanguages().stream().map(IdNameEntity::getName).collect(Collectors.toList()));
@@ -98,12 +97,14 @@ public class FacebookAPIImpl extends FacebookAPI {
         if (SocialMediaUtil.isNullOrWhitespace(id)) {
             throw new FacebookAPIException(ERROR_MISSING_ID);
         }
+        Reading options = new Reading();
+        options.fields("id", "about", "age_range", "birthday", "email", "gender", "hometown", "languages", "link", "location", "website", "name");
         User user;
         try {
             if (id.equals(SELF_ID)) {
-                user = libraryInstance.getMe();
+                user = libraryInstance.getMe(options);
             } else {
-                user = libraryInstance.getUser(id);
+                user = libraryInstance.getUser(id, options);
             }
 
         }
