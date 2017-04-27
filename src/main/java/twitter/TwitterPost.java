@@ -4,6 +4,8 @@ import socialmedia.Coordinate;
 import socialmedia.Post;
 import twitter4j.*;
 
+import java.util.Arrays;
+
 
 public class TwitterPost extends Post<TwitterUser>{
     private String language;
@@ -29,6 +31,35 @@ public class TwitterPost extends Post<TwitterUser>{
     private boolean retweeted;
     private boolean retweetedByMe;
     private boolean truncated;
+
+    @Override
+    public String toString() {
+        return "TwitterPost{" +
+                super.baseToString() +
+                ", language='" + language + '\'' +
+                ", coordinate=" + coordinate +
+                ", place=" + place +
+                ", mediaEntities=" + Arrays.toString(mediaEntities) +
+                ", symbolEntities=" + Arrays.toString(symbolEntities) +
+                ", urlEntities=" + Arrays.toString(urlEntities) +
+                ", favoriteCount=" + favoriteCount +
+                ", replyToScreenName='" + replyToScreenName + '\'' +
+                ", replyToStatusId=" + replyToStatusId +
+                ", replyToUserId=" + replyToUserId +
+                ", possiblySensitive=" + possiblySensitive +
+                ", quotedStatusId=" + quotedStatusId +
+                ", quotedStatus=" + quotedStatus +
+                ", retweetedStatus=" + retweetedStatus +
+                ", currentUserRetweetId=" + currentUserRetweetId +
+                ", source='" + source + '\'' +
+                ", withheldInCountries=" + Arrays.toString(withheldInCountries) +
+                ", favorited=" + favorited +
+                ", retweet=" + retweet +
+                ", retweeted=" + retweeted +
+                ", retweetedByMe=" + retweetedByMe +
+                ", truncated=" + truncated +
+                '}';
+    }
 
     /**
      * Returns location of this tweet as specified by the user or application

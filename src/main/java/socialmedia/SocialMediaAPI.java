@@ -62,7 +62,12 @@ public interface SocialMediaAPI<T extends User, E extends Post> {
      */
     String publishStatusPost(String message);
 
-    //boolean destroyStatusPost(String id);
+    /**
+     * Destroys authenticating users status with given id.
+     * @param id id of post
+     * @return if successfull
+     */
+    boolean destroyStatusPost(String id);
 
     /**
      * Searches for posts matching the given string. Pages can hold up to

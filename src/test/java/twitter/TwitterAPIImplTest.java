@@ -120,7 +120,7 @@ public class TwitterAPIImplTest {
         assertEquals(1L,  Stream.of(tweet.getTo()).count());
         assertEquals(1L,  Stream.of(tweet.getTags()).count());
         assertEquals("6253282", tweet.getAuthor().getId());
-        URL link = new URL("https://twitter.com/" + tweet.getAuthor().getUsername() + "/" + tweet.getId());
+        URL link = new URL("https://twitter.com/" + tweet.getAuthor().getUsername() + "/status/" + tweet.getId());
         assertEquals(link, tweet.getPermalink());
         assertEquals("Testarian", tweet.getLanguage());
         assertEquals(28.385233, tweet.getCoordinate().getLatitude());

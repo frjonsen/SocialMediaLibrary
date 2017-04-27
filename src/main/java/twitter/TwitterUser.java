@@ -13,6 +13,16 @@ public class TwitterUser extends User{
     private String location;
     private String language;
 
+    @Override
+    public String toString() {
+        return "TwitterUser{" +
+                super.baseToString() +
+                ", email='" + email + '\'' +
+                ", location='" + location + '\'' +
+                ", language='" + language + '\'' +
+                '}';
+    }
+
     /**
      * An application needs to be whitelisted by twitter to be able to
      * fetch the email of a user.

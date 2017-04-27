@@ -506,7 +506,7 @@ public class TwitterAPIImpl extends TwitterAPI {
         tp.setAuthor(createUser(status.getUser()));
         if(status.getUser() != null) {
             try {
-                URL url = new URL("https://twitter.com/" + tp.getAuthor().getUsername() + "/" + tp.getId());
+                URL url = new URL("https://twitter.com/" + tp.getAuthor().getUsername() + "/status/" + tp.getId());
                 tp.setPermalink(url);
             } catch (MalformedURLException mue) {
                 debug(mue);
