@@ -101,7 +101,7 @@ public class TwitterAPIImpl extends TwitterAPI {
     }
 
     @Override
-    public URL getProfilePicture(String id) {
+    public URL getProfilePicture(String id) { //TODO:: add a (me) call
         User user;
         long lId = Long.parseLong(id);
 
@@ -319,7 +319,7 @@ public class TwitterAPIImpl extends TwitterAPI {
     public boolean unfollow(long id){
         User user;
         try {
-            user = libraryInstance.createFriendship(id);
+            user = libraryInstance.destroyFriendship(id);
         } catch (TwitterException te){
             debug(te);
             throw new TwitterAPIException(te.getMessage());

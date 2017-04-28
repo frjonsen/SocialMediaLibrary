@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 
+import static java.lang.Thread.sleep;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Tag("apiCall")
@@ -62,7 +63,7 @@ public class TwitterIntegrationTest {
         assertEquals("liustuds", user.getUsername());
         assertEquals("https://t.co/AizXLwr5eB", user.getWebsite().toString());
         assertEquals("Doing a little test, making a little mock.", user.getBiography());
-        assertEquals(1, user.getFollowersCount());
+        assertEquals(0, user.getFollowersCount());
         assertEquals("Testingville", user.getLocation());
         assertEquals("en-gb", user.getLanguage());
         assertEquals(4, user.getUploadCount());
@@ -114,34 +115,38 @@ public class TwitterIntegrationTest {
     }
 
     @Test
-    @DisplayName("Testing testing")
-    void testFollowUnfollow() {
-        if(twitter.getFollowing("me", -1).stream().anyMatch((follower) -> follower.getId().equals("130649891"))) {
-            twitter.unfollow("130649891");
+    @DisplayName("should follow and unfollow a user for the authenticator")
+    
+    void testFollowUnfollow() throws InterruptedException{
+        List<TwitterUser> following = twitter.getFollowing("me", -1); // following list
+        if(following.stream().anyMatch((follower) -> follower.getId().equals("130649891"))) { // check if list has id
+            assertTrue(twitter.unfollow("130649891")); //unfollow if there 130649891
+            following = twitter.getFollowing("me", -1); // following list
         }
 
-        List<TwitterUser> following = twitter.getFollowing("me", -1);
-        assertFalse(following.stream().anyMatch((follower) -> follower.getId().equals("130649891")));
+        assertFalse(following.stream().anyMatch((follower) -> follower.getId().equals("130649891"))); //check if id
 
-        assertTrue(twitter.follow(130649891L));
-        following = twitter.getFollowing("me", -1);
-        assertTrue(following.stream().anyMatch((follower) -> follower.getId().equals("130649891")));
+        assertTrue(twitter.follow(130649891L)); //follow
+        following = twitter.getFollowing("me", -1); //get followers
+        assertTrue(following.stream().anyMatch((follower) -> follower.getId().equals("130649891"))); //check following
 
-        assertTrue(twitter.unfollow(130649891L));
-        following = twitter.getFollowing("me", -1);
-        assertFalse(following.stream().anyMatch((follower) -> follower.getId().equals("130649891")));
+        assertTrue(twitter.unfollow(130649891L)); //unfollow
+        following = twitter.getFollowing("me", -1); //check unfollowed
+        assertFalse(following.stream().anyMatch((follower) -> follower.getId().equals("130649891"))); //check unfollowed
     }
 
     @Test
-    @DisplayName("Testing testing")
+    @DisplayName("searchers for twitter and should find twitters main account in list")
     void testSearchUsers(){
-
+        List<TwitterUser> result = twitter.searchUsers("twitter");
+        assertTrue(result.stream().anyMatch((user) -> user.getId().equals("783214")));
     }
 
     @Test
     @DisplayName("Testing testing")
     void testGetProfilePicture(){
-
+       String url = twitter.getProfilePicture("783214").toString();
+       assertEquals("https://pbs.twimg.com/profile_images/842992378960986112/Yd1Z53jW_bigger.jpg", url);
     }
 
     @Test
