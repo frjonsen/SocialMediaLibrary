@@ -61,7 +61,7 @@ public class FacebookAPIImpl extends FacebookAPI {
         fbUser.setLanguages(user.getLanguages().stream().map(IdNameEntity::getName).collect(Collectors.toList()));
         fbUser.setBiography(user.getBio());
         fbUser.setBirthday(user.getBirthday());
-        IdNameEntity city = user.getHometown();
+        IdNameEntity city = user.getLocation();
         fbUser.setCity(city == null ? null : city.getName());
         fbUser.setEmail(user.getEmail());
         fbUser.setName(user.getName());
@@ -134,8 +134,10 @@ public class FacebookAPIImpl extends FacebookAPI {
             throw new FacebookAPIException(ERROR_MISSING_ID);
         }
         facebook4j.Post post = null;
+        Reading reading = new Reading();
+        reading.fields("id", "created_time", "from", "to", "is_hidden", "is_published", "link", "message", "object_id", "parent_id", "permalink_url", "place", "source", "type", "updated_time", "with_tags");
         try {
-            post = libraryInstance.getPost(id);
+            post = libraryInstance.getPost(id, reading);
         } catch (FacebookException fe) {
             debug(fe);
             throw new FacebookAPIException(fe.getMessage());

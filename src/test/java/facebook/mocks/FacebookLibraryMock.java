@@ -188,7 +188,7 @@ public class FacebookLibraryMock {
         Mockito.when(user.getBio()).thenReturn("A very short biography");
         Mockito.when(user.getAgeRange()).thenReturn(createAgeRange(21, null));
         Mockito.when(user.getBirthday()).thenReturn("10/02/1986");
-        Mockito.when(user.getHometown()).thenReturn(createHometown("atown"));
+        Mockito.when(user.getLocation()).thenReturn(createHometown("atown"));
         Mockito.when(user.getEmail()).thenReturn("email@example.com");
         Mockito.when(user.getLanguages()).thenReturn(createIdNameList(languages));
         Mockito.when(user.getName()).thenReturn("some name");

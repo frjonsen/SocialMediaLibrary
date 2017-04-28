@@ -25,10 +25,15 @@ Page tokens varar bara i en timme. Biblioteket får därför ta in en user token
 ### Övrigt
 Insights, användbart, men bara för Facebook
 
-#### Testning
+# Testning
 ```
 mvn -PallTests test                         //använd denna för att köra alla tester
 mvn -Dtests=regular, apiCall        //använd denna för att välja vilka av typerna som skall köras(regular/apiCall)
 ```
+
+## Facebook
+
+På grund av hur Facebook hanterar IDn, där varje IDn är unika till varje App (dvs en användare har ett id för ett AppId, medan samma användare
+har ett annat ID för ett annat AppID) kommer integrationstesterna för Facebook att fungera för något annat AppID än våran testapplikation.
 # Future Plans
 - Get latest post by a user

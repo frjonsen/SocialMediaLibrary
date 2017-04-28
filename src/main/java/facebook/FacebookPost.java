@@ -17,8 +17,8 @@ import java.util.List;
  */
 public class FacebookPost extends Post<FacebookUser> {
 
-    private boolean hidden;
-    private boolean published;
+    private Boolean hidden;
+    private Boolean published;
     private URL link;
     private URL source;
     private Place place;
@@ -68,7 +68,7 @@ public class FacebookPost extends Post<FacebookUser> {
      * only for pages.
      * @return  hidden
      */
-    public boolean isHidden() {
+    public Boolean isHidden() {
         return hidden;
     }
 
@@ -76,7 +76,7 @@ public class FacebookPost extends Post<FacebookUser> {
      * Sets hidden status for post locally.
      * @param hidden    the new hidden status
      */
-    public void setHidden(boolean hidden) {
+    public void setHidden(Boolean hidden) {
         this.hidden = hidden;
     }
 
@@ -85,7 +85,7 @@ public class FacebookPost extends Post<FacebookUser> {
      * to scheduled page posts.
      * @return  published
      */
-    public boolean isPublished() {
+    public Boolean isPublished() {
         return published;
     }
 
@@ -93,7 +93,7 @@ public class FacebookPost extends Post<FacebookUser> {
      * Sets published status locally.
      * @param published new published status
      */
-    public void setPublished(boolean published) {
+    public void setPublished(Boolean published) {
         this.published = published;
     }
 
