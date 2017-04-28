@@ -1,6 +1,7 @@
 package facebook.mocks;
 
 import facebook4j.*;
+import org.mockito.AdditionalMatchers;
 import org.mockito.Mockito;
 
 import java.net.MalformedURLException;
@@ -10,6 +11,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 
 public class FacebookLibraryMock {
 
@@ -70,6 +75,7 @@ public class FacebookLibraryMock {
 
     private static void addFailCalls(Facebook facebook) throws FacebookException {
         Mockito.when(facebook.getUser("fails")).thenThrow(FacebookException.class);
+        Mockito.when(facebook.getUser(eq("fails"), any(Reading.class))).thenThrow(FacebookException.class);
         Mockito.when(facebook.getPost("fails")).thenThrow(FacebookException.class);
         Mockito.when(facebook.searchUsers("fails")).thenThrow(FacebookException.class);
         Mockito.when(facebook.getPictureURL("fails", Integer.MAX_VALUE, 0)).thenThrow(FacebookException.class);
@@ -87,8 +93,8 @@ public class FacebookLibraryMock {
         User user = getFacebookFullUserMock();
         Post post = getFullFacebookPostMock();
         ResponseList<User> searchResults = intoResponseList(generateBasicFacebookUsers(3));
-        Mockito.when(f.getUser("56726489657236574")).thenReturn(user);
-        Mockito.when(f.getMe()).thenReturn(user);
+        Mockito.when(f.getUser(AdditionalMatchers.not(eq("noexist")), any(Reading.class))).thenReturn(user);
+        Mockito.when(f.getMe(any(Reading.class))).thenReturn(user);
         Mockito.when(f.getPost("10202360904079395_10208824524985878")).thenReturn(post);
         Mockito.when(f.searchUsers("User")).thenReturn(searchResults);
         Mockito.when(f.getPictureURL(Integer.MAX_VALUE, 0)).thenReturn(new URL("https://scontent.xx.fbcdn.net/v/t31.0-1/selfpicture"));
@@ -116,7 +122,6 @@ public class FacebookLibraryMock {
             User user = Mockito.mock(User.class);
             String gender = i % 2 == 0 ? "Man" : "Woman";
             Mockito.when(user.getGender()).thenReturn(gender);
-            Mockito.when(user.getUsername()).thenReturn("User" + i);
             Mockito.when(user.getId()).thenReturn(Integer.toString(i + 1));
             Mockito.when(user.getName()).thenReturn("Firstname LastName" + i);
             Mockito.when(user.getEmail()).thenReturn("email" + i + "@example.com");
@@ -188,7 +193,7 @@ public class FacebookLibraryMock {
         Mockito.when(user.getLanguages()).thenReturn(createIdNameList(languages));
         Mockito.when(user.getName()).thenReturn("some name");
         Mockito.when(user.getId()).thenReturn("56726489657236574");
-        Mockito.when(user.getUsername()).thenReturn("someusername");
+        Mockito.when(user.getUsername()).thenThrow(FacebookException.class);
         Mockito.when(user.getWebsite()).thenReturn(new URL("https://example.com/user"));
         return user;
     }
