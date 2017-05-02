@@ -44,7 +44,6 @@ public class FacebookIntegrationTest {
         String appSecret = provider.getProperty("FACEBOOK.APPSECRET", String.class);
         String token = provider.getProperty("FACEBOOK.ACCESSTOKEN", String.class);
         facebook = new FacebookAPIImpl(appId, appSecret, token, "public_profile,user_about_me,user_hometown,email");
-        facebook = new FacebookAPIImpl(appId, appSecret, facebook.getPages().get(0).getAccessToken(), "public_profile,user_about_me,user_hometown,email");
     }
 
     @Test
