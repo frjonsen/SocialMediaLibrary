@@ -62,7 +62,7 @@ public class TwitterAPIImplTest {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("should get a user by string id and have same id on object returned")
     void testExistantUserIdString() {
         assertNotNull(this.twitter);
         TwitterUser user = this.twitter.getUser("6253282");
