@@ -22,7 +22,9 @@ public interface SocialMediaAPI<T extends User, E extends Post> {
     List<T> searchUsers(String query);
 
     /**
-     * Gets the URL of the users profile image.
+     * Gets the URL of the users profile image. If called
+     * with "me" as id, will get the profile picture of the
+     * authenticating user.
      * @param id site-wide id of the user
      * @return  the URL for the profile image of the user
      */

@@ -101,12 +101,16 @@ public class TwitterAPIImpl extends TwitterAPI {
     }
 
     @Override
-    public URL getProfilePicture(String id) { //TODO:: add a (me) call
+    public URL getProfilePicture(String id) {
         User user;
-        long lId = Long.parseLong(id);
+        Long lId = convertIdToLong(id);
 
         try {
-            user = libraryInstance.showUser(lId);
+            if(lId != null){
+                user = libraryInstance.showUser(lId);
+            } else {
+                user = libraryInstance.verifyCredentials();
+            }
             if(user == null) {
                 return null;
             }
@@ -117,8 +121,9 @@ public class TwitterAPIImpl extends TwitterAPI {
             throw new TwitterAPIException(e.getMessage());
         }
     }
+
     @Override
-    public List<TwitterPost> getPostFeed(String screenName){ //TODO:: maby add me call
+    public List<TwitterPost> getPostFeed(String screenName){
         try {
             long lId = Long.parseLong(screenName);
             return getPostFeed(lId);
@@ -127,7 +132,11 @@ public class TwitterAPIImpl extends TwitterAPI {
 
         ResponseList<Status> timeLine;
         try {
-            timeLine = libraryInstance.getUserTimeline(screenName);
+            if(screenName.equals(SELF_ID)) {
+                timeLine = libraryInstance.getUserTimeline();
+            } else {
+                timeLine = libraryInstance.getUserTimeline(screenName);
+            }
         } catch (TwitterException te) {
             debug(te);
             throw new TwitterAPIException(te.getMessage());
@@ -135,8 +144,6 @@ public class TwitterAPIImpl extends TwitterAPI {
 
         return responseListConverter(timeLine);
     }
-
-
 
     @Override
     public List<TwitterPost> getPostFeed(long id){
@@ -173,6 +180,7 @@ public class TwitterAPIImpl extends TwitterAPI {
         return status == null ? null : String.valueOf(status.getId());
     }
 
+    @Override
     public boolean destroyStatusPost(String id) {
         try {
             long lId = Long.parseLong(id);
@@ -183,6 +191,7 @@ public class TwitterAPIImpl extends TwitterAPI {
         }
     }
 
+    @Override
     public boolean destroyStatusPost(long id) {
         Status status;
         try {
@@ -587,10 +596,6 @@ public class TwitterAPIImpl extends TwitterAPI {
     }
 
     private String idError(String id) {
-        return "invalid id" + "\"" + id + "\"";
-    }
-
-    private String idError(long id) {
         return "invalid id" + "\"" + id + "\"";
     }
 

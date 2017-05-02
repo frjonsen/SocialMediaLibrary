@@ -9,16 +9,11 @@ import org.cfg4j.source.files.FilesConfigurationSource;
 import org.cfg4j.source.system.EnvironmentVariablesConfigurationSource;
 import org.junit.jupiter.api.*;
 import socialmedia.Post;
-import twitter4j.RateLimitStatus;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
-
-import static java.lang.Thread.sleep;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Tag("apiCall")
@@ -175,9 +170,12 @@ public class TwitterIntegrationTest {
     }
 
     @Test
-    @DisplayName("Testing testing")
+    @DisplayName("should search for a post and return a list of posts")
     void testSearchPost(){
+        List<TwitterPost> res = twitter.searchPost("test" ,1);
 
+        assertNotNull(res);
+        assertTrue(res.size() > 0);
     }
 
     @Test
