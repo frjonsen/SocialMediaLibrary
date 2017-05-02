@@ -80,7 +80,7 @@ class FacebookBirthDateUtilTest {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("should handle null gracefully")
     void testInvalidInput() {
         FacebookBirthDateUtil.FacebookBirthDate birthDate = FacebookBirthDateUtil.formatDate(null);
         assertNull(birthDate);

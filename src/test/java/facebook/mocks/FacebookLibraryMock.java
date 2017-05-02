@@ -76,7 +76,7 @@ public class FacebookLibraryMock {
     private static void addFailCalls(Facebook facebook) throws FacebookException {
         Mockito.when(facebook.getUser("fails")).thenThrow(FacebookException.class);
         Mockito.when(facebook.getUser(eq("fails"), any(Reading.class))).thenThrow(FacebookException.class);
-        Mockito.when(facebook.getPost("fails")).thenThrow(FacebookException.class);
+        Mockito.when(facebook.getPost(eq("fails"), any(Reading.class))).thenThrow(FacebookException.class);
         Mockito.when(facebook.searchUsers("fails")).thenThrow(FacebookException.class);
         Mockito.when(facebook.getPictureURL("fails", Integer.MAX_VALUE, 0)).thenThrow(FacebookException.class);
         Mockito.when(facebook.likePost("fails")).thenThrow(FacebookException.class);
@@ -95,7 +95,7 @@ public class FacebookLibraryMock {
         ResponseList<User> searchResults = intoResponseList(generateBasicFacebookUsers(3));
         Mockito.when(f.getUser(AdditionalMatchers.not(eq("noexist")), any(Reading.class))).thenReturn(user);
         Mockito.when(f.getMe(any(Reading.class))).thenReturn(user);
-        Mockito.when(f.getPost("10202360904079395_10208824524985878")).thenReturn(post);
+        Mockito.when(f.getPost(eq("10202360904079395_10208824524985878"), any(Reading.class))).thenReturn(post);
         Mockito.when(f.searchUsers("User")).thenReturn(searchResults);
         Mockito.when(f.getPictureURL(Integer.MAX_VALUE, 0)).thenReturn(new URL("https://scontent.xx.fbcdn.net/v/t31.0-1/selfpicture"));
         Mockito.when(f.getPictureURL("56726489657236574", Integer.MAX_VALUE, 0))
