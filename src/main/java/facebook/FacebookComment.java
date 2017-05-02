@@ -10,7 +10,6 @@ public class FacebookComment {
     private String id;
     private FacebookUser from;
     private ZonedDateTime created;
-    private int likeCount;
 
     /**
      * Sets text of the comment
@@ -88,19 +87,13 @@ public class FacebookComment {
         this.created = SocialMediaUtil.dateToZonedDateTime(time);
     }
 
-    /**
-     * Gets amount of likes the comment has received
-     * @return Like count
-     */
-    public int getLikeCount() {
-        return likeCount;
-    }
-
-    /**
-     * Sets amount of likes the comment has received
-     * @param likeCount Like count
-     */
-    public void setLikeCount(int likeCount) {
-        this.likeCount = likeCount;
+    @Override
+    public String toString() {
+        return "FacebookComment{" +
+                "message='" + message + '\'' +
+                ", id='" + id + '\'' +
+                ", from=" + from +
+                ", created=" + created +
+                '}';
     }
 }

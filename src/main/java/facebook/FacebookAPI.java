@@ -90,8 +90,6 @@ public abstract class FacebookAPI extends SocialMediaBase<FacebookUser, Facebook
         throw new NotSupportedException("unfollow", PLATFORM);
     }
 
-    public abstract boolean destroyStatusPost(String id);
-
     public abstract List<FacebookUser> getPages();
 
 }

@@ -68,12 +68,4 @@ class FacebookCommentTest {
         assertEquals(16, comment.getCreated().getHour());
         assertEquals(ZoneOffset.UTC, comment.getCreated().getZone());
     }
-
-    @Test
-    @DisplayName("should set and get like count unchanged")
-    void testLikeCount() {
-        int count = 7;
-        comment.setLikeCount(count);
-        assertEquals(count, comment.getLikeCount());
-    }
 }
