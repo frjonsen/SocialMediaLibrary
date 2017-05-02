@@ -45,7 +45,7 @@ class FacebookCommentTest {
     @DisplayName("should set and get from-user unchanged")
     void testFrom() {
         String userid = "someid";
-        FacebookUser user = new FacebookUser();
+        FacebookUser user = new FacebookUser(FacebookUser.UserType.USER);
         user.setId(userid);
         comment.setFrom(user);
         assertEquals(userid, comment.getFrom().getId());

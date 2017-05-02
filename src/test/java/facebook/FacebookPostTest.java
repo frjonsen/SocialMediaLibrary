@@ -24,7 +24,7 @@ class FacebookPostTest {
     private List<FacebookUser> createFriendsSample(int count) {
         List<FacebookUser> friends = new ArrayList<>();
         for (int i = 0; i < count; ++i) {
-            FacebookUser user = new FacebookUser();
+            FacebookUser user = new FacebookUser(FacebookUser.UserType.USER);
             user.setId("friend" + i + "id");
             user.setName("Friend " + i);
             friends.add(user);

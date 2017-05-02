@@ -13,6 +13,11 @@ import java.util.List;
  */
 public class FacebookUser extends User {
     private static final String PLATFORM = "Facebook";
+    public enum UserType {
+        USER,
+        PAGE,
+        GROUP
+    }
 
     private facebook4j.User.AgeRange age;
     private String gender;
@@ -20,6 +25,25 @@ public class FacebookUser extends User {
     private String city;
     private List<String> languages;
     private FacebookBirthDateUtil.FacebookBirthDate birthday;
+    private UserType type;
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
+    private String accessToken;
+
+    public FacebookUser(UserType type) {
+        this.type = type;
+    }
+
+    public UserType getType() {
+        return this.type;
+    }
 
     @Override
     public String getUsername() {
@@ -184,14 +208,17 @@ public class FacebookUser extends User {
 
     @Override
     public String toString() {
+        String bday = birthday == null ? null : birthday.toString();
         return "FacebookUser{" +
                 super.baseToString() +
-                "age=" + age +
+                ", age=" + age +
                 ", gender='" + gender + '\'' +
                 ", email='" + email + '\'' +
                 ", city='" + city + '\'' +
                 ", languages=" + languages +
-                ", birthday=" + birthday.toString() +
+                ", birthday=" + bday +
+                ", type=" + type +
+                ", accessToken='" + accessToken + '\'' +
                 '}';
     }
 }

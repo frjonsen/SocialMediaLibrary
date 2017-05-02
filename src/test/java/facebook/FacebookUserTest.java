@@ -21,7 +21,7 @@ class FacebookUserTest {
 
     @BeforeEach
     void init() {
-        user = new FacebookUser();
+        user = new FacebookUser(FacebookUser.UserType.USER);
     }
 
     @Test

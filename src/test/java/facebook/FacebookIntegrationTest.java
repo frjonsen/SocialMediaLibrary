@@ -8,13 +8,18 @@ import org.cfg4j.source.context.filesprovider.ConfigFilesProvider;
 import org.cfg4j.source.files.FilesConfigurationSource;
 import org.cfg4j.source.system.EnvironmentVariablesConfigurationSource;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import socialmedia.Post;
+import socialmedia.User;
 
 import java.io.File;
+import java.net.URL;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -39,6 +44,7 @@ public class FacebookIntegrationTest {
         String appSecret = provider.getProperty("FACEBOOK.APPSECRET", String.class);
         String token = provider.getProperty("FACEBOOK.ACCESSTOKEN", String.class);
         facebook = new FacebookAPIImpl(appId, appSecret, token, "public_profile,user_about_me,user_hometown,email");
+        facebook = new FacebookAPIImpl(appId, appSecret, facebook.getPages().get(0).getAccessToken(), "public_profile,user_about_me,user_hometown,email");
     }
 
     @Test
@@ -62,6 +68,38 @@ public class FacebookIntegrationTest {
         assertEquals(Post.Type.IMAGE, p.getType());
         Iterable<FacebookUser> with = p.getWithTags();
         assertEquals(4, with.spliterator().getExactSizeIfKnown());
+    }
+
+    @Test
+    void testSearchUsers() {
+        List<FacebookUser> results = facebook.searchUsers("Fredrik");
+        assertNotNull(results);
+        // Can't make more assumptions than this, due to no control over real data
+        assertTrue(results.size() > 0);
+    }
+
+    @Test
+    void testGetProfilePicture() {
+        URL picture = facebook.getProfilePicture("10208868385322359");
+        // Will return null when there's no picture, so this test is sufficient
+        assertNotNull(picture);
+    }
+
+    @Test
+    void testGetSilhouettePicture() {
+        List<FacebookUser> pages = facebook.getPages();
+        System.out.println(pages.size());
+        Optional<FacebookUser> testing = pages.stream().filter(page -> page.getName().equals("Testing")).findFirst();
+        assertTrue(testing.isPresent());
+        FacebookUser page = testing.get();
+        assertNotNull(facebook.getProfilePicture(page.getId()));
+    }
+
+    @Test
+    @DisplayName("should get the pages of the authed user")
+    void testGetAccounts() {
+        List<FacebookUser> pages = facebook.getPages();
+        assertTrue(pages.size() > 0);
     }
 
 }

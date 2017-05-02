@@ -54,7 +54,7 @@ public class FacebookAPIImpl extends FacebookAPI {
         if (user == null) {
             return null;
         }
-        FacebookUser fbUser = new FacebookUser();
+        FacebookUser fbUser = new FacebookUser(FacebookUser.UserType.USER);
         fbUser.setId(user.getId());
         fbUser.setGender(user.getGender());
         fbUser.setAge(user.getAgeRange());
@@ -259,7 +259,7 @@ public class FacebookAPIImpl extends FacebookAPI {
         if (SocialMediaUtil.isNullOrWhitespace(postId)) {
             throw new FacebookAPIException(ERROR_MISSING_ID);
         }
-        List<Comment> comments = null;
+        List<Comment> comments;
         try {
             comments = libraryInstance.getPostComments(postId);
         } catch(FacebookException fe) {
@@ -278,6 +278,34 @@ public class FacebookAPIImpl extends FacebookAPI {
         }
         try {
             return libraryInstance.commentPost(postId, commentMessage);
+        } catch (FacebookException fe) {
+            debug(fe);
+            throw new FacebookAPIException(fe.getMessage());
+        }
+    }
+
+    public List<FacebookUser> getPages() {
+        List<FacebookUser> pages = new ArrayList<>();
+        try {
+            List<Account> accounts = libraryInstance.getAccounts();
+            for (Account account : accounts) {
+                FacebookUser user = new FacebookUser(FacebookUser.UserType.PAGE);
+                user.setId(account.getId());
+                user.setName(account.getName());
+                user.setAccessToken(account.getAccessToken());
+                pages.add(user);
+            }
+        } catch (FacebookException fe) {
+            debug(fe);
+            throw new FacebookAPIException(fe.getMessage());
+        }
+        return pages;
+    }
+
+    @Override
+    public boolean destroyStatusPost(String id) {
+        try {
+            return libraryInstance.deletePost(id);
         } catch (FacebookException fe) {
             debug(fe);
             throw new FacebookAPIException(fe.getMessage());

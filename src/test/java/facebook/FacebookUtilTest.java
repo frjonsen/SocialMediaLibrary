@@ -66,6 +66,7 @@ public class FacebookUtilTest {
         Category c = Mockito.mock(Category.class);
         Mockito.when(c.getId()).thenReturn("someid");
         Mockito.when(c.getName()).thenReturn("somename");
+        Mockito.when(c.getCategory()).thenReturn("user");
 
         User user = FacebookUtil.categoryToUser(c);
         assertEquals("someid", user.getId());

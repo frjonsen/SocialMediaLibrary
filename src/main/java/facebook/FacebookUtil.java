@@ -31,7 +31,7 @@ class FacebookUtil {
             return u;
         }
         for (IdNameEntity user : users) {
-            FacebookUser converted = new FacebookUser();
+            FacebookUser converted = new FacebookUser(FacebookUser.UserType.USER);
             converted.setName(user.getName());
             converted.setId(user.getId());
             u.add(converted);
@@ -61,7 +61,7 @@ class FacebookUtil {
     }
 
     static FacebookUser categoryToUser(Category category) {
-        FacebookUser user = new FacebookUser();
+        FacebookUser user = new FacebookUser(FacebookUser.UserType.USER);
         user.setId(category.getId());
         user.setName(category.getName());
         return user;
