@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SocialMediaLibrary.iml" filepath="$PROJECT_DIR$/SocialMediaLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/socialmedia.iml" filepath="$PROJECT_DIR$/socialmedia.iml" />
     </modules>
   </component>

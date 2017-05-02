@@ -118,7 +118,7 @@ public class TwitterAPIImpl extends TwitterAPI {
         }
     }
     @Override
-    public List<TwitterPost> getPostFeed(String screenName){
+    public List<TwitterPost> getPostFeed(String screenName){ //TODO:: maby add me call
         try {
             long lId = Long.parseLong(screenName);
             return getPostFeed(lId);

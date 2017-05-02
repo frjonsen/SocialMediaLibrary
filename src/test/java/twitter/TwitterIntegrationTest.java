@@ -118,21 +118,21 @@ public class TwitterIntegrationTest {
     @DisplayName("should follow and unfollow a user for the authenticator")
     
     void testFollowUnfollow() throws InterruptedException{
-        List<TwitterUser> following = twitter.getFollowing("me", -1); // following list
-        if(following.stream().anyMatch((follower) -> follower.getId().equals("130649891"))) { // check if list has id
-            assertTrue(twitter.unfollow("130649891")); //unfollow if there 130649891
-            following = twitter.getFollowing("me", -1); // following list
+        List<TwitterUser> following = twitter.getFollowing("me", -1);
+        if(following.stream().anyMatch((follower) -> follower.getId().equals("130649891"))) {
+            assertTrue(twitter.unfollow("130649891"));
+            following = twitter.getFollowing("me", -1);
         }
 
-        assertFalse(following.stream().anyMatch((follower) -> follower.getId().equals("130649891"))); //check if id
+        assertFalse(following.stream().anyMatch((follower) -> follower.getId().equals("130649891")));
 
-        assertTrue(twitter.follow(130649891L)); //follow
-        following = twitter.getFollowing("me", -1); //get followers
-        assertTrue(following.stream().anyMatch((follower) -> follower.getId().equals("130649891"))); //check following
+        assertTrue(twitter.follow(130649891L));
+        following = twitter.getFollowing("me", -1);
+        assertTrue(following.stream().anyMatch((follower) -> follower.getId().equals("130649891")));
 
-        assertTrue(twitter.unfollow(130649891L)); //unfollow
-        following = twitter.getFollowing("me", -1); //check unfollowed
-        assertFalse(following.stream().anyMatch((follower) -> follower.getId().equals("130649891"))); //check unfollowed
+        assertTrue(twitter.unfollow(130649891L));
+        following = twitter.getFollowing("me", -1);
+        assertFalse(following.stream().anyMatch((follower) -> follower.getId().equals("130649891")));
     }
 
     @Test
@@ -143,28 +143,35 @@ public class TwitterIntegrationTest {
     }
 
     @Test
-    @DisplayName("Testing testing")
+    @DisplayName("should get valid profile picture url")
     void testGetProfilePicture(){
        String url = twitter.getProfilePicture("783214").toString();
        assertEquals("https://pbs.twimg.com/profile_images/842992378960986112/Yd1Z53jW_bigger.jpg", url);
     }
 
     @Test
-    @DisplayName("Testing testing")
-    void testLikePost(){
+    @DisplayName("should like and unlike a post")
+    void testLikeUnlikePost(){
+        List<TwitterPost> feed = twitter.getPostFeed(783214L);
+        TwitterPost post = feed.get(0);
+        assertFalse(post.isFavorited());
 
+        assertTrue(twitter.likePost(post.getId()));
+        assertTrue(twitter.getPost(post.getId()).isFavorited());
+
+        assertTrue(twitter.unlikePost(post.getId()));
+        assertFalse(twitter.getPost(post.getId()).isFavorited());
     }
 
     @Test
-    @DisplayName("Testing testing")
-    void testUnlikePost(){
+    @DisplayName("should create a status post and then destroy it")
+    void testPublishDestroyStatusPost(){
+        String id = twitter.publishStatusPost("Integration tests are fun!");
+        assertEquals("Integration tests are fun!", twitter.getPost(id).getText());
 
-    }
-
-    @Test
-    @DisplayName("Testing testing")
-    void testPublishStatusPost(){
-
+        assertTrue(twitter.destroyStatusPost(id));
+        List<TwitterPost> feed = twitter.getPostFeed(829638593786347520L);
+        assertFalse(feed.stream().anyMatch((post) -> post.getId().equals("829638593786347520")));
     }
 
     @Test
@@ -174,21 +181,19 @@ public class TwitterIntegrationTest {
     }
 
     @Test
-    @DisplayName("Testing testing")
+    @DisplayName("should get followers and return an empty list as our page is not popular")
     void testGetFollowers(){
-
+        List<TwitterUser> followers = twitter.getFollowers("829638593786347520", -1);
+        assertEquals(0, followers.size());
     }
 
     @Test
-    @DisplayName("Testing testing")
+    @DisplayName("should get a valid following list")
     void testGetFollowing(){
+        List<TwitterUser> followings = twitter.getFollowing("me", -1);
 
-    }
-
-    @Test
-    @DisplayName("Testing testing")
-    void testDestroyStatusPost() {
-
+        assertEquals(2, followings.size());
+        assertTrue(followings.stream().allMatch((user) -> user.getId().equals("6253282") || user.getId().equals("783214")));
     }
 
 }
