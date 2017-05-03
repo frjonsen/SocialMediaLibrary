@@ -48,7 +48,7 @@ public class TwitterAPIImplTest {
         assertEquals("Lorem ipsum testy mctest ipsunator...", user.getBiography());
         assertEquals(10, user.getUploadCount());
         assertEquals(2, user.getFollowingCount());
-        assertEquals(2, user.getFollowersCount());
+        assertEquals(2, user.getFollowersCount().intValue());
         assertEquals("testify@test.com", user.getEmail());
         assertEquals("Testing Street", user.getLocation());
         assertEquals("Testarian", user.getLanguage());

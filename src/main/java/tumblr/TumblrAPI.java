@@ -2,6 +2,7 @@ package tumblr;
 
 import socialmedia.NotSupportedException;
 import socialmedia.SocialMediaBase;
+import java.net.URL;
 
 public abstract class TumblrAPI extends SocialMediaBase<TumblrUser, TumblrPost> {
     private static final String PLATFORM = "Tumblr";
@@ -13,4 +14,10 @@ public abstract class TumblrAPI extends SocialMediaBase<TumblrUser, TumblrPost> 
      */
     @Override
     public TumblrPost getPost(String id) { throw new NotSupportedException("getPost", PLATFORM); }
+
+    abstract TumblrUser getAuthedUser();
+
+    public abstract  TumblrUser getUser(String id);
+
+    public abstract URL getProfilePicture(String id);
 }
