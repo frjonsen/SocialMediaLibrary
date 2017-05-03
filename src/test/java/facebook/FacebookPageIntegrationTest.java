@@ -57,4 +57,10 @@ public class FacebookPageIntegrationTest {
         assertEquals(posts.size() + 1, updatedFeed.size());
         assertTrue(facebook.destroyStatusPost(p.getId()));
     }
+
+    @Test
+    void testGetComments() {
+        List<FacebookComment> comments = facebook.getComments("1391221074275077_1415755851821599");
+        assertEquals("hello", comments.get(0).getMessage());
+    }
 }

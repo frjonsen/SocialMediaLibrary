@@ -1,0 +1,11 @@
+{
+    "server": {
+        "protocol": "http",
+        "host": "localhost:3000"
+    },
+    "tumblr": {
+        "key": "tIRHYJjPgpIn11RhuRooOAjZNNHQhYcA1nxWjIWp9Jk1jTIgOj",
+        "secret": "IqL7ufsJqP9KD7HyQZ64xu117BFqLIIK77irOWJO3AS4x1nE78",
+        "callback": "/handle_tumblr_callback"
+    }
+}
