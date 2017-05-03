@@ -80,7 +80,7 @@ class UserTest {
     void testFollowersCount() {
         int count = 10;
         user.setFollowersCount(count);
-        assertEquals(count, user.getFollowersCount());
+        assertEquals(count, user.getFollowersCount().intValue());
     }
 
 }

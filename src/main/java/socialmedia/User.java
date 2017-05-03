@@ -20,7 +20,7 @@ public abstract class User {
     private String biography;
     private int uploadCount;
     private int followingCount;
-    private int followersCount;
+    private Integer followersCount;
 
     /**
      * Returns a stringified version of this instance
@@ -154,13 +154,13 @@ public abstract class User {
      * Returns number of users/accounts the User is following on the platform.
      * @return  FollowersCount of the User.
      */
-    public int getFollowersCount() { return this.followersCount; }
+    public Integer getFollowersCount() { return this.followersCount; }
 
     /**
      * Updates the follower count on the local User object. It does not update
      * the information on the platform.
      * @param count the new FollowerCount.
      */
-    public void setFollowersCount(int count) { this.followersCount = count; }
+    public void setFollowersCount(Integer count) { this.followersCount = count; }
 
 }

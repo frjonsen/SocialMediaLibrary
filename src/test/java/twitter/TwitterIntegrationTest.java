@@ -58,7 +58,7 @@ public class TwitterIntegrationTest {
         assertEquals("liustuds", user.getUsername());
         assertEquals("https://t.co/AizXLwr5eB", user.getWebsite().toString());
         assertEquals("Doing a little test, making a little mock.", user.getBiography());
-        assertEquals(0, user.getFollowersCount());
+        assertEquals(0, user.getFollowersCount().intValue());
         assertEquals("Testingville", user.getLocation());
         assertEquals("en-gb", user.getLanguage());
         assertEquals(4, user.getUploadCount());
