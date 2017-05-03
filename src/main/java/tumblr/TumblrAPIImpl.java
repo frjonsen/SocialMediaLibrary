@@ -16,6 +16,10 @@ public class TumblrAPIImpl extends TumblrAPI {
         libraryInstance = new JumblrClient(consumerKey, consumerSecret, accessToken, accessSecret);
     }
 
+    TumblrAPIImpl(JumblrClient client) {
+        libraryInstance = client;
+    }
+
     static TumblrUser jumblrBlogToUserConversion(Blog blog) {
         if (blog == null) {
             return null;
@@ -23,6 +27,7 @@ public class TumblrAPIImpl extends TumblrAPI {
         TumblrUser user = new TumblrUser(TumblrUser.UserType.BLOG);
         user.setId(blog.getName());
         user.setUsername(blog.getName());
+        user.setName(blog.getTitle());
         user.setBiography(blog.getDescription());
         user.setUploadCount(blog.getPostCount());
         user.setFollowersCount(blog.getFollowersCount());
@@ -47,6 +52,14 @@ public class TumblrAPIImpl extends TumblrAPI {
         user.setFollowingCount(jumblrUser.getFollowingCount());
 
         return user;
+    }
+
+    TumblrUser getAuthedUser() {
+        return jumblrUserToUserConversion(libraryInstance.user());
+    }
+
+    public TumblrUser getUser(String id) {
+        return jumblrBlogToUserConversion(libraryInstance.blogInfo(id));
     }
 
 }

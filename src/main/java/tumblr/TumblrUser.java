@@ -15,7 +15,7 @@ public class TumblrUser extends User {
     private List<TumblrUser> blogs;
 
     public TumblrUser(UserType userType) {
-        this.type = type;
+        this.type = userType;
     }
 
     public UserType getType() {

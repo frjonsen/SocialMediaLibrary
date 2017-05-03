@@ -10,14 +10,18 @@ import org.cfg4j.source.context.filesprovider.ConfigFilesProvider;
 import org.cfg4j.source.files.FilesConfigurationSource;
 import org.cfg4j.source.system.EnvironmentVariablesConfigurationSource;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import twitter.TwitterAPIImpl;
 
 import java.io.File;
 import java.util.Arrays;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@Tag("apiCall")
 public class TumblrIntegrationTest {
     private static TumblrAPI tumblr;
 
@@ -45,6 +49,29 @@ public class TumblrIntegrationTest {
         User user = client.user();
         System.out.println(user.getName());
         */
+    }
+
+    @Test
+    void testGetAuthedUser() {
+        TumblrUser user = tumblr.getAuthedUser();
+        assertEquals(TumblrUser.UserType.USER, user.getType());
+        assertEquals("sml2003", user.getName());
+        assertEquals(1, user.getFollowingCount());
+        assertEquals(1, user.getBlogs().size());
+        assertEquals(null, user.getBiography());
+
+        assertEquals("Untitled", user.getBlogs().get(0).getUsername());
+        assertNull(user.getBlogs().get(0).getName());
+    }
+
+    @Test
+    void testGetBlog() {
+        TumblrUser blog = tumblr.getUser("sml2003");
+        assertEquals("Untitled", blog.getName());
+        assertEquals("sml2003", blog.getId());
+        assertEquals(1, blog.getUploadCount());
+        assertEquals("herro", blog.getBiography());
+        assertEquals(0, blog.getFollowersCount().intValue());
     }
 
     @Test
