@@ -4,6 +4,8 @@ import com.tumblr.jumblr.JumblrClient;
 import com.tumblr.jumblr.types.Blog;
 import com.tumblr.jumblr.types.User;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -60,6 +62,16 @@ public class TumblrAPIImpl extends TumblrAPI {
 
     public TumblrUser getUser(String id) {
         return jumblrBlogToUserConversion(libraryInstance.blogInfo(id));
+    }
+
+    @Override
+    public URL getProfilePicture(String id) {
+        String rawUrl = libraryInstance.blogAvatar(id, 512);
+        try {
+            return new URL(rawUrl);
+        } catch (MalformedURLException me) {
+            throw new TumblrAPIException(me.getMessage());
+        }
     }
 
 }
