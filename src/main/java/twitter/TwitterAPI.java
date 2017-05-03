@@ -8,8 +8,6 @@ import java.util.Map;
 
 public abstract class TwitterAPI extends SocialMediaBase<TwitterUser, TwitterPost> {
 
-    protected static final String PLATFORM = "Twitter";
-
     /**
      * Gets a TwitterUser by provided screenName, filling a user object
      * with available information. Calling the function with the string "me"

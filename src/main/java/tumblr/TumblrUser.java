@@ -1,4 +1,6 @@
 package tumblr;
 
-public class TumblrUser {
+import socialmedia.User;
+
+public class TumblrUser extends User {
 }
