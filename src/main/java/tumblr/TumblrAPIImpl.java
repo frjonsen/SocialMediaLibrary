@@ -21,19 +21,8 @@ public class TumblrAPIImpl extends TumblrAPI {
         libraryInstance = new JumblrClient(consumerKey, consumerSecret, accessToken, accessSecret);
     }
 
-<<<<<<< HEAD
-    @Override
-    public TumblrUser getUser(String id) {
-        return null;
-    }
-
     @Override
     public List<TumblrUser> searchUsers(String query) {
-        return null;
-    }
-
-    @Override
-    public URL getProfilePicture(String id) {
         return null;
     }
 
@@ -92,9 +81,10 @@ public class TumblrAPIImpl extends TumblrAPI {
         return false;
     }
 
-    private TumblrPost jumblrPostConversion(){
+    private TumblrPost jumblrPostConversion() {
         return null;
-=======
+    }
+
     TumblrAPIImpl(JumblrClient client) {
         libraryInstance = client;
     }
@@ -149,7 +139,6 @@ public class TumblrAPIImpl extends TumblrAPI {
         } catch (MalformedURLException me) {
             throw new TumblrAPIException(me.getMessage());
         }
->>>>>>> 152e9f387852d82f16b20affbd6c5efc989bee22
     }
 
 }

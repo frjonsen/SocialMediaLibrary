@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import twitter.TwitterAPIImpl;
 
 import java.io.File;
+import java.net.URL;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -72,6 +73,12 @@ public class TumblrIntegrationTest {
         assertEquals(1, blog.getUploadCount());
         assertEquals("herro", blog.getBiography());
         assertEquals(0, blog.getFollowersCount().intValue());
+    }
+
+    @Test
+    void testGetProfilePicture() {
+        URL picture = tumblr.getProfilePicture("sml2003");
+        assertEquals("https://assets.tumblr.com/images/default_avatar/cube_open_128.png", picture.toString());
     }
 
     @Test
