@@ -2,7 +2,14 @@ var express = require('express')
 var session = require('express-session')
 
 var Grant = require('grant-express')
-var grant = new Grant(require('./config.json'))
+var config = require('./config.json');
+let yaml = require('yamljs');
+var y = yaml.load('../../secrets.yaml');
+
+config.tumblr.secret = y.TUMBLR.CONSUMERSECRET;
+config.tumblr.key = y.TUMBLR.CONSUMERKEY;
+
+var grant = new Grant(config);
 
 var app = express()
 app.use(session({secret: 'very secret'}))
