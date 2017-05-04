@@ -1,6 +1,7 @@
 package tumblr.mocks;
 
 import com.tumblr.jumblr.JumblrClient;
+import com.tumblr.jumblr.exceptions.JumblrException;
 import com.tumblr.jumblr.types.Blog;
 import com.tumblr.jumblr.types.User;
 import org.mockito.Mockito;
@@ -21,6 +22,7 @@ public class TumblrLibraryMock {
         Mockito.when(client.userFollowing(any(Map.class))).thenReturn(followingBlogs);
         List<User> followersUsers = generateSimpleUsers(2);
         Mockito.when(client.blogFollowers(eq("testblog"), any(Map.class))).thenReturn(followersUsers);
+        Mockito.doThrow(JumblrException.class).when(client).blogFollowers(eq("fails"), any(Map.class));
         return client;
     }
 

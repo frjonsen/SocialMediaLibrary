@@ -50,6 +50,8 @@ class TumblrAPIImplTest {
     void testGetFollowing() {
         List<TumblrUser> blogs = tumblr.getFollowing(null, 1);
         assertEquals(3, blogs.size());
+
+        assertEquals(0, tumblr.getFollowers(null, 0).size());
     }
 
     @Test
@@ -59,6 +61,8 @@ class TumblrAPIImplTest {
         assertEquals(2, users.size());
 
         assertEquals(0, tumblr.getFollowers("testblog", 0).size());
+
+        assertThrows(TumblrAPIException.class, () -> tumblr.getFollowers("fails", 1));
     }
 
     @Test

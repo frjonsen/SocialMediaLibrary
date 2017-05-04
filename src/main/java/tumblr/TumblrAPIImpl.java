@@ -70,6 +70,9 @@ public class TumblrAPIImpl extends TumblrAPI {
      */
     @Override
     public List<TumblrUser> getFollowers(String id, int maxCalls) {
+        if (maxCalls == -1) {
+            maxCalls = Integer.MAX_VALUE;
+        }
         final int limit = 20; // Maximum amount of users tumblr allows per call
         Map<String, Integer> options = new HashMap<>();
         List<TumblrUser> followers = new ArrayList<>();
@@ -100,6 +103,9 @@ public class TumblrAPIImpl extends TumblrAPI {
      */
     @Override
     public List<TumblrUser> getFollowing(String id, int maxCalls) {
+        if (maxCalls == -1) {
+            maxCalls = Integer.MAX_VALUE;
+        }
         final int limit = 20; // Maximum number of blogs tumblr allows per call
         Map<String, Integer> options = new HashMap<>();
         List<TumblrUser> following = new ArrayList<>();
