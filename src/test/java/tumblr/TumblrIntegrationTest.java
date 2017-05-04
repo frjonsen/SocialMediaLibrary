@@ -10,6 +10,7 @@ import org.cfg4j.source.context.filesprovider.ConfigFilesProvider;
 import org.cfg4j.source.files.FilesConfigurationSource;
 import org.cfg4j.source.system.EnvironmentVariablesConfigurationSource;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import twitter.TwitterAPIImpl;
@@ -17,6 +18,7 @@ import twitter.TwitterAPIImpl;
 import java.io.File;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -103,7 +105,25 @@ public class TumblrIntegrationTest {
     }
 
     @Test
-    void stuff(){
-        System.out.println(tumblr.getPost("160298004044").toString());
+    @DisplayName("should get a valid post")
+    void testGetPost(){
+        TumblrPost post = tumblr.getPost("sml2003", 160297775984L);
+
+        assertEquals("160297775984", post.getId());
+        assertEquals("8TnDZkHT", post.getReblogKey());
+        assertEquals(0, post.getLikeCount());
+        assertEquals("Testing title\n" +
+                "\n" +
+                "<p style=\"\">Testing body<br/></p>", post.getText());
+        assertEquals("2017-05-04T12:16:15Z", post.getCreationTime().toString());
+        List<String> tags = (List<String>)post.getTags();
+        assertEquals(2, tags.size());
+        assertEquals("test", tags.get(0));
+        assertEquals("sml", tags.get(1));
+        assertEquals(0, post.getSharedCount());
+        assertEquals("https://sml2003.tumblr.com/post/160297775984/testing-title", post.getPermalink().toString());
+
+        assertFalse(post.isLiked());
+
     }
 }

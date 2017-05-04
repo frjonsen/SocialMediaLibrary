@@ -162,11 +162,13 @@ public class TumblrAPIImpl extends TumblrAPI {
             return null;
         }
         TumblrPost post = new TumblrPost();
-
         post.setLiked(jumblrPost.isLiked());
-        TumblrUser user = new TumblrUser(USER);
-        user.setId(jumblrPost.getAuthorId());
-        post.setAuthor(user);
+
+        if(jumblrPost.getAuthorId() != null) {
+            TumblrUser user = new TumblrUser(USER);
+            user.setId(jumblrPost.getAuthorId());
+            post.setAuthor(user);
+        }
         Date date = new Date();
         date.setTime(jumblrPost.getTimestamp() * 1000);
         post.setCreationTime(date);
@@ -179,12 +181,14 @@ public class TumblrAPIImpl extends TumblrAPI {
         }
 
         long noteCount = jumblrPost.getNoteCount();
-        long reblogCount = jumblrPost.getNotes()
-                .stream()
-                .filter(note -> note.getType().equals("reblog"))
-                .count();
-        post.setSharedCount((int) reblogCount);
-        post.setLikeCount((int) (noteCount - reblogCount));
+        if(jumblrPost.getNotes() != null) {
+            long reblogCount = jumblrPost.getNotes()
+                    .stream()
+                    .filter(note -> note.getType().equals("reblog"))
+                    .count();
+            post.setSharedCount((int) reblogCount);
+            post.setLikeCount((int) (noteCount - reblogCount));
+        }
         post.setTags(jumblrPost.getTags());
         if (jumblrPost.getRebloggedFromName() != null) {
             TumblrUser rebloggedFrom = new TumblrUser(BLOG);
