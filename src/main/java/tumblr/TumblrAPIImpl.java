@@ -4,6 +4,7 @@ import com.tumblr.jumblr.JumblrClient;
 import com.tumblr.jumblr.exceptions.JumblrException;
 import com.tumblr.jumblr.types.Blog;
 import com.tumblr.jumblr.types.User;
+import socialmedia.NotSupportedException;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -23,7 +24,7 @@ public class TumblrAPIImpl extends TumblrAPI {
 
     @Override
     public List<TumblrUser> searchUsers(String query) {
-        return null;
+        throw new NotSupportedException("searchUsers", PLATFORM);
     }
 
     @Override
