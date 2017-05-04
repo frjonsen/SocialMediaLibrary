@@ -11,7 +11,6 @@ import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import java.net.URL;
 import java.util.List;
 
 public class TumblrAPIImpl extends TumblrAPI {
@@ -86,7 +85,8 @@ public class TumblrAPIImpl extends TumblrAPI {
                 throw new TumblrAPIException(je.getMessage());
             }
 
-            if (followersChunk.isEmpty()) break;
+            if (followersChunk.isEmpty())
+                break;
             followers.addAll(followersChunk.stream().map(TumblrAPIImpl::jumblrUserToUserConversion).collect(Collectors.toList()));
         }
         return followers;
@@ -115,7 +115,8 @@ public class TumblrAPIImpl extends TumblrAPI {
                 throw new TumblrAPIException(je.getMessage());
             }
 
-            if (following.isEmpty()) break;
+            if (following.isEmpty())
+                break;
             following.addAll(followingChunk.stream().map(TumblrAPIImpl::jumblrBlogToUserConversion).collect(Collectors.toList()));
         }
 
@@ -125,7 +126,8 @@ public class TumblrAPIImpl extends TumblrAPI {
     @Override
     public boolean follow(String id) {
         Blog blog = libraryInstance.blogInfo(id);
-        if (blog == null) throw new TumblrAPIException("No blog with id \"" + id + "\"");
+        if (blog == null)
+            throw new TumblrAPIException("No blog with id \"" + id + "\"");
         libraryInstance.follow(id);
         return true; // jumblr doesn't return whether it worked. Assume it worked as long as blog exists.
     }
@@ -133,7 +135,8 @@ public class TumblrAPIImpl extends TumblrAPI {
     @Override
     public boolean unfollow(String id) {
         Blog blog = libraryInstance.blogInfo(id);
-        if (blog == null) throw new TumblrAPIException("No blog with id \"" + id + "\"");
+        if (blog == null)
+            throw new TumblrAPIException("No blog with id \"" + id + "\"");
         libraryInstance.unfollow(id);
         return true; // jumblr doesn't return whether it worked. Assume it worked as long as blog exists.
     }
