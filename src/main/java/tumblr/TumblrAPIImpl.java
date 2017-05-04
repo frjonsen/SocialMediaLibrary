@@ -115,12 +115,12 @@ public class TumblrAPIImpl extends TumblrAPI {
                 throw new TumblrAPIException(je.getMessage());
             }
 
-            if (following.isEmpty())
+            if (followingChunk.isEmpty())
                 break;
             following.addAll(followingChunk.stream().map(TumblrAPIImpl::jumblrBlogToUserConversion).collect(Collectors.toList()));
         }
 
-        return libraryInstance.userFollowing().stream().map(TumblrAPIImpl::jumblrBlogToUserConversion).collect(Collectors.toList());
+        return following;
     }
 
     @Override

@@ -7,7 +7,9 @@ import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 
 public class TumblrLibraryMock {
@@ -15,7 +17,10 @@ public class TumblrLibraryMock {
         JumblrClient client = Mockito.mock(JumblrClient.class);
         Blog fullBlogMock = getTumblrFullBlogMock();
         Mockito.when(client.blogInfo(eq("testblog"))).thenReturn(fullBlogMock);
-
+        List<Blog> followingBlogs = generateSimpleBlogs(3);
+        Mockito.when(client.userFollowing(any(Map.class))).thenReturn(followingBlogs);
+        List<User> followersUsers = generateSimpleUsers(2);
+        Mockito.when(client.blogFollowers(eq("testblog"), any(Map.class))).thenReturn(followersUsers);
         return client;
     }
 
@@ -32,6 +37,20 @@ public class TumblrLibraryMock {
         }
 
         return blogs;
+    }
+
+    private static List<User> generateSimpleUsers(int nrOfUsers) {
+        List<User> users = new ArrayList<>();
+        for (int i = 0; i < nrOfUsers; ++i) {
+            User user = Mockito.mock(User.class);
+            Mockito.when(user.getName()).thenReturn("user" + i);
+            Mockito.when(user.getFollowingCount()).thenReturn(i);
+            Mockito.when(user.getLikeCount()).thenReturn(12 + i);
+            List<Blog> blogs = generateSimpleBlogs(i);
+            Mockito.when(user.getBlogs()).thenReturn(blogs);
+            users.add(user);
+        }
+        return users;
     }
 
     public static Blog getTumblrFullBlogMock() {
