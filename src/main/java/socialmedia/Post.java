@@ -19,7 +19,7 @@ public abstract class Post <T extends User> {
      * <li>{@link #OFFER}</li>
      */
     public enum Type{
-        IMAGE, TEXT, VIDEO, LINK, OFFER, UNKNOWN
+        IMAGE, TEXT, VIDEO, LINK, OFFER, CHAT, AUDIO, ANSWER, QUOTE, UNKNOWN
     }
 
     private Type type;
@@ -30,6 +30,8 @@ public abstract class Post <T extends User> {
     private int shareCount;
     private Iterable<T> toUsers;
     private Iterable<String> tags;
+    private URL permalink;
+    private T author;
 
     @Override
     public String toString() {
@@ -60,8 +62,7 @@ public abstract class Post <T extends User> {
                 ", author=" + author;
     }
 
-    private URL permalink;
-    private T author;
+
 
     /**
      * Returns the type of the post. If the post is a text,
