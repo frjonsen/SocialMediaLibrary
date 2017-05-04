@@ -15,6 +15,8 @@ public abstract class TumblrAPI extends SocialMediaBase<TumblrUser, TumblrPost> 
     @Override
     public TumblrPost getPost(String id) { throw new NotSupportedException("getPost", PLATFORM); }
 
+    public abstract TumblrPost getPost(String blogName, long id);
+
     abstract TumblrUser getAuthedUser();
 
     public abstract  TumblrUser getUser(String id);

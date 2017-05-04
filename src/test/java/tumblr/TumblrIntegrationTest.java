@@ -83,6 +83,6 @@ public class TumblrIntegrationTest {
 
     @Test
     void stuff(){
-        assertTrue(true);
+        System.out.println(tumblr.getPost("160298004044").toString());
     }
 }
