@@ -17,10 +17,9 @@ import twitter.TwitterAPIImpl;
 import java.io.File;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @Tag("apiCall")
 public class TumblrIntegrationTest {
@@ -79,6 +78,28 @@ public class TumblrIntegrationTest {
     void testGetProfilePicture() {
         URL picture = tumblr.getProfilePicture("sml2003");
         assertEquals("https://assets.tumblr.com/images/default_avatar/cube_open_128.png", picture.toString());
+    }
+
+    @Test
+    void testGetFollowing() {
+        List<TumblrUser> following = tumblr.getFollowing(null, 1);
+        assertEquals("staff", following.get(0).getId());
+    }
+
+    @Test
+    void testGetFollowers() {
+        List<TumblrUser> followers = tumblr.getFollowers("staff", 2);
+        assertEquals(40, followers.size());
+    }
+
+    @Test
+    void testFollowUnfollow() {
+        String blog = "madewithcode";
+        assertTrue(tumblr.follow(blog));
+        assertTrue(tumblr.getFollowing(null, 1).stream().anyMatch(b -> b.getId().equals(blog)));
+
+        assertTrue(tumblr.unfollow(blog));
+        assertFalse(tumblr.getFollowing(null, 1).stream().anyMatch(b -> b.getId().equals(blog)));
     }
 
     @Test

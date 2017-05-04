@@ -3,7 +3,7 @@ let yaml = require('yamljs');
 let app = express();
 
 let readConfig = function() {
-    let contents = yaml.load('../secrets.yaml');
+    let contents = yaml.load('../../secrets.yaml');
     return contents;
 }
 

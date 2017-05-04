@@ -3,7 +3,11 @@ package tumblr;
 import com.tumblr.jumblr.types.Blog;
 import com.tumblr.jumblr.types.User;
 import org.junit.jupiter.api.*;
+import socialmedia.NotSupportedException;
 import tumblr.mocks.TumblrLibraryMock;
+
+import java.net.URL;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -41,4 +45,46 @@ class TumblrAPIImplTest {
         assertEquals(18, convertedUser.getFollowingCount());
         assertEquals(3, convertedUser.getBlogs().size());
     }
+
+    @Test
+    @DisplayName("should get the blogs authed user is following")
+    void testGetFollowing() {
+        List<TumblrUser> blogs = tumblr.getFollowing(null, 1);
+        assertEquals(3, blogs.size());
+
+        assertEquals(0, tumblr.getFollowers(null, 0).size());
+    }
+
+    @Test
+    @DisplayName("should get the users following a blog")
+    void testGetFollowers() {
+        List<TumblrUser> users = tumblr.getFollowers("testblog", 1);
+        assertEquals(2, users.size());
+
+        assertEquals(0, tumblr.getFollowers("testblog", 0).size());
+
+        assertThrows(TumblrAPIException.class, () -> tumblr.getFollowers("fails", 1));
+    }
+
+    @Test
+    @DisplayName("should handle invalid blog when getting followers")
+    void testGetInvalidFollowers() {
+        assertEquals(0, tumblr.getFollowers("nonexistant", 1).size());
+    }
+
+    @Test
+    @DisplayName("should throw when using searchUsers")
+    void testSearchUsers() {
+        assertThrows(NotSupportedException.class, () -> tumblr.searchUsers("user"));
+    }
+
+    @Test
+    @DisplayName("should retrieve blog avatar")
+    void testGetProfilePicture() {
+        URL url = tumblr.getProfilePicture("testblog");
+        assertEquals("http://urlforavatar.com", url.toString());
+
+        assertThrows(TumblrAPIException.class, () -> tumblr.getProfilePicture("fails"));
+    }
+
 }
