@@ -60,7 +60,7 @@ public class TumblrIntegrationTest {
         assertEquals(1, user.getBlogs().size());
         assertEquals(null, user.getBiography());
 
-        assertEquals("Untitled", user.getBlogs().get(0).getUsername());
+        assertEquals("sml2003", user.getBlogs().get(0).getUsername());
         assertNull(user.getBlogs().get(0).getName());
     }
 
@@ -69,7 +69,7 @@ public class TumblrIntegrationTest {
         TumblrUser blog = tumblr.getUser("sml2003");
         assertEquals("Untitled", blog.getName());
         assertEquals("sml2003", blog.getId());
-        assertEquals(1, blog.getUploadCount());
+        assertEquals(8, blog.getUploadCount());
         assertEquals("herro", blog.getBiography());
         assertEquals(0, blog.getFollowersCount().intValue());
     }
@@ -88,8 +88,8 @@ public class TumblrIntegrationTest {
 
     @Test
     void testGetFollowers() {
-        List<TumblrUser> followers = tumblr.getFollowers("staff", 2);
-        assertEquals(40, followers.size());
+        List<TumblrUser> followers = tumblr.getFollowers("sml2003", 2);
+        assertEquals(0, followers.size());
     }
 
     @Test
