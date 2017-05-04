@@ -18,6 +18,4 @@ public abstract class TumblrAPI extends SocialMediaBase<TumblrUser, TumblrPost> 
     abstract TumblrUser getAuthedUser();
 
     public abstract  TumblrUser getUser(String id);
-
-    public abstract URL getProfilePicture(String id);
 }

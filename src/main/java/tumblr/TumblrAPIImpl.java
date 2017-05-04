@@ -1,13 +1,13 @@
 package tumblr;
 
 import com.tumblr.jumblr.JumblrClient;
+import com.tumblr.jumblr.exceptions.JumblrException;
 import com.tumblr.jumblr.types.Blog;
 import com.tumblr.jumblr.types.User;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import java.net.URL;
@@ -61,24 +61,80 @@ public class TumblrAPIImpl extends TumblrAPI {
         return null;
     }
 
+    /**
+     * Gets all the users following a specified blog. Tumblr only allows getting followers for the
+     * authed users blogs.
+     * @param id id of blog
+     * @param maxCalls max number of calls to api
+     * @return A list of users following the blog
+     */
     @Override
     public List<TumblrUser> getFollowers(String id, int maxCalls) {
-        return null;
+        final int limit = 20; // Maximum amount of users tumblr allows per call
+        Map<String, Integer> options = new HashMap<>();
+        List<TumblrUser> followers = new ArrayList<>();
+        for (int i = 0; i < maxCalls; ++i) {
+            int offset = i*limit;
+            options.put("offset", offset);
+            options.put("limit", limit);
+            List<User> followersChunk;
+            try {
+                followersChunk = libraryInstance.blogFollowers(id, options);
+            } catch(JumblrException je) {
+                debug(je);
+                throw new TumblrAPIException(je.getMessage());
+            }
+
+            if (followersChunk.isEmpty()) break;
+            followers.addAll(followersChunk.stream().map(TumblrAPIImpl::jumblrUserToUserConversion).collect(Collectors.toList()));
+        }
+        return followers;
     }
 
+    /**
+     * Gets the blogs the authed user is following. Id is not used.
+     * @param id id of user
+     * @param maxCalls max number of calls to api
+     * @return List of blogs user is following
+     */
     @Override
     public List<TumblrUser> getFollowing(String id, int maxCalls) {
-        return null;
+        final int limit = 20; // Maximum number of blogs tumblr allows per call
+        Map<String, Integer> options = new HashMap<>();
+        List<TumblrUser> following = new ArrayList<>();
+        for (int i = 0; i < maxCalls; ++i) {
+            int offset = i * limit;
+            options.put("offset", offset);
+            options.put("limit", limit);
+            List<Blog> followingChunk;
+            try {
+                followingChunk = libraryInstance.userFollowing(options);
+            } catch (JumblrException je) {
+                debug(je);
+                throw new TumblrAPIException(je.getMessage());
+            }
+
+            if (following.isEmpty()) break;
+            following.addAll(followingChunk.stream().map(TumblrAPIImpl::jumblrBlogToUserConversion).collect(Collectors.toList()));
+        }
+
+        return libraryInstance.userFollowing().stream().map(TumblrAPIImpl::jumblrBlogToUserConversion).collect(Collectors.toList());
     }
 
     @Override
     public boolean follow(String id) {
-        return false;
+        Blog blog = libraryInstance.blogInfo(id);
+        if (blog == null) throw new TumblrAPIException("No blog with id \"" + id + "\"");
+        libraryInstance.follow(id);
+        return true; // jumblr doesn't return whether it worked. Assume it worked as long as blog exists.
     }
 
     @Override
     public boolean unfollow(String id) {
-        return false;
+        Blog blog = libraryInstance.blogInfo(id);
+        if (blog == null) throw new TumblrAPIException("No blog with id \"" + id + "\"");
+        libraryInstance.unfollow(id);
+        return true; // jumblr doesn't return whether it worked. Assume it worked as long as blog exists.
     }
 
     private TumblrPost jumblrPostConversion() {
@@ -137,6 +193,7 @@ public class TumblrAPIImpl extends TumblrAPI {
         try {
             return new URL(rawUrl);
         } catch (MalformedURLException me) {
+            debug(me);
             throw new TumblrAPIException(me.getMessage());
         }
     }
