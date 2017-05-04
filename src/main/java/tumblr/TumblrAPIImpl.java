@@ -199,7 +199,14 @@ public class TumblrAPIImpl extends TumblrAPI {
 
     @Override
     public URL getProfilePicture(String id) {
-        String rawUrl = libraryInstance.blogAvatar(id, 512);
+        String rawUrl;
+        try {
+            rawUrl = libraryInstance.blogAvatar(id, 512);
+        } catch (JumblrException je) {
+            debug(je);
+            throw new TumblrAPIException(je.getMessage());
+        }
+
         try {
             return new URL(rawUrl);
         } catch (MalformedURLException me) {

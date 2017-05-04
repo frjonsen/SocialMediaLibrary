@@ -6,6 +6,7 @@ import org.junit.jupiter.api.*;
 import socialmedia.NotSupportedException;
 import tumblr.mocks.TumblrLibraryMock;
 
+import java.net.URL;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -77,5 +78,13 @@ class TumblrAPIImplTest {
         assertThrows(NotSupportedException.class, () -> tumblr.searchUsers("user"));
     }
 
+    @Test
+    @DisplayName("should retrieve blog avatar")
+    void testGetProfilePicture() {
+        URL url = tumblr.getProfilePicture("testblog");
+        assertEquals("http://urlforavatar.com", url.toString());
+
+        assertThrows(TumblrAPIException.class, () -> tumblr.getProfilePicture("fails"));
+    }
 
 }

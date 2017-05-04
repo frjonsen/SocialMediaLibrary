@@ -23,6 +23,9 @@ public class TumblrLibraryMock {
         List<User> followersUsers = generateSimpleUsers(2);
         Mockito.when(client.blogFollowers(eq("testblog"), any(Map.class))).thenReturn(followersUsers);
         Mockito.doThrow(JumblrException.class).when(client).blogFollowers(eq("fails"), any(Map.class));
+        Mockito.when(client.blogAvatar("testblog", 512)).thenReturn("http://urlforavatar.com");
+        Mockito.when(client.blogAvatar("incorrecturl")).thenReturn("no%t.u$rl");
+        Mockito.when(client.blogAvatar("fails", 512)).thenThrow(JumblrException.class);
         return client;
     }
 
