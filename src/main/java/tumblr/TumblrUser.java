@@ -5,6 +5,15 @@ import java.util.List;
 
 public class TumblrUser extends User {
 
+    @Override
+    public String toString() {
+        return "TumblrUser{" +
+                super.baseToString() +
+                "type=" + type +
+                ", blogs=" + blogs +
+                '}';
+    }
+
     public enum UserType {
         BLOG,
         USER
