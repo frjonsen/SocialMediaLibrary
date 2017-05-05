@@ -126,12 +126,12 @@ public class TumblrIntegrationTest {
     @Test
     @DisplayName("should publish a valid post")
     void testPublishPost() {
-        String id = tumblr.publishStatusPost("Testing to publish post");
+        String id = tumblr.publishStatusPost("Testing publish post method");
         TumblrPost post = tumblr.getPost(id);
 
-        assertEquals("null\n" +
-                "\n" +
-                "<p>Testing to publish post</p>", post.getText());
+        assertEquals("<p>Testing to publish post</p>", post.getText());
+
+        assertTrue(tumblr.destroyStatusPost(id));
     }
 
     @Test
