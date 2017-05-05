@@ -9,10 +9,7 @@ import org.cfg4j.source.compose.FallbackConfigurationSource;
 import org.cfg4j.source.context.filesprovider.ConfigFilesProvider;
 import org.cfg4j.source.files.FilesConfigurationSource;
 import org.cfg4j.source.system.EnvironmentVariablesConfigurationSource;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import twitter.TwitterAPIImpl;
 
 import java.io.File;
@@ -41,7 +38,7 @@ public class TumblrIntegrationTest {
         String consumerKey = provider.getProperty("TUMBLR.CONSUMERKEY", String.class);
         String consumerSecret = provider.getProperty("TUMBLR.CONSUMERSECRET", String.class);
 
-        tumblr = new TumblrAPIImpl(consumerKey, consumerSecret, accessToken, tokenSecret);
+        tumblr = new TumblrAPIImpl(consumerKey, consumerSecret, accessToken, tokenSecret, "sml2003");
         /*
         JumblrClient client = new JumblrClient("tIRHYJjPgpIn11RhuRooOAjZNNHQhYcA1nxWjIWp9Jk1jTIgOj", "IqL7ufsJqP9KD7HyQZ64xu117BFqLIIK77irOWJO3AS4x1nE78");
         //client.setToken("oauth_token", "oauth_token_secret");
@@ -107,7 +104,7 @@ public class TumblrIntegrationTest {
     @Test
     @DisplayName("should get a valid post")
     void testGetPost(){
-        TumblrPost post = tumblr.getPost("sml2003", 160297775984L);
+        TumblrPost post = tumblr.getPost("sml2003", "160297775984");
 
         assertEquals("160297775984", post.getId());
         assertEquals("8TnDZkHT", post.getReblogKey());
@@ -124,6 +121,17 @@ public class TumblrIntegrationTest {
         assertEquals("https://sml2003.tumblr.com/post/160297775984/testing-title", post.getPermalink().toString());
 
         assertFalse(post.isLiked());
+    }
 
+    @Test
+    @DisplayName("should publish a valid post")
+    @Disabled
+    void testPublishPost() {
+        String id = tumblr.publishStatusPost("Testing to publish post");
+        TumblrPost post = tumblr.getPost(id);
+
+        assertEquals("null\n" +
+                "\n" +
+                "<p>Testing to publish post</p>", post.getText());
     }
 }
