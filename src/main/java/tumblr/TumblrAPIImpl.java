@@ -102,7 +102,15 @@ public class TumblrAPIImpl extends TumblrAPI {
 
     @Override
     public boolean destroyStatusPost(String id) {
-        return false;
+        long pId;
+        try {
+            pId = Long.parseLong(id);
+        } catch (NumberFormatException nfe) {
+            debug(nfe);
+            throw new TumblrAPIException(nfe.getMessage());
+        }
+        libraryInstance.postDelete(activeBlog, pId);
+        return libraryInstance.blogPost(activeBlog, pId) != null;
     }
 
     @Override
@@ -112,7 +120,10 @@ public class TumblrAPIImpl extends TumblrAPI {
 
     @Override
     public List<TumblrPost> getPostFeed(String id) {
-        return null;
+        String blogId = (id == null || id.equals(SELF_ID)) ? activeBlog : id;
+        List<Post> posts = libraryInstance.blogPosts(blogId);
+        return posts.stream().map(this::jumblrPostConversion).collect(Collectors.toList());
+
     }
 
     @Override

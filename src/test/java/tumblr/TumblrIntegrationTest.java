@@ -125,7 +125,6 @@ public class TumblrIntegrationTest {
 
     @Test
     @DisplayName("should publish a valid post")
-    @Disabled
     void testPublishPost() {
         String id = tumblr.publishStatusPost("Testing to publish post");
         TumblrPost post = tumblr.getPost(id);
@@ -133,5 +132,19 @@ public class TumblrIntegrationTest {
         assertEquals("null\n" +
                 "\n" +
                 "<p>Testing to publish post</p>", post.getText());
+    }
+
+    @Test
+    @DisplayName("should get the feed of the active blog")
+    void testGetActiveFeed() {
+        List<TumblrPost> posts = tumblr.getPostFeed(null);
+        assertEquals(8, posts.size());
+    }
+
+    @Test
+    @DisplayName("should get the feed of specified blog")
+    void testGetFeed() {
+        List<TumblrPost> posts = tumblr.getPostFeed("madewithcode");
+        assertEquals(20, posts.size());
     }
 }
