@@ -20,9 +20,31 @@ import static tumblr.TumblrUser.UserType.USER;
 public class TumblrAPIImpl extends TumblrAPI {
 
     private JumblrClient libraryInstance;
+    private String activeBlog;
 
     public TumblrAPIImpl(String consumerKey, String consumerSecret, String accessToken, String accessSecret) {
         libraryInstance = new JumblrClient(consumerKey, consumerSecret, accessToken, accessSecret);
+    }
+
+    public TumblrAPIImpl(String consumerKey, String consumerSecret, String accessToken, String accessSecret, String activeBlog) {
+        this(consumerKey, consumerSecret, accessToken, accessSecret);
+        this.activeBlog = activeBlog;
+    }
+
+    /**
+     * Gets the blog to use when getting or sending messages
+     * @return Returns the name of the active blog
+     */
+    public String getActiveBlog() {
+        return activeBlog;
+    }
+
+    /**
+     * Sets the blog to use when getting or sending messages
+     * @param activeBlog Name of the new active blog
+     */
+    public void setActiveBlog(String activeBlog) {
+        this.activeBlog = activeBlog;
     }
 
     @Override
