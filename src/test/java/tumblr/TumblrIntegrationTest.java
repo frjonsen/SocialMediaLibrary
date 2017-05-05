@@ -63,7 +63,7 @@ public class TumblrIntegrationTest {
         assertEquals(null, user.getBiography());
 
         assertEquals("sml2003", user.getBlogs().get(0).getUsername());
-        assertNull(user.getBlogs().get(0).getName());
+        assertEquals("Untitled", user.getBlogs().get(0).getName());
     }
 
     @Test

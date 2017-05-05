@@ -80,13 +80,11 @@ public class TumblrAPIImpl extends TumblrAPI {
      */
     @Override
     public List<TumblrUser> getFollowers(String id, int maxCalls) {
-        if (maxCalls == -1) {
-            maxCalls = Integer.MAX_VALUE;
-        }
+        int maximumCalls = maxCalls == -1 ? Integer.MAX_VALUE : maxCalls; // To make Sonar happy
         final int limit = 20; // Maximum amount of users tumblr allows per call
         Map<String, Integer> options = new HashMap<>();
         List<TumblrUser> followers = new ArrayList<>();
-        for (int i = 0; i < maxCalls; ++i) {
+        for (int i = 0; i < maximumCalls; ++i) {
             int offset = i*limit;
             options.put("offset", offset);
             options.put("limit", limit);
@@ -113,13 +111,12 @@ public class TumblrAPIImpl extends TumblrAPI {
      */
     @Override
     public List<TumblrUser> getFollowing(String id, int maxCalls) {
-        if (maxCalls == -1) {
-            maxCalls = Integer.MAX_VALUE;
-        }
+        int maximumCalls = maxCalls == -1 ? Integer.MAX_VALUE : maxCalls; // To make Sonar happy
+
         final int limit = 20; // Maximum number of blogs tumblr allows per call
         Map<String, Integer> options = new HashMap<>();
         List<TumblrUser> following = new ArrayList<>();
-        for (int i = 0; i < maxCalls; ++i) {
+        for (int i = 0; i < maximumCalls; ++i) {
             int offset = i * limit;
             options.put("offset", offset);
             options.put("limit", limit);
@@ -184,7 +181,7 @@ public class TumblrAPIImpl extends TumblrAPI {
         if(jumblrPost.getNotes() != null) {
             long reblogCount = jumblrPost.getNotes()
                     .stream()
-                    .filter(note -> note.getType().equals("reblog"))
+                    .filter(note -> "reblog".equals(note.getType()))
                     .count();
             post.setSharedCount((int) reblogCount);
             post.setLikeCount((int) (noteCount - reblogCount));
@@ -349,7 +346,7 @@ public class TumblrAPIImpl extends TumblrAPI {
         List<Blog> userBlogs = jumblrUser.getBlogs();
         List<TumblrUser> blogs = new ArrayList<>();
         if (userBlogs != null) {
-            blogs = jumblrUser.getBlogs().stream().map(TumblrAPIImpl::jumblrBlogToUserConversion).collect(Collectors.toList());
+            blogs = userBlogs.stream().map(TumblrAPIImpl::jumblrBlogToUserConversion).collect(Collectors.toList());
         }
         user.setBlogs(blogs);
         user.setFollowingCount(jumblrUser.getFollowingCount());
