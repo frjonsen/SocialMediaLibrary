@@ -88,7 +88,16 @@ public class TumblrAPIImpl extends TumblrAPI {
             throw new TumblrAPIException(nfe.getMessage());
         }
         libraryInstance.postDelete(activeBlog, pId);
-        return libraryInstance.blogPost(activeBlog, pId) != null;
+        try {
+            libraryInstance.blogPost(activeBlog, pId);
+            return false;
+        } catch (JumblrException je) {
+            if ("Not Found".equals(je.getMessage())) {
+                return true;
+            }
+            debug(je);
+            throw new TumblrAPIException(je.getMessage());
+        }
     }
 
     @Override
