@@ -41,7 +41,7 @@ public class TumblrIntegrationTest {
         String consumerKey = provider.getProperty("TUMBLR.CONSUMERKEY", String.class);
         String consumerSecret = provider.getProperty("TUMBLR.CONSUMERSECRET", String.class);
 
-        tumblr = new TumblrAPIImpl(consumerKey, consumerSecret, accessToken, tokenSecret);
+        tumblr = new TumblrAPIImpl(consumerKey, consumerSecret, accessToken, tokenSecret, "sml2003");
         /*
         JumblrClient client = new JumblrClient("tIRHYJjPgpIn11RhuRooOAjZNNHQhYcA1nxWjIWp9Jk1jTIgOj", "IqL7ufsJqP9KD7HyQZ64xu117BFqLIIK77irOWJO3AS4x1nE78");
         //client.setToken("oauth_token", "oauth_token_secret");
@@ -124,6 +124,19 @@ public class TumblrIntegrationTest {
         assertEquals("https://sml2003.tumblr.com/post/160297775984/testing-title", post.getPermalink().toString());
 
         assertFalse(post.isLiked());
+    }
 
+    @Test
+    @DisplayName("should get the feed of the active blog")
+    void testGetActiveFeed() {
+        List<TumblrPost> posts = tumblr.getPostFeed(null);
+        assertEquals(8, posts.size());
+    }
+
+    @Test
+    @DisplayName("should get the feed of specified blog")
+    void testGetFeed() {
+        List<TumblrPost> posts = tumblr.getPostFeed("madewithcode");
+        assertEquals(20, posts.size());
     }
 }
