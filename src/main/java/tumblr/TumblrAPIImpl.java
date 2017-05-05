@@ -56,12 +56,34 @@ public class TumblrAPIImpl extends TumblrAPI {
 
     @Override
     public boolean likePost(String id) {
-        return false;
+        long pId;
+        try {
+            pId = Long.parseLong(id);
+        } catch (NumberFormatException mfe) {
+            debug(mfe);
+            throw new TumblrAPIException(mfe.getMessage());
+        }
+        Post post = libraryInstance.blogPost(activeBlog, pId);
+        if (post == null) throw new TumblrAPIException("No post with id \"" + id + "\"");
+        TumblrPost convertedPost = jumblrPostConversion(post);
+        libraryInstance.like(pId, convertedPost.getReblogKey());
+        return true;
     }
 
     @Override
     public boolean unlikePost(String id) {
-        return false;
+        long pId;
+        try {
+            pId = Long.parseLong(id);
+        } catch (NumberFormatException mfe) {
+            debug(mfe);
+            throw new TumblrAPIException(mfe.getMessage());
+        }
+        Post post = libraryInstance.blogPost(activeBlog, pId);
+        if (post == null) throw new TumblrAPIException("No post with id \"" + id + "\"");
+        TumblrPost convertedPost = jumblrPostConversion(post);
+        libraryInstance.unlike(pId, convertedPost.getReblogKey());
+        return true;
     }
 
     @Override
