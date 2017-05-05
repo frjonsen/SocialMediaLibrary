@@ -220,83 +220,33 @@ public class TumblrAPIImpl extends TumblrAPI {
     }
 
     private TumblrPost postTypeSpecificConversion(TumblrPost post, Post jumblrPost) {
-        String type = jumblrPost.getType();
-        String text;
-        switch(type.toUpperCase()) {
+        switch(jumblrPost.getType().toUpperCase()) {
             case "TEXT":
-                post.setType(TEXT);
-                TextPost textPost = (TextPost)jumblrPost;
-                text = textPost.getTitle() + "\n\n" + textPost.getBody();;
-                post.setText(text);
-                break;
+                return textPostConverter(post, jumblrPost);
             case "PHOTO":
-                post.setType(IMAGE);
-                PhotoPost photoPost = (PhotoPost)jumblrPost;
-                post.setText(formatPhotoPostText(photoPost));
-                break;
+                return photoPostConverter(post, jumblrPost);
             case "QUOTE":
-                post.setType(QUOTE);
-                QuotePost quotePost = (QuotePost)jumblrPost;
-                text = quotePost.getText() + "source: \"" + quotePost.getSource() + "\"";
-                post.setText(text);
-                break;
+                return quotePostConverter(post, jumblrPost);
             case "LINK":
-                post.setType(LINK);
-                LinkPost linkPost = (LinkPost)jumblrPost;
-                text = linkPost.getTitle() +
-                        "\n\n" + linkPost.getDescription() +
-                        "\n\n" + "source: \"" + linkPost.getLinkUrl() + "\"";
-                post.setText(text);
-                break;
+                return linkPostConverter(post, jumblrPost);
             case "CHAT":
-                post.setType(CHAT);
-                ChatPost chatPost = (ChatPost)jumblrPost;
-                text = chatPost.getTitle() + "\n\n" + chatPost.getBody();
-                post.setText(text);
-                break;
+                return chatPostConverter(post, jumblrPost);
             case "AUDIO":
-                post.setType(AUDIO);
-                AudioPost audioPost = (AudioPost)jumblrPost;
-                text = audioPost.getSourceTitle() +
-                        "\n\n" + audioPost.getCaption() +
-                        "\n\n" + "url: \"" + audioPost.getSourceUrl() + "\"";
-                post.setText(text);
-                break;
+                return audioPostConverter(post, jumblrPost);
             case "VIDEO":
-                post.setType(VIDEO);
-                VideoPost videoPost = (VideoPost)jumblrPost;
-                text = videoPost.getCaption() + "\n\n" +
-                        "url: \"" + videoPost.getThumbnailUrl() + "\"";
-                post.setText(text);
-                break;
+                return videoPostConverter(post, jumblrPost);
             case "ANSWER":
-                post.setType(ANSWER);
-                AnswerPost answerPost = (AnswerPost)jumblrPost;
-                String askingName = answerPost.getAskingName();
-
-                TumblrUser questionUser = new TumblrUser(BLOG);
-                questionUser.setName(askingName);
-                if(post.getTo() == null){
-                    post.setTo(Arrays.asList(questionUser));
-                } else {
-                    List<TumblrUser> toList = (List<TumblrUser>)post.getTo();
-                    toList.add(questionUser);
-                    post.setTo(toList);
-                }
-
-                text = askingName + "\n" + answerPost.getQuestion() + "\n\n" + answerPost.getAnswer();
-
-                post.setText(text);
-
-                break;
+                return answerPostConverter(post, jumblrPost);
             default:
                 post.setType(UNKNOWN);
-                break;
+                return post;
         }
-        return post;
     }
 
-    private String formatPhotoPostText(PhotoPost post) {
+    private TumblrPost photoPostConverter(TumblrPost tumblrPost, Post jumblrPost) {
+        PhotoPost post = (PhotoPost)jumblrPost;
+        tumblrPost.setType(IMAGE);
+
         String body = post.getCaption();
         String text = body + "\n\n";
         text += post.getPhotos()
@@ -304,7 +254,88 @@ public class TumblrAPIImpl extends TumblrAPI {
                 .map(photo -> photo.getOriginalSize().getUrl())
                 .reduce("", (a, b) -> a + "\n" + "\"" + b +"\"");
 
-        return text;
+        tumblrPost.setText(text);
+        return tumblrPost;
+    }
+
+    private TumblrPost quotePostConverter(TumblrPost tumblrPost, Post jumblrPost) {
+        tumblrPost.setType(QUOTE);
+        QuotePost quotePost = (QuotePost)jumblrPost;
+        String text = quotePost.getText() + "source: \"" + quotePost.getSource() + "\"";
+        tumblrPost.setText(text);
+
+        return tumblrPost;
+    }
+
+    private TumblrPost textPostConverter(TumblrPost tumblrPost, Post jumblrPost) {
+        tumblrPost.setType(TEXT);
+        TextPost textPost = (TextPost)jumblrPost;
+        String text = textPost.getTitle() + "\n\n" + textPost.getBody();;
+        tumblrPost.setText(text);
+
+        return tumblrPost;
+    }
+
+    private TumblrPost linkPostConverter(TumblrPost tumblrPost, Post jumblrPost) {
+        tumblrPost.setType(LINK);
+        LinkPost linkPost = (LinkPost)jumblrPost;
+        String text = linkPost.getTitle() +
+                "\n\n" + linkPost.getDescription() +
+                "\n\n" + "source: \"" + linkPost.getLinkUrl() + "\"";
+        tumblrPost.setText(text);
+
+        return tumblrPost;
+    }
+
+    private TumblrPost chatPostConverter(TumblrPost tumblrPost, Post jumblrPost) {
+        tumblrPost.setType(CHAT);
+        ChatPost chatPost = (ChatPost)jumblrPost;
+        String text = chatPost.getTitle() + "\n\n" + chatPost.getBody();
+        tumblrPost.setText(text);
+
+        return tumblrPost;
+    }
+
+    private TumblrPost audioPostConverter(TumblrPost tumblrPost, Post jumblrPost) {
+        tumblrPost.setType(AUDIO);
+        AudioPost audioPost = (AudioPost)jumblrPost;
+        String text = audioPost.getSourceTitle() +
+                "\n\n" + audioPost.getCaption() +
+                "\n\n" + "url: \"" + audioPost.getSourceUrl() + "\"";
+        tumblrPost.setText(text);
+
+        return tumblrPost;
+    }
+
+    private TumblrPost videoPostConverter(TumblrPost tumblrPost, Post jumblrPost) {
+        tumblrPost.setType(VIDEO);
+        VideoPost videoPost = (VideoPost)jumblrPost;
+        String text = videoPost.getCaption() + "\n\n" +
+                "url: \"" + videoPost.getThumbnailUrl() + "\"";
+        tumblrPost.setText(text);
+
+        return tumblrPost;
+    }
+
+    private TumblrPost answerPostConverter(TumblrPost tumblrPost, Post jumblrPost) {
+        tumblrPost.setType(ANSWER);
+        AnswerPost answerPost = (AnswerPost)jumblrPost;
+        String askingName = answerPost.getAskingName();
+
+        TumblrUser questionUser = new TumblrUser(BLOG);
+        questionUser.setName(askingName);
+        if(tumblrPost.getTo() == null){
+            tumblrPost.setTo(Arrays.asList(questionUser));
+        } else {
+            List<TumblrUser> toList = (List<TumblrUser>)tumblrPost.getTo();
+            toList.add(questionUser);
+            tumblrPost.setTo(toList);
+        }
+
+        String text = askingName + "\n" + answerPost.getQuestion() + "\n\n" + answerPost.getAnswer();
+        tumblrPost.setText(text);
+
+        return tumblrPost;
     }
 
     TumblrAPIImpl(JumblrClient client) {
