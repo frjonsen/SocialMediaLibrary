@@ -7,6 +7,19 @@ import java.util.List;
 
 public abstract class TumblrAPI extends SocialMediaBase<TumblrUser, TumblrPost> {
     protected static final String PLATFORM = "Tumblr";
+    protected String activeBlog;
+
+    /**
+     * Gets the blog to use when getting or sending messages
+     * @return Returns the name of the active blog
+     */
+    public abstract String getActiveBlog();
+
+    /**
+     * Sets the blog to use when getting or sending messages
+     * @param activeBlog Name of the new active blog
+     */
+    public abstract void setActiveBlog(String activeBlog);
 
     /**
      * Will get post with id from the active blog and
@@ -70,4 +83,19 @@ public abstract class TumblrAPI extends SocialMediaBase<TumblrUser, TumblrPost> 
      */
     @Override
     public abstract List<TumblrUser> getFollowers(String id, int maxCalls);
+
+    /**
+     * Gets the blogs the authed user is following. Id is not used.
+     * @param id id of user
+     * @param maxCalls max number of calls to api
+     * @return List of blogs user is following
+     */
+    @Override
+    public abstract List<TumblrUser> getFollowing(String id, int maxCalls);
+
+    @Override
+    public List<TumblrUser> searchUsers(String query) {
+        throw new NotSupportedException("searchUsers", PLATFORM);
+    }
+
 }
