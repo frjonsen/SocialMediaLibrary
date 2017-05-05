@@ -3,6 +3,8 @@ package tumblr;
 import socialmedia.NotSupportedException;
 import socialmedia.SocialMediaBase;
 
+import java.util.List;
+
 public abstract class TumblrAPI extends SocialMediaBase<TumblrUser, TumblrPost> {
     protected static final String PLATFORM = "Tumblr";
 
@@ -36,4 +38,22 @@ public abstract class TumblrAPI extends SocialMediaBase<TumblrUser, TumblrPost> 
      * @return user object
      */
     public abstract  TumblrUser getUser(String blogName);
+
+    /**
+     * dis be broken ma'm
+     * @param message text to post
+     * @return
+     */
+    @Override
+    public String publishStatusPost(String message) { throw new NotSupportedException("getPost", PLATFORM); }
+
+    /**
+     * Gets all the users following a specified blog. Tumblr only allows getting followers for the
+     * authed users blogs.
+     * @param id id of blog
+     * @param maxCalls max number of calls to api
+     * @return A list of users following the blog
+     */
+    @Override
+    public abstract List<TumblrUser> getFollowers(String id, int maxCalls);
 }

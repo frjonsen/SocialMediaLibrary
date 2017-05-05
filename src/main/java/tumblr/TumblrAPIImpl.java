@@ -41,19 +41,29 @@ public class TumblrAPIImpl extends TumblrAPI {
     }
 
     @Override
-    public TumblrPost getPost(String blogName, long id) {
+    public TumblrPost getPost(String id) {
         try {
-            Post post = libraryInstance.blogPost(blogName, id);
+            long lId = Long.parseLong(id);
+            Post post = libraryInstance.blogPost(this.activeBlog, lId);
             return jumblrPostConversion(post);
-        } catch(JumblrException je) {
-            debug(je);
-            throw new TumblrAPIException(je.getMessage());
+        } catch(JumblrException|MalformedURLException e) {
+            debug(e);
+            throw new TumblrAPIException(e.getMessage());
         }
     }
 
     @Override
     public String publishStatusPost(String message) {
-        return null;
+        try {
+            Map<String, String> options = new HashMap<>();
+            options.put("type", "text");
+            options.put("body")
+           libraryInstance.postCreate(this.activeBlog, options);
+        } catch(JumblrException je) {
+            debug(je);
+            throw new TumblrAPIException(je.getMessage());
+        }
+
     }
 
     @Override
@@ -71,13 +81,6 @@ public class TumblrAPIImpl extends TumblrAPI {
         return null;
     }
 
-    /**
-     * Gets all the users following a specified blog. Tumblr only allows getting followers for the
-     * authed users blogs.
-     * @param id id of blog
-     * @param maxCalls max number of calls to api
-     * @return A list of users following the blog
-     */
     @Override
     public List<TumblrUser> getFollowers(String id, int maxCalls) {
         int maximumCalls = maxCalls == -1 ? Integer.MAX_VALUE : maxCalls; // To make Sonar happy
