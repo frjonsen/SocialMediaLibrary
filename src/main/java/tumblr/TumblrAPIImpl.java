@@ -5,7 +5,9 @@ import com.tumblr.jumblr.exceptions.JumblrException;
 
 import com.tumblr.jumblr.types.*;
 import socialmedia.NotSupportedException;
+import socialmedia.SocialMediaUtil;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
@@ -63,19 +65,39 @@ public class TumblrAPIImpl extends TumblrAPI {
     }
 
     @Override
-    public TumblrPost getPost(String blogName, long id) {
+    public TumblrPost getPost(String id) {
+        return getPost(this.activeBlog, id);
+    }
+
+    @Override
+    public TumblrPost getPost(String blogName, String id) {
         try {
-            Post post = libraryInstance.blogPost(blogName, id);
+            long lId = Long.parseLong(id);
+            Post post = libraryInstance.blogPost(blogName, lId);
             return jumblrPostConversion(post);
-        } catch(JumblrException je) {
-            debug(je);
-            throw new TumblrAPIException(je.getMessage());
+        } catch(JumblrException|NumberFormatException e) {
+            debug(e);
+            throw new TumblrAPIException(e.getMessage());
         }
     }
 
     @Override
     public String publishStatusPost(String message) {
-        return null;
+        return publishStatusPost(this.activeBlog, message);
+    }
+
+    @Override
+    public String publishStatusPost(String blogName, String message) {
+        try {
+            Map<String, String> options = new HashMap<>();
+            options.put("type", "text");
+            options.put("body", message);
+            Long id = libraryInstance.postCreate(blogName, options);
+            return id != null ? String.valueOf(id) : null;
+        } catch(JumblrException|IOException e) {
+            debug(e);
+            throw new TumblrAPIException(e.getMessage());
+        }
     }
 
     @Override
@@ -113,13 +135,6 @@ public class TumblrAPIImpl extends TumblrAPI {
 
     }
 
-    /**
-     * Gets all the users following a specified blog. Tumblr only allows getting followers for the
-     * authed users blogs.
-     * @param id id of blog
-     * @param maxCalls max number of calls to api
-     * @return A list of users following the blog
-     */
     @Override
     public List<TumblrUser> getFollowers(String id, int maxCalls) {
         int maximumCalls = maxCalls == -1 ? Integer.MAX_VALUE : maxCalls; // To make Sonar happy
@@ -268,12 +283,17 @@ public class TumblrAPIImpl extends TumblrAPI {
         tumblrPost.setType(IMAGE);
 
         String body = post.getCaption();
-        String text = body + "\n\n";
-        text += post.getPhotos()
+        String text = "";
+        if(!SocialMediaUtil.isNullOrWhitespace(body)) {
+            text += body;
+        }
+        String urls = post.getPhotos()
                 .stream()
                 .map(photo -> photo.getOriginalSize().getUrl())
                 .reduce("", (a, b) -> a + "\n" + "\"" + b +"\"");
-
+        if(!SocialMediaUtil.isNullOrWhitespace(urls)) {
+            text += urls;
+        }
         tumblrPost.setText(text);
         return tumblrPost;
     }
@@ -281,7 +301,16 @@ public class TumblrAPIImpl extends TumblrAPI {
     private TumblrPost quotePostConverter(TumblrPost tumblrPost, Post jumblrPost) {
         tumblrPost.setType(QUOTE);
         QuotePost quotePost = (QuotePost)jumblrPost;
-        String text = quotePost.getText() + "source: \"" + quotePost.getSource() + "\"";
+        String source = quotePost.getSource();
+        String body = quotePost.getText();
+        String text = "";
+        if(!SocialMediaUtil.isNullOrWhitespace(body)) {
+            text += body;
+        }
+        if(!SocialMediaUtil.isNullOrWhitespace(source)) {
+            text += "\n\nsource: \"" + quotePost.getSource() + "\"";
+        }
+
         tumblrPost.setText(text);
 
         return tumblrPost;
@@ -290,7 +319,15 @@ public class TumblrAPIImpl extends TumblrAPI {
     private TumblrPost textPostConverter(TumblrPost tumblrPost, Post jumblrPost) {
         tumblrPost.setType(TEXT);
         TextPost textPost = (TextPost)jumblrPost;
-        String text = textPost.getTitle() + "\n\n" + textPost.getBody();;
+        String text = "";
+        String title = textPost.getTitle();
+        String body = textPost.getBody();
+        if(!SocialMediaUtil.isNullOrWhitespace(title)) {
+            text += title + "\n\n";
+        }
+        if(!SocialMediaUtil.isNullOrWhitespace(body)) {
+            text += body;
+        }
         tumblrPost.setText(text);
 
         return tumblrPost;
@@ -299,9 +336,20 @@ public class TumblrAPIImpl extends TumblrAPI {
     private TumblrPost linkPostConverter(TumblrPost tumblrPost, Post jumblrPost) {
         tumblrPost.setType(LINK);
         LinkPost linkPost = (LinkPost)jumblrPost;
-        String text = linkPost.getTitle() +
-                "\n\n" + linkPost.getDescription() +
-                "\n\n" + "source: \"" + linkPost.getLinkUrl() + "\"";
+        String text = "";
+        String title = linkPost.getTitle();
+        String description = linkPost.getDescription();
+        String url = linkPost.getLinkUrl();
+
+        if(!SocialMediaUtil.isNullOrWhitespace(title)) {
+            text += title;
+        }
+        if(!SocialMediaUtil.isNullOrWhitespace(description)) {
+            text += "\n\n" + description;
+        }
+        if(!SocialMediaUtil.isNullOrWhitespace(url)) {
+            text += "\n\n" + "source: \"" + linkPost.getLinkUrl() + "\"";
+        }
         tumblrPost.setText(text);
 
         return tumblrPost;
@@ -310,7 +358,16 @@ public class TumblrAPIImpl extends TumblrAPI {
     private TumblrPost chatPostConverter(TumblrPost tumblrPost, Post jumblrPost) {
         tumblrPost.setType(CHAT);
         ChatPost chatPost = (ChatPost)jumblrPost;
-        String text = chatPost.getTitle() + "\n\n" + chatPost.getBody();
+        String text = "";
+        String title = chatPost.getTitle();
+        String body = chatPost.getBody();
+        if(!SocialMediaUtil.isNullOrWhitespace(title)) {
+            text += title;
+        }
+        if(!SocialMediaUtil.isNullOrWhitespace(body)) {
+            text += "\n\n" + body;
+        }
+
         tumblrPost.setText(text);
 
         return tumblrPost;
@@ -319,9 +376,19 @@ public class TumblrAPIImpl extends TumblrAPI {
     private TumblrPost audioPostConverter(TumblrPost tumblrPost, Post jumblrPost) {
         tumblrPost.setType(AUDIO);
         AudioPost audioPost = (AudioPost)jumblrPost;
-        String text = audioPost.getSourceTitle() +
-                "\n\n" + audioPost.getCaption() +
-                "\n\n" + "url: \"" + audioPost.getSourceUrl() + "\"";
+        String text = "";
+        String title = audioPost.getSourceTitle();
+        String caption = audioPost.getCaption();
+        String source = audioPost.getSourceUrl();
+        if(!SocialMediaUtil.isNullOrWhitespace(title)) {
+            text += title;
+        }
+        if(!SocialMediaUtil.isNullOrWhitespace(caption)) {
+            text += "\n\n" + caption;
+        }
+        if(!SocialMediaUtil.isNullOrWhitespace(source)) {
+            text += "\n\n" + source;
+        }
         tumblrPost.setText(text);
 
         return tumblrPost;
@@ -330,8 +397,17 @@ public class TumblrAPIImpl extends TumblrAPI {
     private TumblrPost videoPostConverter(TumblrPost tumblrPost, Post jumblrPost) {
         tumblrPost.setType(VIDEO);
         VideoPost videoPost = (VideoPost)jumblrPost;
-        String text = videoPost.getCaption() + "\n\n" +
-                "url: \"" + videoPost.getThumbnailUrl() + "\"";
+        String caption = videoPost.getCaption();
+        String thumbnail = videoPost.getThumbnailUrl();
+        String text = "";
+
+        if(!SocialMediaUtil.isNullOrWhitespace(caption)) {
+            text += caption;
+        }
+        if(!SocialMediaUtil.isNullOrWhitespace(thumbnail)) {
+            text += "url: \"" + thumbnail + "\"";
+        }
+
         tumblrPost.setText(text);
 
         return tumblrPost;
@@ -343,7 +419,6 @@ public class TumblrAPIImpl extends TumblrAPI {
         String askingName = answerPost.getAskingName();
 
         TumblrUser questionUser = new TumblrUser(BLOG);
-        questionUser.setName(askingName);
         if(tumblrPost.getTo() == null){
             tumblrPost.setTo(Arrays.asList(questionUser));
         } else {
@@ -352,7 +427,20 @@ public class TumblrAPIImpl extends TumblrAPI {
             tumblrPost.setTo(toList);
         }
 
-        String text = askingName + "\n" + answerPost.getQuestion() + "\n\n" + answerPost.getAnswer();
+        String text = "";
+        String question = answerPost.getQuestion();
+        String answer = answerPost.getAnswer();
+
+        if(!SocialMediaUtil.isNullOrWhitespace(askingName)) {
+            text += askingName;
+            questionUser.setName(askingName);
+        }
+        if(!SocialMediaUtil.isNullOrWhitespace(question)) {
+            text += "\n\n" + question;
+        }
+        if(!SocialMediaUtil.isNullOrWhitespace(answer)) {
+            text += "\n\n" + answer;
+        }
         tumblrPost.setText(text);
 
         return tumblrPost;

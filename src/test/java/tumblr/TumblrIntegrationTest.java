@@ -9,10 +9,7 @@ import org.cfg4j.source.compose.FallbackConfigurationSource;
 import org.cfg4j.source.context.filesprovider.ConfigFilesProvider;
 import org.cfg4j.source.files.FilesConfigurationSource;
 import org.cfg4j.source.system.EnvironmentVariablesConfigurationSource;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import twitter.TwitterAPIImpl;
 
 import java.io.File;
@@ -107,7 +104,7 @@ public class TumblrIntegrationTest {
     @Test
     @DisplayName("should get a valid post")
     void testGetPost(){
-        TumblrPost post = tumblr.getPost("sml2003", 160297775984L);
+        TumblrPost post = tumblr.getPost("sml2003", "160297775984");
 
         assertEquals("160297775984", post.getId());
         assertEquals("8TnDZkHT", post.getReblogKey());
@@ -124,6 +121,17 @@ public class TumblrIntegrationTest {
         assertEquals("https://sml2003.tumblr.com/post/160297775984/testing-title", post.getPermalink().toString());
 
         assertFalse(post.isLiked());
+    }
+
+    @Test
+    @DisplayName("should publish a valid post")
+    void testPublishPost() {
+        String id = tumblr.publishStatusPost("Testing publish post method");
+        TumblrPost post = tumblr.getPost(id);
+
+        assertEquals("<p>Testing to publish post</p>", post.getText());
+
+        assertTrue(tumblr.destroyStatusPost(id));
     }
 
     @Test
