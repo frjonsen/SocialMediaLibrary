@@ -4,7 +4,6 @@ import com.tumblr.jumblr.JumblrClient;
 import com.tumblr.jumblr.exceptions.JumblrException;
 
 import com.tumblr.jumblr.types.*;
-import socialmedia.NotSupportedException;
 import socialmedia.SocialMediaUtil;
 
 import java.io.IOException;
@@ -22,7 +21,6 @@ import static tumblr.TumblrUser.UserType.USER;
 public class TumblrAPIImpl extends TumblrAPI {
 
     private JumblrClient libraryInstance;
-    private String activeBlog;
 
     public TumblrAPIImpl(String consumerKey, String consumerSecret, String accessToken, String accessSecret) {
         libraryInstance = new JumblrClient(consumerKey, consumerSecret, accessToken, accessSecret);
@@ -33,25 +31,14 @@ public class TumblrAPIImpl extends TumblrAPI {
         this.activeBlog = activeBlog;
     }
 
-    /**
-     * Gets the blog to use when getting or sending messages
-     * @return Returns the name of the active blog
-     */
+    @Override
     public String getActiveBlog() {
         return activeBlog;
     }
 
-    /**
-     * Sets the blog to use when getting or sending messages
-     * @param activeBlog Name of the new active blog
-     */
+    @Override
     public void setActiveBlog(String activeBlog) {
         this.activeBlog = activeBlog;
-    }
-
-    @Override
-    public List<TumblrUser> searchUsers(String query) {
-        throw new NotSupportedException("searchUsers", PLATFORM);
     }
 
     @Override
@@ -160,12 +147,6 @@ public class TumblrAPIImpl extends TumblrAPI {
         return followers;
     }
 
-    /**
-     * Gets the blogs the authed user is following. Id is not used.
-     * @param id id of user
-     * @param maxCalls max number of calls to api
-     * @return List of blogs user is following
-     */
     @Override
     public List<TumblrUser> getFollowing(String id, int maxCalls) {
         int maximumCalls = maxCalls == -1 ? Integer.MAX_VALUE : maxCalls; // To make Sonar happy
