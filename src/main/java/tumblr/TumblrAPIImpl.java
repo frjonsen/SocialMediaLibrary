@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 import java.util.List;
 
 import static socialmedia.Post.Type.*;
+import static tumblr.TumblrPostConversion.jumblrPostConversion;
 import static tumblr.TumblrUser.UserType.BLOG;
 import static tumblr.TumblrUser.UserType.USER;
 
@@ -52,7 +53,13 @@ public class TumblrAPIImpl extends TumblrAPI {
         }
         Post post = libraryInstance.blogPost(activeBlog, pId);
         if (post == null) throw new TumblrAPIException("No post with id \"" + id + "\"");
-        TumblrPost convertedPost = jumblrPostConversion(post);
+        TumblrPost convertedPost;
+        try {
+            convertedPost = jumblrPostConversion(post);
+        } catch (MalformedURLException me) {
+            debug(me);
+            throw new TumblrAPIException(me.getMessage());
+        }
         libraryInstance.like(pId, convertedPost.getReblogKey());
         return true;
     }
@@ -68,7 +75,13 @@ public class TumblrAPIImpl extends TumblrAPI {
         }
         Post post = libraryInstance.blogPost(activeBlog, pId);
         if (post == null) throw new TumblrAPIException("No post with id \"" + id + "\"");
-        TumblrPost convertedPost = jumblrPostConversion(post);
+        TumblrPost convertedPost;
+        try {
+            convertedPost = jumblrPostConversion(post);
+        } catch (MalformedURLException me) {
+            debug(me);
+            throw new TumblrAPIException(me.getMessage());
+        }
         libraryInstance.unlike(pId, convertedPost.getReblogKey());
         return true;
     }
@@ -83,7 +96,7 @@ public class TumblrAPIImpl extends TumblrAPI {
         try {
             long lId = Long.parseLong(id);
             Post post = libraryInstance.blogPost(blogName, lId);
-            return TumblrPostConversion.jumblrPostConversion(post);
+            return jumblrPostConversion(post);
         } catch(JumblrException|NumberFormatException|MalformedURLException e) {
             debug(e);
             throw new TumblrAPIException(e.getMessage());
@@ -143,7 +156,7 @@ public class TumblrAPIImpl extends TumblrAPI {
         try {
             List<TumblrPost> returnList = new ArrayList<>();
             for(Post post: posts) {
-                returnList.add(TumblrPostConversion.jumblrPostConversion(post));
+                returnList.add(jumblrPostConversion(post));
             }
             return returnList;
         } catch(MalformedURLException mue) {
