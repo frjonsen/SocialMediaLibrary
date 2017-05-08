@@ -8,6 +8,7 @@ import com.tumblr.jumblr.types.Post;
 import com.tumblr.jumblr.types.User;
 import org.mockito.Mockito;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,7 +18,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 
 public class TumblrLibraryMock {
-    public static JumblrClient getTumblrMock() {
+    public static JumblrClient getTumblrMock() throws IOException {
         JumblrClient client = Mockito.mock(JumblrClient.class);
         Blog fullBlogMock = getTumblrFullBlogMock();
         Mockito.when(client.blogInfo(eq("testblog"))).thenReturn(fullBlogMock);
@@ -29,6 +30,13 @@ public class TumblrLibraryMock {
         Mockito.when(client.blogAvatar("testblog", 512)).thenReturn("http://urlforavatar.com");
         Mockito.when(client.blogAvatar("incorrecturl")).thenReturn("no%t.u$rl");
         Mockito.when(client.blogAvatar("fails", 512)).thenThrow(JumblrException.class);
+        List<Post> feed = generateSimplePosts(3);
+        Mockito.when(client.blogPosts(eq("testblog"))).thenReturn(feed);
+        Mockito.when(client.blogPosts(eq("fails"))).thenThrow(JumblrException.class);
+        Mockito.when(client.postCreate(eq("testblog"), any(Map.class))).thenReturn(123L);
+        Mockito.doNothing().when(client).postDelete("testblog", 123L);
+        Mockito.when(client.blogPost("testblog", 123L)).thenThrow(JumblrException.class);
+
 
         return client;
     }
@@ -111,6 +119,7 @@ public class TumblrLibraryMock {
             Mockito.when(post.getTags()).thenReturn(Arrays.asList("tag" + i, "tag" + 1 + i));
             Mockito.when(post.getRebloggedFromName()).thenReturn(i % 2 == 0 ? null : "reblogblog");
             Mockito.when(post.getReblogKey()).thenReturn("reblogkey");
+            Mockito.when(post.getType()).thenReturn("none");
 
             posts.add(post);
         }

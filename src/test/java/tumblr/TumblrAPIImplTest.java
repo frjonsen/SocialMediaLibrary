@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import socialmedia.NotSupportedException;
 import tumblr.mocks.TumblrLibraryMock;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
@@ -20,7 +21,7 @@ class TumblrAPIImplTest {
     private static TumblrAPI tumblr;
 
     @BeforeAll
-    static void init() {
+    static void init() throws IOException {
         tumblr = new TumblrAPIImpl(TumblrLibraryMock.getTumblrMock());
     }
 
@@ -89,6 +90,21 @@ class TumblrAPIImplTest {
         assertEquals("http://urlforavatar.com", url.toString());
 
         assertThrows(TumblrAPIException.class, () -> tumblr.getProfilePicture("fails"));
+    }
+
+    @Test
+    @DisplayName("should retrieve and convert a blogs post feed")
+    void testGetPostFeed() {
+        List<TumblrPost> posts = tumblr.getPostFeed("testblog");
+        assertEquals(3, posts.size());
+
+        assertThrows(TumblrAPIException.class, () -> tumblr.getPostFeed("fails"));
+    }
+
+    @Test
+    @DisplayName("should create a new post and get an id back")
+    void testPublishPost() {
+
     }
 
 }
