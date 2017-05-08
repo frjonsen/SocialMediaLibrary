@@ -109,6 +109,8 @@ class TumblrAPIImplTest {
     @Test
     @DisplayName("unlike post")
     void testUnlikePost() {
+        assertTrue(tumblr.unlikePost("123555"));
+        assertThrows(TumblrAPIException.class, () -> tumblr.unlikePost("1234"));
 
     }
 
