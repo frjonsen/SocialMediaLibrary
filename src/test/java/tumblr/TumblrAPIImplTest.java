@@ -151,6 +151,8 @@ class TumblrAPIImplTest {
 
         assertThrows(TumblrAPIException.class, () -> tumblr.destroyStatusPost("-1"));
     }
+    
+    @Test
     @DisplayName("should get a post")
     void testGetPost() {
         TumblrPost post = tumblr.getPost("123555");
