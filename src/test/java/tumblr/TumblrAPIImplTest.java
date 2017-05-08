@@ -115,6 +115,7 @@ class TumblrAPIImplTest {
 
     }
 
+    @Test
     @DisplayName("should retrieve and convert a blogs post feed")
     void testGetPostFeed() {
         List<TumblrPost> posts = tumblr.getPostFeed("testblog");
@@ -127,6 +128,14 @@ class TumblrAPIImplTest {
     @DisplayName("should create a new post and get an id back")
     void testPublishPost() {
         assertEquals("123", tumblr.publishStatusPost("hello"));
+    }
+
+    @Test
+    @DisplayName("should delete a post")
+    void testDestroyPost() {
+        assertTrue(tumblr.destroyStatusPost("123"));
+
+        assertThrows(TumblrAPIException.class, () -> tumblr.destroyStatusPost("-1"));
     }
 
 }
