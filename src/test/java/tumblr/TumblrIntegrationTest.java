@@ -17,6 +17,7 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -39,15 +40,6 @@ public class TumblrIntegrationTest {
         String consumerSecret = provider.getProperty("TUMBLR.CONSUMERSECRET", String.class);
 
         tumblr = new TumblrAPIImpl(consumerKey, consumerSecret, accessToken, tokenSecret, "sml2003");
-        /*
-        JumblrClient client = new JumblrClient("tIRHYJjPgpIn11RhuRooOAjZNNHQhYcA1nxWjIWp9Jk1jTIgOj", "IqL7ufsJqP9KD7HyQZ64xu117BFqLIIK77irOWJO3AS4x1nE78");
-        //client.setToken("oauth_token", "oauth_token_secret");
-        client.
-
-        Write the user's name
-        User user = client.user();
-        System.out.println(user.getName());
-        */
     }
 
     @Test
@@ -146,5 +138,15 @@ public class TumblrIntegrationTest {
     void testGetFeed() {
         List<TumblrPost> posts = tumblr.getPostFeed("madewithcode");
         assertEquals(20, posts.size());
+    }
+
+    @Test
+    @DisplayName("should return a list of posts containing the tag used to search")
+    void testSearchPosts() {
+        String tag = "summer";
+        List<TumblrPost> queryRes = tumblr.searchPost(tag, 1);
+        List<String> tags = (List<String>) queryRes.get(0).getTags();
+        assertTrue(tags.stream().anyMatch(listTag -> listTag.equals(tag)));
+        assertEquals(20, queryRes.size());
     }
 }

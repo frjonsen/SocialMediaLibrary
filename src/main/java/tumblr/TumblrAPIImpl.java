@@ -20,6 +20,8 @@ import static tumblr.TumblrUser.UserType.BLOG;
 import static tumblr.TumblrUser.UserType.USER;
 
 public class TumblrAPIImpl extends TumblrAPI {
+    private static final String OFFSET = "offset";
+    private static final String LIMIT = "limit";
 
     private JumblrClient libraryInstance;
 
@@ -146,7 +148,33 @@ public class TumblrAPIImpl extends TumblrAPI {
 
     @Override
     public List<TumblrPost> searchPost(String query, int maxCalls) {
-        return null;
+        int maximumCalls = maxCalls == -1 ? Integer.MAX_VALUE : maxCalls;
+        final int limit = 20; // Maximum amount of users tumblr allows per call
+        Map<String, Integer> options = new HashMap<>();
+        List<TumblrPost> queryRes = new ArrayList<>();
+        for (int i = 0; i < maximumCalls; ++i) {
+            int offset = i * limit;
+            options.put(OFFSET, offset);
+            options.put(LIMIT, limit);
+            List<Post> postsChunk;
+            try {
+                postsChunk = libraryInstance.tagged(query);
+            } catch (JumblrException je) {
+                debug(je);
+                throw new TumblrAPIException(je.getMessage());
+            }
+            if (postsChunk.isEmpty())
+                break;
+
+            for(Post post: postsChunk) {
+                try {
+                    queryRes.add(jumblrPostConversion(post));
+                } catch(MalformedURLException mue) {
+                    debug(mue);
+                }
+            }
+        }
+        return queryRes;
     }
 
     @Override
@@ -174,8 +202,8 @@ public class TumblrAPIImpl extends TumblrAPI {
         List<TumblrUser> followers = new ArrayList<>();
         for (int i = 0; i < maximumCalls; ++i) {
             int offset = i*limit;
-            options.put("offset", offset);
-            options.put("limit", limit);
+            options.put(OFFSET, offset);
+            options.put(LIMIT, limit);
             List<User> followersChunk;
             try {
                 followersChunk = libraryInstance.blogFollowers(id, options);
@@ -200,8 +228,8 @@ public class TumblrAPIImpl extends TumblrAPI {
         List<TumblrUser> following = new ArrayList<>();
         for (int i = 0; i < maximumCalls; ++i) {
             int offset = i * limit;
-            options.put("offset", offset);
-            options.put("limit", limit);
+            options.put(OFFSET, offset);
+            options.put(LIMIT, limit);
             List<Blog> followingChunk;
             try {
                 followingChunk = libraryInstance.userFollowing(options);

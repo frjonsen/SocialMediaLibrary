@@ -98,4 +98,6 @@ public abstract class TumblrAPI extends SocialMediaBase<TumblrUser, TumblrPost> 
         throw new NotSupportedException("searchUsers", PLATFORM);
     }
 
+    @Override
+    public abstract List<TumblrPost> searchPost(String query, int maxCalls);
 }

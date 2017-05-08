@@ -70,11 +70,8 @@ public class TwitterAPIImpl extends TwitterAPI {
             debug(tw);
             throw new TwitterAPIException(tw.getMessage());
         }
-        if(user == null) {
-            return null;
-        }
 
-        return createUser(user);
+        return user == null ? null : createUser(user);
     }
 
     @Override
