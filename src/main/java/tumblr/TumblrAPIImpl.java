@@ -46,8 +46,13 @@ public class TumblrAPIImpl extends TumblrAPI {
     @Override
     public boolean likePost(String id) {
         long pId = parseId(id);
-        String reblogKey = getReblogKey(pId);
-        libraryInstance.like(pId, reblogKey);
+        try {
+            String reblogKey = getReblogKey(pId);
+            libraryInstance.like(pId, reblogKey);
+        } catch(JumblrException je) {
+            debug(je);
+            throw new TumblrAPIException(je.getMessage());
+        }
         return true;
     }
 
@@ -78,8 +83,13 @@ public class TumblrAPIImpl extends TumblrAPI {
     @Override
     public boolean unlikePost(String id) {
         long pId = parseId(id);
-        String reblogKey = getReblogKey(pId);
-        libraryInstance.unlike(pId, reblogKey);
+        try {
+            String reblogKey = getReblogKey(pId);
+            libraryInstance.unlike(pId, reblogKey);
+        }catch(JumblrException je) {
+            debug(je);
+            throw new TumblrAPIException(je.getMessage());
+        }
         return true;
     }
 

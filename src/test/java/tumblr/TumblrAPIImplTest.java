@@ -13,8 +13,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @Tag("regular")
 class TumblrAPIImplTest {
@@ -23,6 +22,15 @@ class TumblrAPIImplTest {
     @BeforeAll
     static void init() throws IOException {
         tumblr = new TumblrAPIImpl(TumblrLibraryMock.getTumblrMock());
+        tumblr.setActiveBlog("testblog");
+    }
+
+    @Test
+    @DisplayName("should create a TumblrAPIImpl through it's constructor")
+    void testConstructor() {
+        TumblrAPI tumblrTest = new TumblrAPIImpl("consumerKey", "consumerSecret", "accessToken", "acessSecret", "activeBlog");
+        assertNotNull(tumblrTest);
+
     }
 
     @Test
@@ -93,6 +101,20 @@ class TumblrAPIImplTest {
     }
 
     @Test
+    @DisplayName("like post")
+    void testLikePost() {
+        assertTrue(tumblr.likePost("123555"));
+        assertThrows(TumblrAPIException.class, () -> tumblr.likePost("1234"));
+    }
+
+    @Test
+    @DisplayName("unlike post")
+    void testUnlikePost() {
+        assertTrue(tumblr.unlikePost("123555"));
+        assertThrows(TumblrAPIException.class, () -> tumblr.unlikePost("1234"));
+
+    }
+
     @DisplayName("should retrieve and convert a blogs post feed")
     void testGetPostFeed() {
         List<TumblrPost> posts = tumblr.getPostFeed("testblog");

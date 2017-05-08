@@ -38,6 +38,14 @@ public class TumblrLibraryMock {
         Mockito.when(client.blogPost("testblog", 123L)).thenThrow(JumblrException.class);
 
 
+        Post likePost = generateSimplePosts(1).get(0);
+
+        //Mockito.doThrow(JumblrException.class).when(client).like(1234L, "reblogkey");
+        Mockito.doNothing().when(client).like(123555L , "reblogkey");
+        //Mockito.doThrow(JumblrException.class).when(client).unlike(1234L, "reblogkey");
+        Mockito.doNothing().when(client).unlike(123555L, "reblogkey");
+        Mockito.when(client.blogPost("testblog", 1234L)).thenThrow(JumblrException.class);
+        Mockito.when(client.blogPost("testblog", 123555L)).thenReturn(likePost);
         return client;
     }
 
