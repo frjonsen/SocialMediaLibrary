@@ -3,10 +3,13 @@ package tumblr.mocks;
 import com.tumblr.jumblr.JumblrClient;
 import com.tumblr.jumblr.exceptions.JumblrException;
 import com.tumblr.jumblr.types.Blog;
+import com.tumblr.jumblr.types.Note;
+import com.tumblr.jumblr.types.Post;
 import com.tumblr.jumblr.types.User;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +35,7 @@ public class TumblrLibraryMock {
         Mockito.doThrow(JumblrException.class).when(client).unlike(1234L, "rk1");
         Mockito.doNothing().when(client).unlike(123555L, "rk2");
         Mockito.when(client.blogPost("testblog", 1234L)).thenThrow(JumblrException.class);
-        
+
         return client;
     }
 
@@ -86,5 +89,38 @@ public class TumblrLibraryMock {
         return user;
     }
 
+    private static List<Note> generateSimpleNotes(int nrOfNotes) {
+        List<Note> notes = new ArrayList<>();
+        for (int i = 0; i < nrOfNotes; ++i) {
+            Note note = Mockito.mock(Note.class);
+            Mockito.when(note.getType()).thenReturn("reblog");
+            notes.add(note);
+        }
 
+        return notes;
+    }
+
+    private static List<Post> generateSimplePosts(int nrOfPosts) {
+        List<Post> posts = new ArrayList<>();
+
+        for (int i = 0; i < nrOfPosts; ++i) {
+            Post post = Mockito.mock(Post.class);
+            Mockito.when(post.getBlogName()).thenReturn("testblog");
+            Mockito.when(post.isLiked()).thenReturn(i % 2 == 0);
+            Mockito.when(post.getAuthorId()).thenReturn("testuser");
+            Mockito.when(post.getTimestamp()).thenReturn(1494245531L);
+            Mockito.when(post.getId()).thenReturn(Long.valueOf(i));
+            Mockito.when(post.getPostUrl()).thenReturn("https://sml2003.tumblr.com/post/160297775984/testing-title");
+            Mockito.when(post.getNoteCount()).thenReturn(Long.valueOf(i));
+            List<Note> notes = generateSimpleNotes(i);
+            Mockito.when(post.getNotes()).thenReturn(notes);
+            Mockito.when(post.getTags()).thenReturn(Arrays.asList("tag" + i, "tag" + 1 + i));
+            Mockito.when(post.getRebloggedFromName()).thenReturn(i % 2 == 0 ? null : "reblogblog");
+            Mockito.when(post.getReblogKey()).thenReturn("reblogkey");
+
+            posts.add(post);
+        }
+
+        return posts;
+    }
 }

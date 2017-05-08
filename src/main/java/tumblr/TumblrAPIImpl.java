@@ -153,7 +153,7 @@ public class TumblrAPIImpl extends TumblrAPI {
             options.put(LIMIT, limit);
             List<Post> postsChunk;
             try {
-                postsChunk = libraryInstance.tagged(query);
+                postsChunk = libraryInstance.tagged(query, options);
             } catch (JumblrException je) {
                 debug(je);
                 throw new TumblrAPIException(je.getMessage());
