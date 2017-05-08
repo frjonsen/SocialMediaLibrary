@@ -45,6 +45,13 @@ public class TumblrAPIImpl extends TumblrAPI {
 
     @Override
     public boolean likePost(String id) {
+        long pId = parseId(id);
+        String reblogKey = getReblogKey(pId);
+        libraryInstance.like(pId, reblogKey);
+        return true;
+    }
+
+    private long parseId(String id) {
         long pId;
         try {
             pId = Long.parseLong(id);
@@ -52,8 +59,12 @@ public class TumblrAPIImpl extends TumblrAPI {
             debug(mfe);
             throw new TumblrAPIException(mfe.getMessage());
         }
+        return pId;
+    }
+
+    private String getReblogKey(long pId) {
         Post post = libraryInstance.blogPost(activeBlog, pId);
-        if (post == null) throw new TumblrAPIException("No post with id \"" + id + "\"");
+        if (post == null) throw new TumblrAPIException("No post with id \"" + pId + "\"");
         TumblrPost convertedPost;
         try {
             convertedPost = jumblrPostConversion(post);
@@ -61,29 +72,14 @@ public class TumblrAPIImpl extends TumblrAPI {
             debug(me);
             throw new TumblrAPIException(me.getMessage());
         }
-        libraryInstance.like(pId, convertedPost.getReblogKey());
-        return true;
+        return convertedPost.getReblogKey();
     }
 
     @Override
     public boolean unlikePost(String id) {
-        long pId;
-        try {
-            pId = Long.parseLong(id);
-        } catch (NumberFormatException mfe) {
-            debug(mfe);
-            throw new TumblrAPIException(mfe.getMessage());
-        }
-        Post post = libraryInstance.blogPost(activeBlog, pId);
-        if (post == null) throw new TumblrAPIException("No post with id \"" + id + "\"");
-        TumblrPost convertedPost;
-        try {
-            convertedPost = jumblrPostConversion(post);
-        } catch (MalformedURLException me) {
-            debug(me);
-            throw new TumblrAPIException(me.getMessage());
-        }
-        libraryInstance.unlike(pId, convertedPost.getReblogKey());
+        long pId = parseId(id);
+        String reblogKey = getReblogKey(pId);
+        libraryInstance.unlike(pId, reblogKey);
         return true;
     }
 
