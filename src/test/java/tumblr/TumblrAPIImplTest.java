@@ -107,23 +107,25 @@ class TumblrAPIImplTest {
     }
 
     @Test
-    @DisplayName("like post")
+    @DisplayName("should like a post and throw exceptions on some calls")
     void testLikePost() {
         assertTrue(tumblr.likePost("123555"));
         assertThrows(TumblrAPIException.class, () -> tumblr.likePost("1234"));
 
         assertThrows(TumblrAPIException.class, () -> tumblr.likePost("404"));
         assertThrows(TumblrAPIException.class, () -> tumblr.likePost("500"));
+        assertThrows(TumblrAPIException.class, () -> tumblr.likePost("1baedid"));
     }
 
     @Test
-    @DisplayName("unlike post")
+    @DisplayName("should unlike post and throw exceptions on some calls")
     void testUnlikePost() {
         assertTrue(tumblr.unlikePost("123555"));
         assertThrows(TumblrAPIException.class, () -> tumblr.unlikePost("1234"));
 
         assertThrows(TumblrAPIException.class, () -> tumblr.unlikePost("404"));
         assertThrows(TumblrAPIException.class, () -> tumblr.unlikePost("500"));
+        assertThrows(TumblrAPIException.class, () -> tumblr.unlikePost("1baedid"));
 
     }
 
@@ -141,4 +143,12 @@ class TumblrAPIImplTest {
         assertEquals("123", tumblr.publishStatusPost("hello"));
     }
 
+    @Test
+    @DisplayName("should get a post")
+    void testGetPost() {
+        TumblrPost post = tumblr.getPost("123555");
+        assertEquals("0", post.getId());
+
+        assertThrows(TumblrAPIException.class, () -> tumblr.getPost("1234"));
+    }
 }
