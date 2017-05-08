@@ -36,7 +36,10 @@ public class TumblrLibraryMock {
         Mockito.when(client.blogPosts(eq("fails"))).thenThrow(JumblrException.class);
         Mockito.when(client.postCreate(eq("testblog"), any(Map.class))).thenReturn(123L);
         Mockito.doNothing().when(client).postDelete("testblog", 123L);
-        Mockito.when(client.blogPost("testblog", 123L)).thenThrow(JumblrException.class);
+        JumblrException je = Mockito.mock(JumblrException.class);
+        Mockito.when(je.getMessage()).thenReturn("Not Found");
+        Mockito.when(client.blogPost("testblog", 123L)).thenThrow(je);
+        Mockito.when(client.blogPost("testblog", -1L)).thenThrow(JumblrException.class);
 
 
         Post likePost = generateSimplePosts(1).get(0);
