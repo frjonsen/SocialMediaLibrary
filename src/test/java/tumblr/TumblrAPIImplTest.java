@@ -104,7 +104,7 @@ class TumblrAPIImplTest {
     @Test
     @DisplayName("should create a new post and get an id back")
     void testPublishPost() {
-
+        assertEquals("123", tumblr.publishStatusPost("hello"));
     }
 
 }
