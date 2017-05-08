@@ -34,6 +34,12 @@ class TumblrAPIImplTest {
     }
 
     @Test
+    @DisplayName("should get the activeblog")
+    void testActiveBlog(){
+        assertEquals("testblog", tumblr.getActiveBlog());
+    }
+
+    @Test
     @DisplayName("should convert a jumblr blog to TumblrUser")
     void testConvertBlog() {
         Blog blog = TumblrLibraryMock.getTumblrFullBlogMock();
@@ -105,6 +111,9 @@ class TumblrAPIImplTest {
     void testLikePost() {
         assertTrue(tumblr.likePost("123555"));
         assertThrows(TumblrAPIException.class, () -> tumblr.likePost("1234"));
+
+        assertThrows(TumblrAPIException.class, () -> tumblr.likePost("404"));
+        assertThrows(TumblrAPIException.class, () -> tumblr.likePost("500"));
     }
 
     @Test
@@ -112,6 +121,9 @@ class TumblrAPIImplTest {
     void testUnlikePost() {
         assertTrue(tumblr.unlikePost("123555"));
         assertThrows(TumblrAPIException.class, () -> tumblr.unlikePost("1234"));
+
+        assertThrows(TumblrAPIException.class, () -> tumblr.unlikePost("404"));
+        assertThrows(TumblrAPIException.class, () -> tumblr.unlikePost("500"));
 
     }
 
