@@ -104,6 +104,7 @@ class TumblrAPIImplTest {
         assertEquals("http://urlforavatar.com", url.toString());
 
         assertThrows(TumblrAPIException.class, () -> tumblr.getProfilePicture("fails"));
+        assertThrows(TumblrAPIException.class, () -> tumblr.getProfilePicture("incorrecturl"));
     }
 
     @Test
