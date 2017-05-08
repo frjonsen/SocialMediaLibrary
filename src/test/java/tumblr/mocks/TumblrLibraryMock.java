@@ -9,6 +9,7 @@ import com.tumblr.jumblr.types.User;
 import org.mockito.Mockito;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -42,6 +43,8 @@ public class TumblrLibraryMock {
 
 
         Post likePost = generateSimplePosts(1).get(0);
+        Post badPost = generateSimplePosts(1).get(0); //post with bad url
+        Mockito.when(badPost.getPostUrl()).thenReturn("%baed&stuff");
 
         //Mockito.doThrow(JumblrException.class).when(client).like(1234L, "reblogkey");
         Mockito.doNothing().when(client).like(123555L , "reblogkey");
@@ -49,6 +52,8 @@ public class TumblrLibraryMock {
         Mockito.doNothing().when(client).unlike(123555L, "reblogkey");
         Mockito.when(client.blogPost("testblog", 1234L)).thenThrow(JumblrException.class);
         Mockito.when(client.blogPost("testblog", 123555L)).thenReturn(likePost);
+        Mockito.when(client.blogPost("testblog", 404L)).thenReturn(null);
+        Mockito.when(client.blogPost("testblog", 500L)).thenReturn(badPost);
         return client;
     }
 
