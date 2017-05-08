@@ -12,8 +12,7 @@ import tumblr.mocks.TumblrLibraryMock;
 import java.net.URL;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @Tag("regular")
 class TumblrAPIImplTest {
@@ -22,6 +21,15 @@ class TumblrAPIImplTest {
     @BeforeAll
     static void init() {
         tumblr = new TumblrAPIImpl(TumblrLibraryMock.getTumblrMock());
+        tumblr.setActiveBlog("testblog");
+    }
+
+    @Test
+    @DisplayName("should create a TumblrAPIImpl through it's constructor")
+    void testConstructor() {
+        TumblrAPI tumblrTest = new TumblrAPIImpl("consumerKey", "consumerSecret", "accessToken", "acessSecret", "activeBlog");
+        assertNotNull(tumblrTest);
+
     }
 
     @Test
@@ -90,5 +98,19 @@ class TumblrAPIImplTest {
 
         assertThrows(TumblrAPIException.class, () -> tumblr.getProfilePicture("fails"));
     }
+
+    @Test
+    @DisplayName("like post")
+    void testLikePost() {
+        assertTrue(tumblr.likePost("123555"));
+        assertThrows(TumblrAPIException.class, () -> tumblr.likePost("1234"));
+    }
+
+    @Test
+    @DisplayName("unlike post")
+    void testUnlikePost() {
+
+    }
+
 
 }

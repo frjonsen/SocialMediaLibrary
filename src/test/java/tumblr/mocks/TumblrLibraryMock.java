@@ -26,6 +26,13 @@ public class TumblrLibraryMock {
         Mockito.when(client.blogAvatar("testblog", 512)).thenReturn("http://urlforavatar.com");
         Mockito.when(client.blogAvatar("incorrecturl")).thenReturn("no%t.u$rl");
         Mockito.when(client.blogAvatar("fails", 512)).thenThrow(JumblrException.class);
+
+        Mockito.doThrow(JumblrException.class).when(client).like(1234L, "rk1");
+        Mockito.doNothing().when(client).like(123555L , "rk2");
+        Mockito.doThrow(JumblrException.class).when(client).unlike(1234L, "rk1");
+        Mockito.doNothing().when(client).unlike(123555L, "rk2");
+        Mockito.when(client.blogPost("testblog", 1234L)).thenThrow(JumblrException.class);
+        
         return client;
     }
 
