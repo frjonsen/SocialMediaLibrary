@@ -175,10 +175,17 @@ public class TumblrAPIImpl extends TumblrAPI {
     @Override
     public List<TumblrPost> getPostFeed(String id) {
         String blogId = (id == null || id.equals(SELF_ID)) ? activeBlog : id;
-        List<Post> posts = libraryInstance.blogPosts(blogId);
+        List<Post> posts;
+        try {
+
+            posts = libraryInstance.blogPosts(blogId);
+        } catch (JumblrException je) {
+            debug(je);
+            throw new TumblrAPIException(je.getMessage());
+        }
         try {
             List<TumblrPost> returnList = new ArrayList<>();
-            for(Post post: posts) {
+            for(Post post : posts) {
                 returnList.add(jumblrPostConversion(post));
             }
             return returnList;
