@@ -2,7 +2,6 @@ package facebook;
 
 import facebook4j.Place;
 import socialmedia.Post;
-import socialmedia.User;
 
 import java.net.URL;
 import java.util.List;

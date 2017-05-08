@@ -10,8 +10,6 @@ import java.util.Date;
 import java.util.List;
 
 import static socialmedia.Post.Type.*;
-import static socialmedia.Post.Type.ANSWER;
-import static socialmedia.Post.Type.VIDEO;
 import static tumblr.TumblrUser.UserType.BLOG;
 import static tumblr.TumblrUser.UserType.USER;
 

@@ -1,6 +1,7 @@
 package tumblr;
 
 import socialmedia.User;
+
 import java.util.List;
 
 public class TumblrUser extends User {

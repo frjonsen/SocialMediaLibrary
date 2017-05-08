@@ -1,9 +1,7 @@
 package facebook;
 
 import facebook4j.Category;
-import facebook4j.FacebookResponse;
 import facebook4j.Place;
-import facebook4j.Post;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;

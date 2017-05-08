@@ -2,21 +2,20 @@ package tumblr;
 
 import com.tumblr.jumblr.JumblrClient;
 import com.tumblr.jumblr.exceptions.JumblrException;
-
-import com.tumblr.jumblr.types.*;
-import socialmedia.SocialMediaUtil;
+import com.tumblr.jumblr.types.Blog;
+import com.tumblr.jumblr.types.Post;
+import com.tumblr.jumblr.types.User;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-import java.util.List;
-
-import static socialmedia.Post.Type.*;
 import static tumblr.TumblrPostConversion.jumblrPostConversion;
-import static tumblr.TumblrUser.UserType.BLOG;
 import static tumblr.TumblrUser.UserType.USER;
 
 public class TumblrAPIImpl extends TumblrAPI {

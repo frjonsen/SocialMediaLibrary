@@ -7,7 +7,10 @@ import org.cfg4j.source.compose.FallbackConfigurationSource;
 import org.cfg4j.source.context.filesprovider.ConfigFilesProvider;
 import org.cfg4j.source.files.FilesConfigurationSource;
 import org.cfg4j.source.system.EnvironmentVariablesConfigurationSource;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import socialmedia.Post;
 
 import java.io.File;

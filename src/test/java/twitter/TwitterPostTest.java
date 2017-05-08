@@ -6,9 +6,12 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import socialmedia.Coordinate;
-import twitter4j.*;
+import twitter4j.MediaEntity;
+import twitter4j.Place;
+import twitter4j.SymbolEntity;
+import twitter4j.URLEntity;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Tag("regular")
 class TwitterPostTest {

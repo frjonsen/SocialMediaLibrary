@@ -1,10 +1,9 @@
 package twitter;
 
-import socialmedia.*;
+import socialmedia.Coordinate;
 import socialmedia.Post;
+import socialmedia.SocialMediaUtil;
 import twitter4j.*;
-import twitter4j.ResponseList;
-import twitter4j.User;
 import twitter4j.conf.ConfigurationBuilder;
 
 import java.net.MalformedURLException;

@@ -2,14 +2,18 @@ package tumblr;
 
 import com.tumblr.jumblr.types.Blog;
 import com.tumblr.jumblr.types.User;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import socialmedia.NotSupportedException;
 import tumblr.mocks.TumblrLibraryMock;
 
 import java.net.URL;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @Tag("regular")
 class TumblrAPIImplTest {

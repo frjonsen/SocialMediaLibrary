@@ -1,11 +1,9 @@
 package facebook;
 
-import facebook.mocks.FacebookLibraryMock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import socialmedia.SocialMediaUtil;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,7 +11,7 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Tag("regular")
 class FacebookCommentTest {

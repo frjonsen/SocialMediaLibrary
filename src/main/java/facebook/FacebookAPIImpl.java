@@ -1,7 +1,6 @@
 package facebook;
 
 import facebook4j.*;
-import facebook4j.User;
 import facebook4j.conf.ConfigurationBuilder;
 import socialmedia.SocialMediaUtil;
 

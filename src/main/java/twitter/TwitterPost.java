@@ -2,7 +2,10 @@ package twitter;
 
 import socialmedia.Coordinate;
 import socialmedia.Post;
-import twitter4j.*;
+import twitter4j.MediaEntity;
+import twitter4j.Place;
+import twitter4j.SymbolEntity;
+import twitter4j.URLEntity;
 
 import java.util.Arrays;
 

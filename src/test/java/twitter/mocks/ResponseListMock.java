@@ -2,9 +2,8 @@ package twitter.mocks;
 
 import twitter4j.RateLimitStatus;
 import twitter4j.ResponseList;
-import twitter4j.User;
 
-import java.util.*;
+import java.util.ArrayList;
 
 public class ResponseListMock<T> extends ArrayList<T> implements ResponseList<T> {
     @Override
