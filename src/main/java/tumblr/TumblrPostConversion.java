@@ -92,7 +92,7 @@ public class TumblrPostConversion {
                 .map(photo -> photo.getOriginalSize().getUrl())
                 .reduce("", (a, b) -> a + "\n" + "\"" + b +"\"");
         if(!SocialMediaUtil.isNullOrWhitespace(urls)) {
-            text += urls;
+            text += "\n" + urls;
         }
         tumblrPost.setText(text);
         return tumblrPost;
@@ -205,7 +205,7 @@ public class TumblrPostConversion {
             text += caption;
         }
         if(!SocialMediaUtil.isNullOrWhitespace(thumbnail)) {
-            text += "url: \"" + thumbnail + "\"";
+            text += "\n\n" + "\"" + thumbnail + "\"";
         }
 
         tumblrPost.setText(text);
