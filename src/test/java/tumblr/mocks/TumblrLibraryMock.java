@@ -55,14 +55,18 @@ public class TumblrLibraryMock {
         Post badPost = generateSimplePosts(1).get(0); //post with bad url
         Mockito.when(badPost.getPostUrl()).thenReturn("%baed&stuff");
 
-        //Mockito.doThrow(JumblrException.class).when(client).like(1234L, "reblogkey");
         Mockito.doNothing().when(client).like(123555L , "reblogkey");
-        //Mockito.doThrow(JumblrException.class).when(client).unlike(1234L, "reblogkey");
         Mockito.doNothing().when(client).unlike(123555L, "reblogkey");
         Mockito.when(client.blogPost("testblog", 1234L)).thenThrow(JumblrException.class);
         Mockito.when(client.blogPost("testblog", 123555L)).thenReturn(likePost);
         Mockito.when(client.blogPost("testblog", 404L)).thenReturn(null);
         Mockito.when(client.blogPost("testblog", 500L)).thenReturn(badPost);
+        Mockito.when(client.blogPosts("badURL")).thenReturn(Arrays.asList(badPost));
+        Mockito.doThrow(JumblrException.class).when(client).follow("superBad");
+        Mockito.doThrow(JumblrException.class).when(client).unfollow("superBad");
+
+        User auth = getTumblrFullUserMock();
+        Mockito.when(client.user()).thenReturn(auth);
         return client;
     }
 

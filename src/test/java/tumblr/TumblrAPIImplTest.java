@@ -51,6 +51,7 @@ class TumblrAPIImplTest {
         assertEquals(7, convertedBlog.getUploadCount());
         assertEquals(13, convertedBlog.getFollowersCount().intValue());
         assertEquals("Blog description", convertedBlog.getBiography());
+        assertEquals(null, TumblrAPIImpl.jumblrBlogToUserConversion(null));
     }
 
     @Test
@@ -63,6 +64,7 @@ class TumblrAPIImplTest {
         assertEquals("testuser", convertedUser.getUsername());
         assertEquals(18, convertedUser.getFollowingCount());
         assertEquals(3, convertedUser.getBlogs().size());
+        assertEquals(null, TumblrAPIImpl.jumblrUserToUserConversion(null));
     }
 
     @Test
@@ -136,6 +138,7 @@ class TumblrAPIImplTest {
         List<TumblrPost> posts = tumblr.getPostFeed("testblog");
         assertEquals(3, posts.size());
 
+        assertThrows(TumblrAPIException.class, () -> tumblr.getPostFeed("badURL"));
         assertThrows(TumblrAPIException.class, () -> tumblr.getPostFeed("fails"));
     }
 
@@ -149,8 +152,10 @@ class TumblrAPIImplTest {
     @DisplayName("should delete a post")
     void testDestroyPost() {
         assertTrue(tumblr.destroyStatusPost("123"));
+        assertFalse(tumblr.destroyStatusPost("123555"));
 
         assertThrows(TumblrAPIException.class, () -> tumblr.destroyStatusPost("-1"));
+        assertThrows(TumblrAPIException.class, () -> tumblr.destroyStatusPost("19BBB"));
     }
 
     @Test
@@ -168,6 +173,8 @@ class TumblrAPIImplTest {
         assertTrue(tumblr.follow("goodBlog"));
         assertThrows(TumblrAPIException.class, () -> tumblr.follow("badBlog"));
         assertThrows(TumblrAPIException.class, () -> tumblr.follow("badBlog2"));
+        assertThrows(TumblrAPIException.class, () -> tumblr.follow("superBad"));
+
     }
 
     @Test
@@ -176,6 +183,7 @@ class TumblrAPIImplTest {
         assertTrue(tumblr.unfollow("goodBlog"));
         assertThrows(TumblrAPIException.class, () -> tumblr.unfollow("badBlog"));
         assertThrows(TumblrAPIException.class, () -> tumblr.unfollow("badBlog2"));
+        assertThrows(TumblrAPIException.class, () -> tumblr.unfollow("superBad"));
     }
 
     @Test
@@ -188,4 +196,18 @@ class TumblrAPIImplTest {
         assertThrows(TumblrAPIException.class, () -> tumblr.searchPost("fails", 1));
     }
 
+    @Test
+    @DisplayName("should get the authentication user")
+    void testGetAuthUser() {
+        TumblrUser auth = tumblr.getAuthedUser();
+        assertEquals(TumblrUser.UserType.USER, auth.getType());
+        assertEquals("testuser", auth.getName());
+    }
+
+    @Test
+    @DisplayName("should get user with id")
+    void testGetUser() {
+        TumblrUser user = tumblr.getUser("testblog");
+        assertEquals("testblog", user.getId());
+    }
 }
