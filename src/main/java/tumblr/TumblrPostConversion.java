@@ -227,7 +227,6 @@ public class TumblrPostConversion {
             questionUser.setName(askingName);
         }
         if(tumblrPost.getTo() == null && questionUser != null){
-            List<TumblrUser> toList = new ArrayList<>();
             tumblrPost.setTo(Arrays.asList(questionUser));
         } else if( questionUser != null){
             List<TumblrUser> toList = (List<TumblrUser>)tumblrPost.getTo();
