@@ -5,6 +5,7 @@ import socialmedia.SocialMediaUtil;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -45,9 +46,11 @@ public class TumblrPostConversion {
         }
         post.setTags(jumblrPost.getTags());
         if (jumblrPost.getRebloggedFromName() != null) {
+            List<TumblrUser> toList = new ArrayList<>();
             TumblrUser rebloggedFrom = new TumblrUser(BLOG);
             rebloggedFrom.setName(jumblrPost.getRebloggedFromName());
-            post.setTo(Arrays.asList(rebloggedFrom));
+            toList.add(rebloggedFrom);
+            post.setTo(toList);
         }
         post.setReblogKey(jumblrPost.getReblogKey());
 
@@ -218,10 +221,15 @@ public class TumblrPostConversion {
         AnswerPost answerPost = (AnswerPost)jumblrPost;
         String askingName = answerPost.getAskingName();
 
-        TumblrUser questionUser = new TumblrUser(BLOG);
-        if(tumblrPost.getTo() == null){
+        TumblrUser questionUser = null;
+        if(askingName != null ) {
+            questionUser = new TumblrUser(BLOG);
+            questionUser.setName(askingName);
+        }
+        if(tumblrPost.getTo() == null && questionUser != null){
+            List<TumblrUser> toList = new ArrayList<>();
             tumblrPost.setTo(Arrays.asList(questionUser));
-        } else {
+        } else if( questionUser != null){
             List<TumblrUser> toList = (List<TumblrUser>)tumblrPost.getTo();
             toList.add(questionUser);
             tumblrPost.setTo(toList);
@@ -233,7 +241,6 @@ public class TumblrPostConversion {
 
         if(!SocialMediaUtil.isNullOrWhitespace(askingName)) {
             text += askingName;
-            questionUser.setName(askingName);
         }
         if(!SocialMediaUtil.isNullOrWhitespace(question)) {
             text += "\n\n" + question;
