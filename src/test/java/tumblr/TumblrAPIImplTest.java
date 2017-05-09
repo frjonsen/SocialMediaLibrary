@@ -178,6 +178,7 @@ class TumblrAPIImplTest {
         assertThrows(TumblrAPIException.class, () -> tumblr.unfollow("badBlog2"));
     }
 
+    @Test
     @DisplayName("should return a list of results")
     void testSearchPost() {
         List<TumblrPost> posts = tumblr.searchPost("tag", 2);
