@@ -4,7 +4,6 @@ import com.tumblr.jumblr.JumblrClient;
 import com.tumblr.jumblr.exceptions.JumblrException;
 import com.tumblr.jumblr.types.*;
 import org.mockito.Mockito;
-import org.mockito.stubbing.Answer;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -62,6 +61,23 @@ public class TumblrLibraryMock {
         Mockito.when(client.blogPosts("badURL")).thenReturn(Arrays.asList(badPost));
         Mockito.doThrow(JumblrException.class).when(client).follow("superBad");
         Mockito.doThrow(JumblrException.class).when(client).unfollow("superBad");
+
+        TextPost textPost = getFullTextPostMock();
+        PhotoPost photoPost = getFullPhotoPostMock();
+        QuotePost quotePost = getFullQuotePostMock();
+        LinkPost linkPost = getFullLinkPostMock();
+        ChatPost chatPost = getFullChatPostMock();
+        AudioPost audioPost = getFullAudioPostMock();
+        VideoPost videoPost = getFullVideoPostMock();
+        AnswerPost answerPost = getFullAnswerPostMock();
+        Mockito.when(client.blogPost("testblog", 11L)).thenReturn(textPost);
+        Mockito.when(client.blogPost("testblog", 12L)).thenReturn(photoPost);
+        Mockito.when(client.blogPost("testblog", 13L)).thenReturn(quotePost);
+        Mockito.when(client.blogPost("testblog", 14L)).thenReturn(linkPost);
+        Mockito.when(client.blogPost("testblog", 15L)).thenReturn(chatPost);
+        Mockito.when(client.blogPost("testblog", 16L)).thenReturn(audioPost);
+        Mockito.when(client.blogPost("testblog", 17L)).thenReturn(videoPost);
+        Mockito.when(client.blogPost("testblog", 18L)).thenReturn(answerPost);
 
         User auth = getTumblrFullUserMock();
         Mockito.when(client.user()).thenReturn(auth);
@@ -166,7 +182,6 @@ public class TumblrLibraryMock {
         Mockito.when(post.getTags()).thenReturn(Arrays.asList("test", "full", "post"));
         Mockito.when(post.getRebloggedFromName()).thenReturn("testington");
         Mockito.when(post.getReblogKey()).thenReturn("reblogkey");
-
     }
 
     public static TextPost getFullTextPostMock() {
@@ -176,7 +191,7 @@ public class TumblrLibraryMock {
         Mockito.when(post.getType()).thenReturn("TEXT");
         Mockito.when(post.getTitle()).thenReturn("Master of tests");
         Mockito.when(post.getBody()).thenReturn("This is how you test like you mean it");
-        return null;
+        return post;
     }
 
     public static PhotoPost getFullPhotoPostMock() {
@@ -187,7 +202,8 @@ public class TumblrLibraryMock {
         Mockito.when(post.getHeight()).thenReturn(600);
         Mockito.when(post.getWidth()).thenReturn(800);
         Mockito.when(post.getCaption()).thenReturn("Photo caption");
-        Mockito.when(post.getPhotos()).thenReturn(generateSimplePhotos(3));
+        List<Photo> photos = generateSimplePhotos(3);
+        Mockito.when(post.getPhotos()).thenReturn(photos);
 
         return post;
     }
@@ -199,7 +215,7 @@ public class TumblrLibraryMock {
         Mockito.when(post.getType()).thenReturn("QUOTE");
         Mockito.when(post.getText()).thenReturn("I like testing titles");
         Mockito.when(post.getSource()).thenReturn("https://sml2003.tumblr.com/post/160297775984/testing-title");
-        return null;
+        return post;
     }
 
     public static LinkPost getFullLinkPostMock() {
@@ -210,7 +226,7 @@ public class TumblrLibraryMock {
         Mockito.when(post.getTitle()).thenReturn("LinkPost");
         Mockito.when(post.getDescription()).thenReturn("this is the best description");
         Mockito.when(post.getLinkUrl()).thenReturn("https://sml2003.tumblr.com/post/160297775984/testing-title");
-        return null;
+        return post;
     }
 
     public static ChatPost getFullChatPostMock() {
@@ -220,7 +236,7 @@ public class TumblrLibraryMock {
         Mockito.when(post.getType()).thenReturn("CHAT");
         Mockito.when(post.getTitle()).thenReturn("ChatPost");
         Mockito.when(post.getBody()).thenReturn("this is the best body");
-        return null;
+        return post;
     }
 
     public static AudioPost getFullAudioPostMock() {
@@ -238,7 +254,7 @@ public class TumblrLibraryMock {
     public static VideoPost getFullVideoPostMock() {
         VideoPost post = Mockito.mock(VideoPost.class);
         getFullPostMock(post);
-        return null;
+        return post;
     }
 
     public static AnswerPost getFullAnswerPostMock() {
@@ -250,7 +266,7 @@ public class TumblrLibraryMock {
         Mockito.when(post.getQuestion()).thenReturn("Can has test?");
         Mockito.when(post.getAnswer()).thenReturn("Noh");
         Mockito.when(post.getAskingUrl()).thenReturn("https://google.com");
-        return null;
+        return post;
     }
 
     static List<Photo> generateSimplePhotos(int nrOfPhotos) {

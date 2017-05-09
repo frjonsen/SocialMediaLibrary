@@ -1,6 +1,8 @@
 package tumblr;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import tumblr.mocks.TumblrLibraryMock;
 
 import java.io.IOException;
@@ -14,5 +16,10 @@ public class TumblrPostConversionTest {
         tumblr.setActiveBlog("testblog");
     }
 
+    @Test
+    @DisplayName("textpost")
+    void testTextPost() {
+        TumblrPost post = tumblr.getPost("11");
+    }
 
 }
