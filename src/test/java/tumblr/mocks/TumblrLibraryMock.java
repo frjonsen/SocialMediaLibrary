@@ -253,6 +253,9 @@ public class TumblrLibraryMock {
 
     public static VideoPost getFullVideoPostMock() {
         VideoPost post = Mockito.mock(VideoPost.class);
+        Mockito.when(post.getType()).thenReturn("VIDEO");
+        Mockito.when(post.getCaption()).thenReturn("Video Caption");
+        Mockito.when(post.getThumbnailUrl()).thenReturn("https://tumbr.com/videourl");
         getFullPostMock(post);
         return post;
     }
