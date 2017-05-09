@@ -173,6 +173,7 @@ public class TumblrLibraryMock {
         TextPost post = Mockito.mock(TextPost.class);
         getFullPostMock(post);
 
+        Mockito.when(post.getType()).thenReturn("TEXT");
         Mockito.when(post.getTitle()).thenReturn("Master of tests");
         Mockito.when(post.getBody()).thenReturn("This is how you test like you mean it");
         return null;
@@ -181,6 +182,8 @@ public class TumblrLibraryMock {
     public static PhotoPost getFullPhotoPostMock() {
         PhotoPost post = Mockito.mock(PhotoPost.class);
         getFullPostMock(post);
+
+        Mockito.when(post.getType()).thenReturn("PHOTO");
         Mockito.when(post.getHeight()).thenReturn(600);
         Mockito.when(post.getWidth()).thenReturn(800);
         Mockito.when(post.getCaption()).thenReturn("Photo caption");
@@ -193,6 +196,7 @@ public class TumblrLibraryMock {
         QuotePost post = Mockito.mock(QuotePost.class);
         getFullPostMock(post);
 
+        Mockito.when(post.getType()).thenReturn("QUOTE");
         Mockito.when(post.getText()).thenReturn("I like testing titles");
         Mockito.when(post.getSource()).thenReturn("https://sml2003.tumblr.com/post/160297775984/testing-title");
         return null;
@@ -202,6 +206,7 @@ public class TumblrLibraryMock {
         LinkPost post = Mockito.mock(LinkPost.class);
         getFullPostMock(post);
 
+        Mockito.when(post.getType()).thenReturn("LINK");
         Mockito.when(post.getTitle()).thenReturn("LinkPost");
         Mockito.when(post.getDescription()).thenReturn("this is the best description");
         Mockito.when(post.getLinkUrl()).thenReturn("https://sml2003.tumblr.com/post/160297775984/testing-title");
@@ -212,6 +217,7 @@ public class TumblrLibraryMock {
         ChatPost post = Mockito.mock(ChatPost.class);
         getFullPostMock(post);
 
+        Mockito.when(post.getType()).thenReturn("CHAT");
         Mockito.when(post.getTitle()).thenReturn("ChatPost");
         Mockito.when(post.getBody()).thenReturn("this is the best body");
         return null;
@@ -221,6 +227,7 @@ public class TumblrLibraryMock {
         AudioPost post = Mockito.mock(AudioPost.class);
         getFullPostMock(post);
 
+        Mockito.when(post.getType()).thenReturn("AUDIO");
         Mockito.when(post.getSourceTitle()).thenReturn("Source title");
         Mockito.when(post.getCaption()).thenReturn("Audio Caption");
         Mockito.when(post.getSourceTitle()).thenReturn("http://tumblr.com/audiourl");
@@ -238,6 +245,7 @@ public class TumblrLibraryMock {
         AnswerPost post = Mockito.mock(AnswerPost.class);
         getFullPostMock(post);
 
+        Mockito.when(post.getType()).thenReturn("ANSWER");
         Mockito.when(post.getAskingName()).thenReturn("Testie");
         Mockito.when(post.getQuestion()).thenReturn("Can has test?");
         Mockito.when(post.getAnswer()).thenReturn("Noh");
