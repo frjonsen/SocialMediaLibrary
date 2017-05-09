@@ -152,7 +152,7 @@ class TumblrAPIImplTest {
 
         assertThrows(TumblrAPIException.class, () -> tumblr.destroyStatusPost("-1"));
     }
-    
+
     @Test
     @DisplayName("should get a post")
     void testGetPost() {
@@ -176,6 +176,15 @@ class TumblrAPIImplTest {
         assertTrue(tumblr.unfollow("goodBlog"));
         assertThrows(TumblrAPIException.class, () -> tumblr.unfollow("badBlog"));
         assertThrows(TumblrAPIException.class, () -> tumblr.unfollow("badBlog2"));
+    }
+
+    @DisplayName("should return a list of results")
+    void testSearchPost() {
+        List<TumblrPost> posts = tumblr.searchPost("tag", 2);
+        assertEquals(6, posts.size());
+        assertEquals(posts.get(0).getId(), posts.get(3).getId());
+
+        assertThrows(TumblrAPIException.class, () -> tumblr.searchPost("fails", 1));
     }
 
 }

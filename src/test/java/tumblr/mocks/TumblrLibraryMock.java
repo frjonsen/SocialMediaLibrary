@@ -39,12 +39,17 @@ public class TumblrLibraryMock {
         Mockito.when(je.getMessage()).thenReturn("Not Found");
         Mockito.when(client.blogPost("testblog", 123L)).thenThrow(je);
         Mockito.when(client.blogPost("testblog", -1L)).thenThrow(JumblrException.class);
+
         Mockito.doNothing().when(client).follow("goodBlog");
         Mockito.doNothing().when(client).unfollow("goodBlog");
         Mockito.doThrow(JumblrException.class).when(client).follow("badBlog");
         Mockito.doThrow(JumblrException.class).when(client).unfollow("badBlog");
         Mockito.when(client.blogInfo("goodBlog")).thenReturn(Mockito.mock(Blog.class));
         Mockito.when(client.blogInfo("badBlog2")).thenReturn(null);
+
+        Mockito.when(client.tagged(eq("tag"), any(Map.class))).thenReturn(feed);
+        Mockito.when(client.tagged(eq("fails"), any(Map.class))).thenThrow(JumblrException.class);
+
 
         Post likePost = generateSimplePosts(1).get(0);
         Post badPost = generateSimplePosts(1).get(0); //post with bad url
