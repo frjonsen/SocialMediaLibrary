@@ -14,7 +14,7 @@ import static tumblr.TumblrUser.UserType.BLOG;
 import static tumblr.TumblrUser.UserType.USER;
 
 public class TumblrPostConversion {
-    private TumblrPostConversion(){}
+    private TumblrPostConversion(){} //NOSONAR
 
     static TumblrPost jumblrPostConversion(Post jumblrPost) throws MalformedURLException {
         if(jumblrPost == null) {

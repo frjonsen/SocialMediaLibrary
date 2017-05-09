@@ -2,11 +2,9 @@ package tumblr.mocks;
 
 import com.tumblr.jumblr.JumblrClient;
 import com.tumblr.jumblr.exceptions.JumblrException;
-import com.tumblr.jumblr.types.Blog;
-import com.tumblr.jumblr.types.Note;
-import com.tumblr.jumblr.types.Post;
-import com.tumblr.jumblr.types.User;
+import com.tumblr.jumblr.types.*;
 import org.mockito.Mockito;
+import org.mockito.stubbing.Answer;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -155,4 +153,68 @@ public class TumblrLibraryMock {
 
         return posts;
     }
+
+    public static void getFullPostMock(Post post) {
+        Mockito.when(post.isLiked()).thenReturn(false);
+        Mockito.when(post.getAuthorId()).thenReturn("852");
+        Mockito.when(post.getTimestamp()).thenReturn(1494245531L);
+        Mockito.when(post.getId()).thenReturn(111L);
+        Mockito.when(post.getPostUrl()).thenReturn("https://sml2003.tumblr.com/post/160297775984/testing-title");
+        Mockito.when(post.getNoteCount()).thenReturn(10L);
+        List<Note> notes = generateSimpleNotes(2);
+        Mockito.when(post.getNotes()).thenReturn(notes);
+        Mockito.when(post.getTags()).thenReturn(Arrays.asList("test", "full", "post"));
+        Mockito.when(post.getRebloggedFromName()).thenReturn("testington");
+        Mockito.when(post.getReblogKey()).thenReturn("reblogkey");
+
+    }
+
+    public static TextPost getFullTextPostMock() {
+        TextPost post = Mockito.mock(TextPost.class);
+        getFullPostMock(post);
+        return null;
+    }
+
+    public static PhotoPost getFullPhotoPostMock() {
+        PhotoPost post = Mockito.mock(PhotoPost.class);
+        getFullPostMock(post);
+        return null;
+    }
+
+    public static QuotePost getFullQuotePostMock() {
+        QuotePost post = Mockito.mock(QuotePost.class);
+        getFullPostMock(post);
+        return null;
+    }
+
+    public static LinkPost getFullLinkPostMock() {
+        LinkPost post = Mockito.mock(LinkPost.class);
+        getFullPostMock(post);
+        return null;
+    }
+
+    public static ChatPost getFullChatPostMock() {
+        ChatPost post = Mockito.mock(ChatPost.class);
+        getFullPostMock(post);
+        return null;
+    }
+
+    public static AudioPost getFullAudioPostMock() {
+        AudioPost post = Mockito.mock(AudioPost.class);
+        getFullPostMock(post);
+        return null;
+    }
+
+    public static VideoPost getFullVideoPostMock() {
+        VideoPost post = Mockito.mock(VideoPost.class);
+        getFullPostMock(post);
+        return null;
+    }
+
+    public static AnswerPost getFullAnswerPostMock() {
+        AnswerPost post = Mockito.mock(AnswerPost.class);
+        getFullPostMock(post);
+        return null;
+    }
+
 }
