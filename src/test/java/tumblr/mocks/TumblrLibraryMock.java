@@ -178,7 +178,12 @@ public class TumblrLibraryMock {
     public static PhotoPost getFullPhotoPostMock() {
         PhotoPost post = Mockito.mock(PhotoPost.class);
         getFullPostMock(post);
-        return null;
+        Mockito.when(post.getHeight()).thenReturn(600);
+        Mockito.when(post.getWidth()).thenReturn(800);
+        Mockito.when(post.getCaption()).thenReturn("Photo caption");
+        Mockito.when(post.getPhotos()).thenReturn(generateSimplePhotos(3));
+
+        return post;
     }
 
     public static QuotePost getFullQuotePostMock() {
@@ -202,7 +207,12 @@ public class TumblrLibraryMock {
     public static AudioPost getFullAudioPostMock() {
         AudioPost post = Mockito.mock(AudioPost.class);
         getFullPostMock(post);
-        return null;
+
+        Mockito.when(post.getSourceTitle()).thenReturn("Source title");
+        Mockito.when(post.getCaption()).thenReturn("Audio Caption");
+        Mockito.when(post.getSourceTitle()).thenReturn("http://tumblr.com/audiourl");
+
+        return post;
     }
 
     public static VideoPost getFullVideoPostMock() {
@@ -215,6 +225,19 @@ public class TumblrLibraryMock {
         AnswerPost post = Mockito.mock(AnswerPost.class);
         getFullPostMock(post);
         return null;
+    }
+
+    static List<Photo> generateSimplePhotos(int nrOfPhotos) {
+        List<Photo> photos = new ArrayList<>();
+        for (int i = 0; i < nrOfPhotos; ++i) {
+            Photo photo = Mockito.mock(Photo.class);
+            PhotoSize size = Mockito.mock(PhotoSize.class);
+            Mockito.when(size.getUrl()).thenReturn("https://tumblr.com/photo" + i);
+            Mockito.when(photo.getOriginalSize()).thenReturn(size);
+            photos.add(photo);
+        }
+
+        return photos;
     }
 
 }
