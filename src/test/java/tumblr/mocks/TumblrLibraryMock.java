@@ -246,7 +246,7 @@ public class TumblrLibraryMock {
         Mockito.when(post.getType()).thenReturn("AUDIO");
         Mockito.when(post.getSourceTitle()).thenReturn("Source title");
         Mockito.when(post.getCaption()).thenReturn("Audio Caption");
-        Mockito.when(post.getSourceTitle()).thenReturn("http://tumblr.com/audiourl");
+        Mockito.when(post.getSourceUrl()).thenReturn("http://tumblr.com/audiourl");
 
         return post;
     }
@@ -255,7 +255,7 @@ public class TumblrLibraryMock {
         VideoPost post = Mockito.mock(VideoPost.class);
         Mockito.when(post.getType()).thenReturn("VIDEO");
         Mockito.when(post.getCaption()).thenReturn("Video Caption");
-        Mockito.when(post.getThumbnailUrl()).thenReturn("https://tumbr.com/videourl");
+        Mockito.when(post.getThumbnailUrl()).thenReturn("https://tumblr.com/videourl");
         getFullPostMock(post);
         return post;
     }
