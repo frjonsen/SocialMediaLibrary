@@ -108,7 +108,7 @@ public class TumblrPostConversion {
             text += body;
         }
         if(!SocialMediaUtil.isNullOrWhitespace(source)) {
-            text += "\n\nsource: \"" + quotePost.getSource() + "\"";
+            text += "\n\nsource: \"" + source + "\"";
         }
 
         tumblrPost.setText(text);

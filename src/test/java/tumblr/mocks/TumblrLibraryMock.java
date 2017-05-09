@@ -172,6 +172,9 @@ public class TumblrLibraryMock {
     public static TextPost getFullTextPostMock() {
         TextPost post = Mockito.mock(TextPost.class);
         getFullPostMock(post);
+
+        Mockito.when(post.getTitle()).thenReturn("Master of tests");
+        Mockito.when(post.getBody()).thenReturn("This is how you test like you mean it");
         return null;
     }
 
@@ -184,18 +187,28 @@ public class TumblrLibraryMock {
     public static QuotePost getFullQuotePostMock() {
         QuotePost post = Mockito.mock(QuotePost.class);
         getFullPostMock(post);
+
+        Mockito.when(post.getText()).thenReturn("I like testing titles");
+        Mockito.when(post.getSource()).thenReturn("https://sml2003.tumblr.com/post/160297775984/testing-title");
         return null;
     }
 
     public static LinkPost getFullLinkPostMock() {
         LinkPost post = Mockito.mock(LinkPost.class);
         getFullPostMock(post);
+
+        Mockito.when(post.getTitle()).thenReturn("LinkPost");
+        Mockito.when(post.getDescription()).thenReturn("this is the best description");
+        Mockito.when(post.getLinkUrl()).thenReturn("https://sml2003.tumblr.com/post/160297775984/testing-title");
         return null;
     }
 
     public static ChatPost getFullChatPostMock() {
         ChatPost post = Mockito.mock(ChatPost.class);
         getFullPostMock(post);
+
+        Mockito.when(post.getTitle()).thenReturn("ChatPost");
+        Mockito.when(post.getBody()).thenReturn("this is the best body");
         return null;
     }
 
@@ -214,6 +227,11 @@ public class TumblrLibraryMock {
     public static AnswerPost getFullAnswerPostMock() {
         AnswerPost post = Mockito.mock(AnswerPost.class);
         getFullPostMock(post);
+
+        Mockito.when(post.getAskingName()).thenReturn("Testie");
+        Mockito.when(post.getQuestion()).thenReturn("Can has test?");
+        Mockito.when(post.getAnswer()).thenReturn("Noh");
+        Mockito.when(post.getAskingUrl()).thenReturn("https://google.com");
         return null;
     }
 
