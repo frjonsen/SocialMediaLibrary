@@ -151,7 +151,7 @@ class TumblrAPIImplTest {
 
         assertThrows(TumblrAPIException.class, () -> tumblr.destroyStatusPost("-1"));
     }
-    
+
     @Test
     @DisplayName("should get a post")
     void testGetPost() {
@@ -159,5 +159,16 @@ class TumblrAPIImplTest {
         assertEquals("0", post.getId());
 
         assertThrows(TumblrAPIException.class, () -> tumblr.getPost("1234"));
+    }
+
+    @Test
+    @DisplayName("should return a list of results")
+    void testSearchPost() {
+        List<TumblrPost> posts = tumblr.searchPost("tag", 2);
+        assertEquals(6, posts.size());
+        assertEquals(posts.get(0).getId(), posts.get(3).getId());
+
+        assertThrows(TumblrAPIException.class, () -> tumblr.searchPost("fails", 1));
+
     }
 }
