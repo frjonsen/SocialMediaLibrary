@@ -260,19 +260,32 @@ public class TumblrAPIImpl extends TumblrAPI {
 
     @Override
     public boolean follow(String id) {
-        Blog blog = libraryInstance.blogInfo(id);
-        if (blog == null)
-            throw new TumblrAPIException("No blog with id \"" + id + "\"");
-        libraryInstance.follow(id);
+        try {
+            Blog blog = libraryInstance.blogInfo(id);
+            if (blog == null) {
+                throw new TumblrAPIException("No blog with id \"" + id + "\"");
+            }
+            libraryInstance.follow(id);
+        } catch(JumblrException je) {
+            debug(je);
+            throw new TumblrAPIException(je.getMessage());
+        }
         return true; // jumblr doesn't return whether it worked. Assume it worked as long as blog exists.
     }
 
     @Override
     public boolean unfollow(String id) {
-        Blog blog = libraryInstance.blogInfo(id);
-        if (blog == null)
-            throw new TumblrAPIException("No blog with id \"" + id + "\"");
-        libraryInstance.unfollow(id);
+        try {
+            Blog blog = libraryInstance.blogInfo(id);
+            if (blog == null) {
+                throw new TumblrAPIException("No blog with id \"" + id + "\"");
+            }
+            libraryInstance.unfollow(id);
+        } catch(JumblrException je) {
+            debug(je);
+            throw new TumblrAPIException(je.getMessage());
+        }
+
         return true; // jumblr doesn't return whether it worked. Assume it worked as long as blog exists.
     }
 

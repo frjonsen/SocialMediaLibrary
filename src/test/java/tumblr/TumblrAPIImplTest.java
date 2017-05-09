@@ -161,4 +161,21 @@ class TumblrAPIImplTest {
 
         assertThrows(TumblrAPIException.class, () -> tumblr.getPost("1234"));
     }
+
+    @Test
+    @DisplayName("follow")
+    void testFollow() {
+        assertTrue(tumblr.follow("goodBlog"));
+        assertThrows(TumblrAPIException.class, () -> tumblr.follow("badBlog"));
+        assertThrows(TumblrAPIException.class, () -> tumblr.follow("badBlog2"));
+    }
+
+    @Test
+    @DisplayName("unfollow")
+    void testUnfollow() {
+        assertTrue(tumblr.unfollow("goodBlog"));
+        assertThrows(TumblrAPIException.class, () -> tumblr.unfollow("badBlog"));
+        assertThrows(TumblrAPIException.class, () -> tumblr.unfollow("badBlog2"));
+    }
+
 }

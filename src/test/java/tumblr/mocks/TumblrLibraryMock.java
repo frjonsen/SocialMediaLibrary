@@ -9,7 +9,6 @@ import com.tumblr.jumblr.types.User;
 import org.mockito.Mockito;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -40,7 +39,12 @@ public class TumblrLibraryMock {
         Mockito.when(je.getMessage()).thenReturn("Not Found");
         Mockito.when(client.blogPost("testblog", 123L)).thenThrow(je);
         Mockito.when(client.blogPost("testblog", -1L)).thenThrow(JumblrException.class);
-
+        Mockito.doNothing().when(client).follow("goodBlog");
+        Mockito.doNothing().when(client).unfollow("goodBlog");
+        Mockito.doThrow(JumblrException.class).when(client).follow("badBlog");
+        Mockito.doThrow(JumblrException.class).when(client).unfollow("badBlog");
+        Mockito.when(client.blogInfo("goodBlog")).thenReturn(Mockito.mock(Blog.class));
+        Mockito.when(client.blogInfo("badBlog2")).thenReturn(null);
 
         Post likePost = generateSimplePosts(1).get(0);
         Post badPost = generateSimplePosts(1).get(0); //post with bad url
