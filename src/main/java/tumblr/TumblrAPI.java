@@ -93,11 +93,22 @@ public abstract class TumblrAPI extends SocialMediaBase<TumblrUser, TumblrPost> 
     @Override
     public abstract List<TumblrUser> getFollowing(String id, int maxCalls);
 
+    /**
+     * Searching for users is not supported by tumblr
+     * @param query ignored
+     * @return Always throws
+     */
     @Override
     public List<TumblrUser> searchUsers(String query) {
         throw new NotSupportedException("searchUsers", PLATFORM);
     }
 
+    /**
+     * Searches posts on tumblr. Tumblr only supports searching for a single tag, and will not do full-text searches of posts.
+     * @param query tag to search for
+     * @param maxCalls maximum number of pages of results to get
+     * @return A list of TumblrPosts
+     */
     @Override
     public abstract List<TumblrPost> searchPost(String query, int maxCalls);
 }

@@ -68,6 +68,12 @@ public class TumblrPostConversion {
         return postTypeSpecificConversion(post, jumblrPost);
     }
 
+    /**
+     * Figures out type of the post and ensures post is converted to the correct type
+     * @param post Post to move attributes to
+     * @param jumblrPost Post to move attributes from
+     * @return the converted post
+     */
     static TumblrPost postTypeSpecificConversion(TumblrPost post, Post jumblrPost) {
         switch(jumblrPost.getType().toUpperCase()) {
             case "TEXT":
@@ -92,6 +98,12 @@ public class TumblrPostConversion {
         }
     }
 
+    /**
+     * Converts all Photo-post specific attributes
+     * @param tumblrPost TumblrPost to move attributes to
+     * @param jumblrPost JumblrPost to move attributes from
+     * @return the converted post
+     */
     static TumblrPost photoPostConverter(TumblrPost tumblrPost, Post jumblrPost) {
         PhotoPost post = (PhotoPost)jumblrPost;
         tumblrPost.setType(IMAGE);
@@ -112,6 +124,12 @@ public class TumblrPostConversion {
         return tumblrPost;
     }
 
+    /**
+     * Converts all Quote-post specific attributes
+     * @param tumblrPost TumblrPost to move attributes to
+     * @param jumblrPost JumblrPost to move attributes from
+     * @return the converted post
+     */
     static TumblrPost quotePostConverter(TumblrPost tumblrPost, Post jumblrPost) {
         tumblrPost.setType(QUOTE);
         QuotePost quotePost = (QuotePost)jumblrPost;
@@ -130,6 +148,12 @@ public class TumblrPostConversion {
         return tumblrPost;
     }
 
+    /**
+     * Converts all Text-post specific attributes
+     * @param tumblrPost TumblrPost to move attributes to
+     * @param jumblrPost JumblrPost to move attributes from
+     * @return the converted post
+     */
     static TumblrPost textPostConverter(TumblrPost tumblrPost, Post jumblrPost) {
         tumblrPost.setType(TEXT);
         TextPost textPost = (TextPost)jumblrPost;
@@ -147,6 +171,12 @@ public class TumblrPostConversion {
         return tumblrPost;
     }
 
+    /**
+     * Converts all Link-post specific attributes
+     * @param tumblrPost TumblrPost to move attributes to
+     * @param jumblrPost JumblrPost to move attributes from
+     * @return the converted post
+     */
     static TumblrPost linkPostConverter(TumblrPost tumblrPost, Post jumblrPost) {
         tumblrPost.setType(LINK);
         LinkPost linkPost = (LinkPost)jumblrPost;
@@ -169,6 +199,12 @@ public class TumblrPostConversion {
         return tumblrPost;
     }
 
+    /**
+     * Converts all Chat-post specific attributes
+     * @param tumblrPost TumblrPost to move attributes to
+     * @param jumblrPost JumblrPost to move attributes from
+     * @return the converted post
+     */
     static TumblrPost chatPostConverter(TumblrPost tumblrPost, Post jumblrPost) {
         tumblrPost.setType(CHAT);
         ChatPost chatPost = (ChatPost)jumblrPost;
@@ -187,6 +223,12 @@ public class TumblrPostConversion {
         return tumblrPost;
     }
 
+    /**
+     * Converts all Audio-post specific attributes
+     * @param tumblrPost TumblrPost to move attributes to
+     * @param jumblrPost JumblrPost to move attributes from
+     * @return the converted post
+     */
     static TumblrPost audioPostConverter(TumblrPost tumblrPost, Post jumblrPost) {
         tumblrPost.setType(AUDIO);
         AudioPost audioPost = (AudioPost)jumblrPost;
@@ -208,6 +250,12 @@ public class TumblrPostConversion {
         return tumblrPost;
     }
 
+    /**
+     * Converts all Video-post specific attributes
+     * @param tumblrPost TumblrPost to move attributes to
+     * @param jumblrPost JumblrPost to move attributes from
+     * @return the converted post
+     */
     static TumblrPost videoPostConverter(TumblrPost tumblrPost, Post jumblrPost) {
         tumblrPost.setType(VIDEO);
         VideoPost videoPost = (VideoPost)jumblrPost;
@@ -227,6 +275,12 @@ public class TumblrPostConversion {
         return tumblrPost;
     }
 
+    /**
+     * Converts all Answer-post specific attributes
+     * @param tumblrPost TumblrPost to move attributes to
+     * @param jumblrPost JumblrPost to move attributes from
+     * @return the converted post
+     */
     static TumblrPost answerPostConverter(TumblrPost tumblrPost, Post jumblrPost) {
         tumblrPost.setType(ANSWER);
         AnswerPost answerPost = (AnswerPost)jumblrPost;

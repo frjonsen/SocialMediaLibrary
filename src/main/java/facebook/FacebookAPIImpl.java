@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Actual implementation of the Facebook API. Mostly acts as a wrapper for facebook4j.
+ */
 public class FacebookAPIImpl extends FacebookAPI {
 
     private Facebook libraryInstance;

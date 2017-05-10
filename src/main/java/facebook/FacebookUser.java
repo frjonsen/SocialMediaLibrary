@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * This class is an extension of the User class. The variables added here are the
- * facebook exclusive fields for a user.
+ * facebook exclusive fields for a user. Can represent a Facebook User, Page or Group.
  * @see socialmedia.User
  */
 public class FacebookUser extends User {
@@ -26,21 +26,38 @@ public class FacebookUser extends User {
     private List<String> languages;
     private FacebookBirthDateUtil.FacebookBirthDate birthday;
     private UserType type;
+    private String accessToken;
 
+    /**
+     * An access token which can be used to make API calls on behalf of this user.
+     * @return String with access token
+     */
     public String getAccessToken() {
         return accessToken;
     }
 
+
+    /**
+     * Set the access token which can be used to make API calls on behalf of this user.
+     * @param accessToken String with access token
+     */
     public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
     }
 
-    private String accessToken;
 
+    /**
+     * Sets the type of user the instance represents
+     * @param type Type of user
+     */
     public FacebookUser(UserType type) {
         this.type = type;
     }
 
+    /**
+     * Gets the type of user the instance represents
+     * @return Type of user
+     */
     public UserType getType() {
         return this.type;
     }

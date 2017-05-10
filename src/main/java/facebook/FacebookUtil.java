@@ -9,10 +9,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * Utility functions for Facebook-specific cases
+ */
 class FacebookUtil {
 
     private FacebookUtil() { }
 
+    /**
+     * Retrieves all hash tags in a message
+     * @param message Message to parse
+     * @return A list of all hashtags found
+     */
     static List<String> getHashTags(String message) {
         if (message == null) {
             return new ArrayList<>();
@@ -25,6 +33,11 @@ class FacebookUtil {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Converts a facebook4j IdNameEntity to a simple user
+     * @param users A list of IdNameEntities
+     * @return A list of basic users, containing only Id and name
+     */
     static List<FacebookUser> convertNameIdToSimpleUsers(List<IdNameEntity> users) {
         List<FacebookUser> u = new ArrayList<>();
         if (users == null) {
@@ -39,6 +52,11 @@ class FacebookUtil {
         return u;
     }
 
+    /**
+     * Converts facebook post types to the general Post.Type
+     * @param type String representation of a type
+     * @return Generalized enum representation of the type
+     */
     static socialmedia.Post.Type convertFacebookType(String type) {
         if (type == null) {
             return Post.Type.UNKNOWN;
@@ -60,6 +78,11 @@ class FacebookUtil {
         }
     }
 
+    /**
+     * Converts a facebook4j Category to a basic Facebook user, containing only Id and Name
+     * @param category Category to convert
+     * @return Basic Facebook user
+     */
     static FacebookUser categoryToUser(Category category) {
         FacebookUser user = new FacebookUser(FacebookUser.UserType.USER);
         user.setId(category.getId());
