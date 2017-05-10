@@ -172,7 +172,7 @@ public class FacebookUser extends User {
 
     /**
      * This variable is not supported by facebook and throws an NotSupportedException
-     * @return
+     * @return will not return
      */
     @Override
     public int getFollowingCount() {

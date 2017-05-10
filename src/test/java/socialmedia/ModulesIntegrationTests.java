@@ -2,8 +2,6 @@ package socialmedia;
 
 import facebook.FacebookAPI;
 import facebook.FacebookAPIImpl;
-import facebook.FacebookPost;
-import facebook.FacebookUser;
 import org.cfg4j.provider.ConfigurationProvider;
 import org.cfg4j.provider.ConfigurationProviderBuilder;
 import org.cfg4j.source.ConfigurationSource;

@@ -9,7 +9,11 @@ import twitter4j.URLEntity;
 
 import java.util.Arrays;
 
-
+/**
+ * Class representing a post in Twitter. Only contains
+ * twitter specific variables. Extends socialmedia Post class.
+ * @see socialmedia.Post
+ */
 public class TwitterPost extends Post<TwitterUser>{
     private String language;
     private Coordinate coordinate;
@@ -321,7 +325,7 @@ public class TwitterPost extends Post<TwitterUser>{
     /**
      * Returns the source. Utillity used to post tweets as an html
      * formatted string.
-     * @return
+     * @return string of the source
      */
     public String getSource() {
         return source;
@@ -337,7 +341,7 @@ public class TwitterPost extends Post<TwitterUser>{
 
     /**
      * Returns the list of countries where the tweet is withheld.
-     * @return
+     * @return string of countrys withheld in
      */
     public String[] getWithheldInCountries() {
         return withheldInCountries;

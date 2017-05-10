@@ -6,6 +6,9 @@ import twitter4j.RateLimitStatus;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Contains functionality for interacting with Twitter.
+ */
 public abstract class TwitterAPI extends SocialMediaBase<TwitterUser, TwitterPost> {
 
     /**
@@ -34,7 +37,7 @@ public abstract class TwitterAPI extends SocialMediaBase<TwitterUser, TwitterPos
      * Gets a TwitterPost by provided id, filling a post object
      * with available information. Some fields may be null.
      * @param id
-     * @return
+     * @return a TwitterPost
      */
     public abstract TwitterPost getPost(String id);
 

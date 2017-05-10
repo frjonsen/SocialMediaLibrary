@@ -14,9 +14,20 @@ import static socialmedia.Post.Type.*;
 import static tumblr.TumblrUser.UserType.BLOG;
 import static tumblr.TumblrUser.UserType.USER;
 
+/**
+ * Handles conversion of Jumblr Post to our TumblrPost
+ * @see TumblrPost
+ * @see Post
+ */
 public class TumblrPostConversion {
     private TumblrPostConversion(){} //NOSONAR
 
+    /**
+     * Takes a Jumblr Post and converts it to a TumblrPost
+     * @param jumblrPost post to convert
+     * @return TumblrPost created from jumblrPost
+     * @throws MalformedURLException gets thrown if the URL in the post is of bad format
+     */
     static TumblrPost jumblrPostConversion(Post jumblrPost) throws MalformedURLException {
         if(jumblrPost == null) {
             return null;

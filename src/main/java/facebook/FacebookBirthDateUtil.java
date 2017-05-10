@@ -106,7 +106,7 @@ public class FacebookBirthDateUtil {
     /**
      * Figures out the date type of a facebook date. Note that this function makes no checks whether the date
      * itself is valid. A date using the 13th month, as 13/01/2001 will as such still be considered a FULL type.
-     * @see DateType
+     * @see facebook.FacebookBirthDateUtil.DateType
      * @param date A date formatted as one of the types specified by DateType
      * @return The deduced DateType of the input string. INVALID is returned if no type matched.
      */
