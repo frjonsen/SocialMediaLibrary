@@ -8,6 +8,9 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+/**
+ * Utility class to handle the different cases for how Facebook handles birthdates.
+ */
 public class FacebookBirthDateUtil {
 
     static class FacebookBirthDate {

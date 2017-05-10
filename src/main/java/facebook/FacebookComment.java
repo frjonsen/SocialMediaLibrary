@@ -5,6 +5,9 @@ import socialmedia.SocialMediaUtil;
 import java.time.ZonedDateTime;
 import java.util.Date;
 
+/**
+ * Represents a Facebook post comment.
+ */
 public class FacebookComment {
     private String message;
     private String id;
